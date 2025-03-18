@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "698119802204",
+    "project_id": "andiezstore-2705",
+    "storage_bucket": "andiezstore-2705.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698119802204:android:5fe1fbaca4cac5489a0599",
+        "android_client_info": {
+          "package_name": "com.example.andiezstore"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmuWqFP2OCcdNHPK2-IXaOCrn80oOxEn4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698119802204:android:f4d308c2ab8fdf709a0599",
+        "android_client_info": {
+          "package_name": "com.example.saleapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmuWqFP2OCcdNHPK2-IXaOCrn80oOxEn4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

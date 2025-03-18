@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">AndiezStore</string>
+    <string name="search">Search</string>
+    <string name="cagetories">Cagetories</string>
+    <string name="hi_andiez">Hi,Andiez</string>
+    <string name="tony_kroos">Tony Kroos</string>
+    <string name="cagetory_manage">Cagetory Manage</string>
+    <string name="cagetory">Cagetory:</string>
+    <string name="save">Save</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="get_start_with_shoes_app">Get Start With Shoes App</string>
+    <string name="enter_your_phone_number">Enter Your Phone Number</string>
+    <string name="next">Next</string>
+    <string name="verify_phone_number">Verify Phone Number</string>
+    <string name="loading">Loading</string>
+    <string name="enter_your_password">Enter Your Password</string>
+    <string name="login">Login</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="enter_your_name">Enter Your Name</string>
+    <string name="register">Register</string>
+</resources>
