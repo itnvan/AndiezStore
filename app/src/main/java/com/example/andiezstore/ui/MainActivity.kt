@@ -1,4 +1,4 @@
-package com.example.andiezstore
+package com.example.andiezstore.ui
 
 import android.os.Bundle
 import android.os.Handler
@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import com.example.andiezstore.adapter.SliderAdapter
-import java.lang.Math.abs
+import com.example.andiezstore.R
+import com.example.andiezstore.ui.adapter.SliderAdapter
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewPager2: ViewPager2
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        viewPager2.registerOnPageChangeCallback(object :ViewPager2.OnPageChangeCallback() {
+        viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 handler.removeCallbacks(runnable)
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         val transfomer = CompositePageTransformer()
         transfomer.addTransformer(MarginPageTransformer(40))
         transfomer.addTransformer { page, position ->
-            val r = 1 - abs(position)
+            val r = 1 - Math.abs(position)
             page.scaleY = 0.85f + r + 0.14f
         }
         viewPager2.setPageTransformer(transfomer)
@@ -66,9 +66,9 @@ class MainActivity : AppCompatActivity() {
         handler = Handler(Looper.myLooper()!!)
         imageList = ArrayList()
         imageList.add(R.drawable.background)
-        imageList.add(R.drawable.banner2)
-        imageList.add(R.drawable.background1)
-        imageList.add(R.drawable.designer)
+        imageList.add(R.drawable.shoes1)
+        imageList.add(R.drawable.shoes2)
+        imageList.add(R.drawable.adidas_campus)
         adapter = SliderAdapter(imageList, viewPager2)
         viewPager2.adapter = adapter
         viewPager2.offscreenPageLimit = 4

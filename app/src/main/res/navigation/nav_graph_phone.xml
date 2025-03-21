@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.andiezstore.fragments.SplashFragment"
+        android:name="com.example.andiezstore.ui.fragments.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -31,4 +31,13 @@
         android:name="com.example.andiezstore.fragments.OtpFragment"
         android:label="fragment_otp"
         tools:layout="@layout/fragment_otp" />
+    <fragment
+        android:id="@+id/registedFragment"
+        android:name="com.example.andiezstore.user.fragments.RegistedFragment"
+        android:label="fragment_registed"
+        tools:layout="@layout/fragment_registed" >
+        <action
+            android:id="@+id/action_registedFragment_to_phoneFragment"
+            app:destination="@id/phoneFragment" />
+    </fragment>
 </navigation>

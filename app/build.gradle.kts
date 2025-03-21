@@ -1,4 +1,5 @@
 plugins {
+    id("kotlin-kapt")
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
@@ -68,5 +69,20 @@ dependencies {
     //auth
     implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
     implementation("com.google.firebase:firebase-auth")
-
+    //Live Data
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    //Room Database
+    val room_version = "2.2.5"
+    kapt("androidx.room:room-compiler:2.5.2")
+    implementation("androidx.room:room-runtime:2.6.1")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
+    // For Kotlin use kapt instead of annotationProcessor
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation ("androidx.room:room-ktx:$room_version")
+    testImplementation ("androidx.room:room-testing:$room_version")
+    implementation ("androidx.room:room-rxjava2:$room_version")
+    //retrofit && okhttp
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
 }

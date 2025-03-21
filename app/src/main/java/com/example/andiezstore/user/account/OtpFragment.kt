@@ -1,4 +1,4 @@
-package com.example.andiezstore.fragments
+package com.example.andiezstore.user.account
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,11 +11,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.andiezstore.MainActivity
+import com.example.andiezstore.ui.MainActivity
 import com.example.andiezstore.R
 import com.example.andiezstore.databinding.FragmentOtpBinding
+import com.example.andiezstore.user.viewmodel.OtpViewModel
 import com.example.andiezstore.utils.Util
-import com.example.andiezstore.viewmodel.OtpViewModel
 import kotlinx.coroutines.launch
 
 

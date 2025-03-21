@@ -1,4 +1,4 @@
-package com.example.andiezstore.viewmodel
+package com.example.andiezstore.user.viewmodel
 
 import android.app.Activity
 import android.util.Log
@@ -14,7 +14,7 @@ import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.concurrent.TimeUnit
 
-class OtpViewModel:ViewModel() {
+class OtpViewModel: ViewModel() {
     val TAG="loggg"
     private val _verificationId= MutableStateFlow<String?>(null)
     private val _isOtpSend= MutableStateFlow(false)

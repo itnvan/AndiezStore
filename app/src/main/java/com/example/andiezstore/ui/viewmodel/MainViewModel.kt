@@ -1,18 +1,16 @@
-package com.example.andiezstore.viewmodel
+package com.example.andiezstore.ui.viewmodel
 
-import android.transition.Slide
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.andiezstore.model.SliderModel
-import com.google.firebase.Firebase
+import com.example.andiezstore.ui.model.SliderModel
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class MainViewModel :ViewModel(){
+class MainViewModel : ViewModel(){
     private val firebaseDatabase=FirebaseDatabase.getInstance()
     private val banner=MutableLiveData<List<SliderModel>>()
     val banners:LiveData<List<SliderModel>> = banner

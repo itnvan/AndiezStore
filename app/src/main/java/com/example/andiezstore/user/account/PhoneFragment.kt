@@ -1,4 +1,4 @@
-package com.example.andiezstore.fragments
+package com.example.andiezstore.user.account
 
 import android.content.Intent
 import android.os.Bundle
@@ -15,10 +15,11 @@ import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
 import com.example.andiezstore.R
 import com.example.andiezstore.databinding.FragmentPhoneBinding
+import com.example.andiezstore.user.fragments.RegistedFragment
 
 class PhoneFragment : Fragment() {
     private lateinit var binding: FragmentPhoneBinding
-    private lateinit var tvRegisted:TextView
+    private lateinit var tvRegisted: TextView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,8 +28,8 @@ class PhoneFragment : Fragment() {
         setControler()
         setColorButton()
         checkToLogin()
-        tvRegisted.setOnClickListener{
-            val intent=Intent(activity,RegisterFragment::class.java)
+        tvRegisted.setOnClickListener {
+            val intent = Intent(activity, RegistedFragment::class.java)
             startActivity(intent)
         }
         return binding.root
@@ -72,9 +73,12 @@ class PhoneFragment : Fragment() {
         binding.btnNext.setOnClickListener({
             val number = binding.edtPhone.text.toString()
             if (number.length == 10) {
-                val bundle=Bundle()
-                bundle.putString("phoneNumber",number)
-                findNavController().navigate(R.id.action_action_phoneFragment_to_action_otpFragment,bundle)
+                val bundle = Bundle()
+                bundle.putString("phoneNumber", number)
+                findNavController().navigate(
+                    R.id.action_action_phoneFragment_to_action_otpFragment,
+                    bundle
+                )
             } else {
                 Toast.makeText(requireContext(), "Wrong number", Toast.LENGTH_SHORT).show()
             }

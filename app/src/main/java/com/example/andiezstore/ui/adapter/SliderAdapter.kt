@@ -1,20 +1,12 @@
-package com.example.andiezstore.adapter
+package com.example.andiezstore.ui.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterInside
-import com.bumptech.glide.request.RequestOptions
 import com.example.andiezstore.R
-import com.example.andiezstore.databinding.SliderItemContainerBinding
-import com.example.andiezstore.model.SliderModel
 
 class SliderAdapter(private val imageList: ArrayList<Int>, private val viewPager2: ViewPager2):
     RecyclerView.Adapter<SliderAdapter.SliderViewHolder>() {

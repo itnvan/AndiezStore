@@ -1,4 +1,4 @@
-package com.example.andiezstore.fragments
+package com.example.andiezstore.ui.fragments
 
 import android.os.Bundle
 import android.os.Handler
