@@ -18,17 +18,23 @@
     </fragment>
     <fragment
         android:id="@+id/phoneFragment"
-        android:name="com.example.andiezstore.fragments.PhoneFragment"
+        android:name="com.example.andiezstore.user.fragments.PhoneFragment"
         android:label="fragment_phone"
         tools:layout="@layout/fragment_phone" >
         <action
             android:id="@+id/action_action_phoneFragment_to_action_otpFragment"
             app:destination="@id/otpFragment"
             app:popUpTo="@id/phoneFragment" />
+        <action
+            android:id="@+id/action_phoneFragment_self"
+            app:destination="@id/phoneFragment" />
+        <action
+            android:id="@+id/action_phoneFragment_to_registedFragment2"
+            app:destination="@id/registedFragment" />
     </fragment>
     <fragment
         android:id="@+id/otpFragment"
-        android:name="com.example.andiezstore.fragments.OtpFragment"
+        android:name="com.example.andiezstore.user.fragments.OtpFragment"
         android:label="fragment_otp"
         tools:layout="@layout/fragment_otp" />
     <fragment

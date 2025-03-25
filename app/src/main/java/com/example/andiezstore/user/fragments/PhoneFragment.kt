@@ -11,14 +11,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.fragment.findNavController
 import com.example.andiezstore.R
 import com.example.andiezstore.databinding.FragmentPhoneBinding
 
 class PhoneFragment : Fragment() {
     private lateinit var binding: FragmentPhoneBinding
-    private lateinit var tvRegisted:TextView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,9 +26,8 @@ class PhoneFragment : Fragment() {
         setControler()
         setColorButton()
         checkToLogin()
-        tvRegisted.setOnClickListener{
-            val intent=Intent(activity,RegisterFragment::class.java)
-            startActivity(intent)
+        binding.tvRegisted.setOnClickListener{
+            findNavController().navigate(R.id.action_phoneFragment_to_registedFragment2)
         }
         return binding.root
     }
