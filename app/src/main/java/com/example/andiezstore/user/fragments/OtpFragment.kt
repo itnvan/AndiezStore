@@ -55,8 +55,8 @@ class OtpFragment : Fragment() {
                 lifecycleScope.launch {
                     viewModel.isLogin.collect{
                         if (it){
-                            Util.hideDialog()
-                            Toast.makeText(requireContext(),"Login",Toast.LENGTH_SHORT).show()
+                            Util.showDialog(requireContext(),"Wait a second")
+                            Toast.makeText(requireContext(),"Login Success",Toast.LENGTH_SHORT).show()
                             val intent = Intent(activity, MainActivity::class.java)
                             startActivity(intent)
 

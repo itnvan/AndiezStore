@@ -12,25 +12,21 @@
         tools:layout="@layout/fragment_splash" >
         <action
             android:id="@+id/action_splashFragment_to_phoneFragment"
-            app:destination="@id/phoneFragment"
+            app:destination="@id/loginFragment"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/phoneFragment"
-        android:name="com.example.andiezstore.user.fragments.PhoneFragment"
-        android:label="fragment_phone"
-        tools:layout="@layout/fragment_phone" >
+        android:id="@+id/loginFragment"
+        android:name="com.example.andiezstore.user.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login">
         <action
-            android:id="@+id/action_action_phoneFragment_to_action_otpFragment"
-            app:destination="@id/otpFragment"
-            app:popUpTo="@id/phoneFragment" />
-        <action
-            android:id="@+id/action_phoneFragment_self"
-            app:destination="@id/phoneFragment" />
-        <action
-            android:id="@+id/action_phoneFragment_to_registedFragment2"
+            android:id="@+id/action_loginFragment_to_registedFragment"
             app:destination="@id/registedFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_phoneFragment"
+            app:destination="@id/phoneFragment" />
     </fragment>
     <fragment
         android:id="@+id/otpFragment"
@@ -43,7 +39,16 @@
         android:label="fragment_registed"
         tools:layout="@layout/fragment_registed" >
         <action
-            android:id="@+id/action_registedFragment_to_phoneFragment"
-            app:destination="@id/phoneFragment" />
+            android:id="@+id/action_registedFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/phoneFragment"
+        android:name="com.example.andiezstore.user.fragments.PhoneFragment"
+        android:label="fragment_phone"
+        tools:layout="@layout/fragment_phone" >
+        <action
+            android:id="@+id/action_phoneFragment_to_otpFragment"
+            app:destination="@id/otpFragment" />
     </fragment>
 </navigation>

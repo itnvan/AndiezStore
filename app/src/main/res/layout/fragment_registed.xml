@@ -52,7 +52,7 @@
             android:id="@+id/edtName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:drawableStart="@drawable/ic_phone"
+            android:drawableStart="@drawable/ic_user"
             android:drawablePadding="@dimen/_7sdp"
             android:hint="@string/enter_your_name"
             android:inputType="textPersonName"
@@ -76,13 +76,13 @@
         app:layout_constraintTop_toBottomOf="@id/inputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtPhone"
+            android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:drawableStart="@drawable/ic_pass"
+            android:drawableStart="@drawable/ic_email"
             android:drawablePadding="@dimen/_7sdp"
-            android:hint="@string/enter_your_phone_number"
-            android:inputType="phone"
+            android:hint="@string/enter_your_email"
+            android:inputType="textEmailAddress"
             android:paddingStart="@dimen/_5sdp"
             tools:ignore="RtlSymmetry" />
 
@@ -98,7 +98,7 @@
         app:boxCornerRadiusBottomStart="@dimen/_10sdp"
         app:boxCornerRadiusTopEnd="@dimen/_10sdp"
         app:boxCornerRadiusTopStart="@dimen/_10sdp"
-        app:endIconMode="clear_text"
+        app:endIconMode="password_toggle"
         app:layout_constraintTop_toBottomOf="@id/inputLayout2">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -114,7 +114,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvRegisted"
+        android:id="@+id/tvLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login"
@@ -126,13 +126,13 @@
         app:layout_constraintTop_toBottomOf="@id/inputLayout3" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnRegister"
+        android:id="@+id/btnRegisted"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_25sdp"
         android:backgroundTint="@color/gray"
         android:paddingVertical="@dimen/_10sdp"
-        android:text="@string/register"
+        android:text="@string/registed"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

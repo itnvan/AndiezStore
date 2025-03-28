@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loginFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".user.fragments.PhoneFragment">
+    android:background="#ffffff"
+    tools:context="user.fragments.LoginFragment">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/logo"
@@ -23,7 +25,7 @@
         android:id="@+id/tv1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_60sdp"
+        android:layout_marginTop="@dimen/_30sdp"
         android:gravity="center"
         android:text="@string/get_start_with_shoes_app"
         android:textSize="@dimen/dimen_18sp"
@@ -42,7 +44,6 @@
         app:boxCornerRadiusTopEnd="@dimen/_10sdp"
         app:boxCornerRadiusTopStart="@dimen/_10sdp"
         app:endIconMode="clear_text"
-        app:layout_constraintBottom_toTopOf="@id/btnLogin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv1"
@@ -50,17 +51,65 @@
         >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtPhone"
+            android:id="@+id/edtEmail"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="64dp"
             android:drawableStart="@drawable/ic_phone"
             android:drawablePadding="@dimen/_7sdp"
-            android:hint="Enter Your Phone Number"
-            android:inputType="phone"
+            android:hint="@string/enter_your_email"
+            android:inputType="textEmailAddress"
             android:paddingStart="@dimen/_5sdp"
             tools:ignore="RtlSymmetry" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_25sdp"
+        app:boxCornerRadiusBottomEnd="@dimen/_10sdp"
+        app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+        app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+        app:boxCornerRadiusTopStart="@dimen/_10sdp"
+        app:endIconMode="password_toggle"
+        app:layout_constraintTop_toBottomOf="@id/inputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtPass"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/ic_pass"
+            android:drawablePadding="@dimen/_7sdp"
+            android:hint="@string/enter_your_password"
+            android:inputType="textPassword"
+            android:paddingStart="@dimen/_5sdp"
+            tools:ignore="RtlSymmetry" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login With Phone"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_15sdp"
+        app:layout_constraintEnd_toEndOf="@id/inputLayout2"
+        app:layout_constraintTop_toBottomOf="@id/inputLayout2" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvRegisted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_15sdp"
+        app:layout_constraintStart_toStartOf="@id/inputLayout2"
+        app:layout_constraintTop_toBottomOf="@id/inputLayout2" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnLogin"
@@ -70,11 +119,10 @@
         android:backgroundTint="@color/gray"
         android:paddingVertical="@dimen/_10sdp"
         android:text="@string/login"
-        app:layout_constraintTop_toBottomOf="@id/inputLayout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginBottom="@dimen/dimen_30dp"
-        />
+         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

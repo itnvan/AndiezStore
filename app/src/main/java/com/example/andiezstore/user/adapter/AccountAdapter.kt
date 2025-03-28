@@ -6,18 +6,22 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.recyclerview.widget.RecyclerView
 import com.example.andiezstore.R
+import com.example.andiezstore.user.fragments.RegistedFragment
 import com.example.andiezstore.user.model.Account
 
-open class AccountAdapter(private val listAccount: MutableList<Account>) :
+open class AccountAdapter(
+    listAccount1: RegistedFragment,
+    private val listAccount: MutableList<Account>
+) :
     RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {
     class AccountViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         val edtName: EditText = view.findViewById<EditText>(R.id.edtName)
-        val edtPhone: EditText = view.findViewById<EditText>(R.id.edtPhone)
+        val edtEmail: EditText = view.findViewById<EditText>(R.id.edtEmail)
         val edtPass: EditText = view.findViewById<EditText>(R.id.edtPhone)
 
         fun onBind(account: Account) {
             edtName.setText(account.name)
-            edtPhone.setText(account.phone)
+            edtEmail.setText(account.email)
             edtPass.setText(account.pass)
 
         }
