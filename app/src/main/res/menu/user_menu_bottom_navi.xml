@@ -7,13 +7,15 @@
             android:checked="true"
             android:id="@+id/item_home"
             android:icon="@drawable/ic_home"/>
-        <item android:title="Product"
-            android:id="@+id/item_product_user"
-            android:icon="@drawable/ic_buy"/>
+        <item android:title="Messenger"
+            android:id="@+id/item_mess_user"
+            android:icon="@drawable/ic_mess"/>
+        <item android:title="Social"
+            android:id="@+id/item_social_user"
+            android:icon="@drawable/ic_star"/>
         <item android:title="Notification"
             android:id="@+id/item_notify_user"
             android:icon="@drawable/ic_notifications"/>
-
         <item android:title="Profile"
             android:id="@+id/item_profile_user"
             android:icon="@drawable/ic_person"/>
