@@ -1,10 +1,13 @@
 package com.example.andiezstore.user.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.andiezstore.R
@@ -32,5 +35,36 @@ class PhoneFragment : Fragment() {
                 Toast.makeText(requireContext(), "Wrong number", Toast.LENGTH_SHORT).show()
             }
         })
+        binding.btnLogin.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                updateButtonColor()
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (p0?.length !! > 1) {
+                    Toast.makeText(requireContext(),"Error",Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        })
+        }
+    fun updateButtonColor() {
+        val phone = binding.edtPhone.text?.toString()
+
+        phone?.length?.let {
+            if (it < 10) {
+                binding.btnLogin.setBackgroundColor(
+                    ContextCompat.getColor(requireContext(), R.color.my_blue)
+                )
+            } else {
+                binding.btnLogin.setBackgroundColor(
+                    ContextCompat.getColor(requireContext(), R.color.gray)
+                )
+            }
+        }
     }
-}
+    }

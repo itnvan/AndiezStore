@@ -7,11 +7,12 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.andiezstore.R
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
 
-class SliderAdapter(private val imageList: ArrayList<Int>, private val viewPager2: ViewPager2):
+class SliderAdapter(private val imageList: ArrayList<Int>, private val viewPager2: ViewPager2) :
     RecyclerView.Adapter<SliderAdapter.SliderViewHolder>() {
-    class SliderViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
-        val imageView:ImageView=itemView.findViewById(R.id.imgPhoto)
+    class SliderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val imageView: ImageView = itemView.findViewById(R.id.imgPhoto)
     }
 
 
@@ -19,23 +20,17 @@ class SliderAdapter(private val imageList: ArrayList<Int>, private val viewPager
         parent: ViewGroup,
         viewType: Int
     ): SliderViewHolder {
-        val view=LayoutInflater.from(parent.context).inflate(R.layout.item_photo,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_photo, parent, false)
         return SliderViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: SliderViewHolder, position: Int) {
         holder.imageView.setImageResource(imageList[position])
-        if(position==imageList.size -1){
-            viewPager2.post(runnable)
-        }
+
     }
 
     override fun getItemCount(): Int {
         return imageList.size
-    }
-    private val runnable= Runnable {
-        imageList.addAll(imageList)
-        notifyDataSetChanged()
     }
 }
 //    private var sliderItems: List<SliderModel>,

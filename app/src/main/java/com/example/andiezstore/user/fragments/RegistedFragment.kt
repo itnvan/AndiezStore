@@ -73,7 +73,7 @@ class RegistedFragment : Fragment() {
             accountViewModel.fetchAccount()
             val list = accountViewModel.getAllAccount()
             Log.d("listAccount", "$list")
-            accountAdapter = AccountAdapter(this@RegistedFragment, listAccount)
+            accountAdapter = AccountAdapter( listAccount)
             recyclerview.adapter = accountAdapter
 
         }

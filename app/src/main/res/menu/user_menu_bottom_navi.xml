@@ -13,9 +13,6 @@
         <item android:title="Social"
             android:id="@+id/item_social_user"
             android:icon="@drawable/ic_star"/>
-        <item android:title="Notification"
-            android:id="@+id/item_notify_user"
-            android:icon="@drawable/ic_notifications"/>
         <item android:title="Profile"
             android:id="@+id/item_profile_user"
             android:icon="@drawable/ic_person"/>

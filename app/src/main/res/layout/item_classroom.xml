@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/_20sdp"
+    android:layout_marginBottom="@dimen/_5sdp"
+    app:cardElevation="@dimen/_10sdp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="360dp"
+        android:layout_height="130dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgClass"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/sflashlogo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSubjects"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:hint="UI/UX Design"
+            android:textColor="#FF6B00"
+            android:textColorHint="#FF6B00"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintStart_toEndOf="@id/imgClass"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDecription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:hint="Intro to UI/UX Design"
+            android:textColorHint="@color/black"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/tvSubjects"
+            app:layout_constraintTop_toBottomOf="@id/tvSubjects" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgStar"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:src="@drawable/ic_star"
+            app:layout_constraintStart_toStartOf="@id/tvDecription"
+            app:layout_constraintTop_toBottomOf="@id/tvDecription" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvStar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:hint="4.4"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/imgStar"
+            app:layout_constraintStart_toEndOf="@id/imgStar"
+            app:layout_constraintTop_toTopOf="@id/imgStar" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:text="|"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tvStar"
+            app:layout_constraintStart_toEndOf="@id/tvStar"
+            app:layout_constraintTop_toTopOf="@id/tvStar" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_30sdp"
+            android:hint="May 27th 2025"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tvStar"
+            app:layout_constraintStart_toEndOf="@id/tvStar"
+            app:layout_constraintTop_toTopOf="@id/tvStar" />
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="@drawable/bg_class"
+            app:layout_constraintStart_toStartOf="@id/imgStar"
+            app:layout_constraintTop_toBottomOf="@id/imgStar" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_7sdp"
+            android:hint="93/125"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="@dimen/_8sdp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/scrollView"
+            app:layout_constraintStart_toEndOf="@id/scrollView"
+            app:layout_constraintTop_toTopOf="@id/scrollView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

@@ -8,8 +8,6 @@
     <string name="cagetory">Cagetory:</string>
     <string name="save">Save</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="get_start_with_shoes_app">Get Start With Shoes App</string>
     <string name="enter_your_phone_number">Enter Your Phone Number</string>
     <string name="next">Next</string>
     <string name="verify_phone_number">Verify Phone Number</string>
@@ -29,4 +27,9 @@
     <string name="register">Register</string>
     <string name="enter_your_email">Enter Your Email</string>
     <string name="registed">Registed</string>
+    <string name="get_start_with_thien_an_education">Get start with Thien An Education</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_user_nav">UserNavActivity</string>
 </resources>

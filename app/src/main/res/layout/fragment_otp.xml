@@ -13,7 +13,7 @@
         android:layout_height="300dp"
         android:layout_marginStart="@dimen/_40sdp"
         android:layout_marginEnd="@dimen/_40sdp"
-        android:src="@drawable/logo1"
+        android:src="@drawable/logothienan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

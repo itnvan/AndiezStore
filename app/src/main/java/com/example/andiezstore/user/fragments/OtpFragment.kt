@@ -1,6 +1,5 @@
 package com.example.andiezstore.user.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.andiezstore.ui.MainActivity
+import androidx.navigation.fragment.findNavController
 import com.example.andiezstore.R
 import com.example.andiezstore.databinding.FragmentOtpBinding
 import com.example.andiezstore.user.viewmodel.OtpViewModel
@@ -57,8 +56,7 @@ class OtpFragment : Fragment() {
                         if (it){
                             Util.showDialog(requireContext(),"Wait a second")
                             Toast.makeText(requireContext(),"Login Success",Toast.LENGTH_SHORT).show()
-                            val intent = Intent(activity, MainActivity::class.java)
-                            startActivity(intent)
+                            findNavController().navigate(R.id.action_otpFragment_to_mainActivity)
 
                         }
                     }

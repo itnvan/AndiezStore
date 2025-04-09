@@ -10,7 +10,6 @@ import com.example.andiezstore.user.fragments.RegistedFragment
 import com.example.andiezstore.user.model.Account
 
 open class AccountAdapter(
-    listAccount1: RegistedFragment,
     private val listAccount: MutableList<Account>
 ) :
     RecyclerView.Adapter<AccountAdapter.AccountViewHolder>() {

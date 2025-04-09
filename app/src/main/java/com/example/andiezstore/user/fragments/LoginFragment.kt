@@ -1,10 +1,8 @@
 package com.example.andiezstore.user.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,8 +14,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.andiezstore.R
 import com.example.andiezstore.databinding.FragmentLoginBinding
-import com.example.andiezstore.databinding.FragmentPhoneBinding
-import com.example.andiezstore.ui.MainActivity
 import com.example.andiezstore.utils.Util
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
@@ -83,8 +79,7 @@ class LoginFragment : Fragment() {
                     withContext(Dispatchers.Main) {
                         Util.hideDialog()
                         Toast.makeText(requireContext(), "Login Success", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(activity, MainActivity::class.java)
-                        startActivity(intent)
+                        findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
                     }
                 } catch (e: Exception) {
                     withContext(Dispatchers.Main) {
