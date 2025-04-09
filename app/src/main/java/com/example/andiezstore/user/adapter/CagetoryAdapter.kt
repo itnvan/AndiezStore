@@ -3,11 +3,8 @@ package com.example.andiezstore.user.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemClickListener
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.andiezstore.R
 import com.example.andiezstore.ui.model.CagetoryModel
