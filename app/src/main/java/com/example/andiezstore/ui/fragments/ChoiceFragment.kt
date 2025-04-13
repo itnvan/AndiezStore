@@ -34,10 +34,10 @@ class ChoiceFragment : Fragment() {
             }
         }
 
-        binding.imgStudent.setOnClickListener {
-            if (binding.imgStudent.isClickable) {
+        binding.imgTeacher.setOnClickListener {
+            if (binding.imgTeacher.isClickable) {
                 Util.showDialog(requireContext(), "Wait a second")
-                binding.imgStudent.isClickable = false // Ngăn click nhiều lần trong khi chờ
+                binding.imgTeacher.isClickable = false // Ngăn click nhiều lần trong khi chờ
 
                 lifecycleScope.launch {
                     delay(2000L) // Chờ 3 giây (3000 milliseconds)

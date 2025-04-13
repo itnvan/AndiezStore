@@ -36,5 +36,4 @@
     <string name="hello">Hello,</string>
     <string name="admin">Admin</string>
     <string name="teacher">Teacher</string>
-    <string name="student">Student</string>
 </resources>
