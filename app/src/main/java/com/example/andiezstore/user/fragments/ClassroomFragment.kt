@@ -24,7 +24,7 @@ class ClassroomFragment : Fragment() {
                 subject = "Kotlin Course",
                 subjectDecrip = "Kotlin with Firebase Course",
                 starCount = "4.9",
-                time = "26 April 2025",
+                time = "26 April 2  025",
                 quantity = "91/125",
                 imgClass = R.drawable.sflashlogo
             ),

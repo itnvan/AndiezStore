@@ -20,45 +20,44 @@ class PhoneFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding= FragmentPhoneBinding.inflate(layoutInflater)
+        binding = FragmentPhoneBinding.inflate(layoutInflater)
         setControler()
         return binding.root
     }
+
     private fun setControler() {
-        binding.btnLogin.setOnClickListener({
+        binding.btnLogin.setOnClickListener {
             val number = binding.edtPhone.text.toString()
             if (number.length == 10) {
-                val bundle=Bundle()
-                bundle.putString("phoneNumber",number)
-                findNavController().navigate(R.id.action_phoneFragment_to_otpFragment,bundle)
+                val bundle = Bundle()
+                bundle.putString("phoneNumber", number)
+                findNavController().navigate(R.id.action_phoneFragment_to_otpFragment, bundle)
             } else {
                 Toast.makeText(requireContext(), "Wrong number", Toast.LENGTH_SHORT).show()
             }
-        })
-        binding.btnLogin.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        }
 
-            }
+        binding.edtPhone.addTextChangedListener(object : TextWatcher { // Theo dõi edtPhone
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 updateButtonColor()
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                if (p0?.length !! > 1) {
-                    Toast.makeText(requireContext(),"Error",Toast.LENGTH_SHORT).show()
+                if (p0?.length!! > 1) {
                 }
             }
-
         })
-        }
+    }
+
     fun updateButtonColor() {
         val phone = binding.edtPhone.text?.toString()
 
         phone?.length?.let {
-            if (it < 10) {
+            if (it == 10) {
                 binding.btnLogin.setBackgroundColor(
-                    ContextCompat.getColor(requireContext(), R.color.my_blue)
+                    ContextCompat.getColor(requireContext(), R.color.white_blue)
                 )
             } else {
                 binding.btnLogin.setBackgroundColor(
@@ -67,4 +66,4 @@ class PhoneFragment : Fragment() {
             }
         }
     }
-    }
+}

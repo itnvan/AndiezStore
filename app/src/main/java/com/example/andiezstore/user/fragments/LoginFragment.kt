@@ -12,10 +12,14 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.room.Database
 import com.example.andiezstore.R
 import com.example.andiezstore.databinding.FragmentLoginBinding
 import com.example.andiezstore.utils.Util
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -23,8 +27,8 @@ import kotlinx.coroutines.withContext
 import kotlin.toString
 
 class LoginFragment : Fragment() {
-    private lateinit var auth: FirebaseAuth
     private lateinit var binding: FragmentLoginBinding
+    private lateinit var database: DatabaseReference
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -79,7 +83,7 @@ class LoginFragment : Fragment() {
                     withContext(Dispatchers.Main) {
                         Util.hideDialog()
                         Toast.makeText(requireContext(), "Login Success", Toast.LENGTH_SHORT).show()
-                        findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
+                        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                     }
                 } catch (e: Exception) {
                     withContext(Dispatchers.Main) {
@@ -94,6 +98,7 @@ class LoginFragment : Fragment() {
             }
         }
     }
+
 
 
     private fun setColorButton() {
@@ -124,7 +129,7 @@ class LoginFragment : Fragment() {
 
         if (isValidEmail(email) && isValidPassword(password)) {
             binding.btnLogin.setBackgroundColor(
-                ContextCompat.getColor(requireContext(), R.color.my_blue)
+                ContextCompat.getColor(requireContext(), R.color.white_blue)
             )
         } else {
             binding.btnLogin.setBackgroundColor(

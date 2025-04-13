@@ -1,13 +1,14 @@
 package com.example.andiezstore.user.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -17,6 +18,13 @@ import com.example.andiezstore.databinding.FragmentHomeBinding
 import com.example.andiezstore.ui.adapter.SliderAdapter
 import com.example.andiezstore.ui.model.CagetoryModel
 import com.example.andiezstore.user.adapter.CagetoryAdapter
+import androidx.navigation.findNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class HomeFragment : Fragment() {
     private lateinit var viewPager2: ViewPager2
@@ -25,6 +33,8 @@ class HomeFragment : Fragment() {
     private lateinit var silderAdapter: SliderAdapter
     private lateinit var cagetoryAdapter: CagetoryAdapter
     private lateinit var binding: FragmentHomeBinding
+    private var database: DatabaseReference=FirebaseDatabase.getInstance().getReference("Users")
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,8 +42,10 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         viewPager2 = binding.viewPager2 // Khởi tạo viewPager2 bằng View Binding
+        auth = FirebaseAuth.getInstance()
         init()
         setUpTransformer()
+        getCurrentUserName()
         val categoryList = mutableListOf(
             CagetoryModel(name = "Subject", img = R.drawable.view2),
             CagetoryModel(name = "Classroom", img = R.drawable.view3),
@@ -51,16 +63,46 @@ class HomeFragment : Fragment() {
         })
 
         cagetoryAdapter.setOnItemClickListener(object : CagetoryAdapter.OnItemClickListener {
-            override fun onItemClick(category: CagetoryModel) {
+            override fun onItemClick(category: CagetoryModel, itemView: View) { // Sử dụng itemView
+                val navController = itemView.findNavController() // Tìm NavController từ itemView
                 when (category.name) {
-                    "Subject" -> findNavController(binding.root).navigate(R.id.action_homeFragment_to_subjectFragment)
-                    "Classroom" -> findNavController(binding.root).navigate(R.id.action_homeFragment_to_classroomFragment)
-                    "Information" -> findNavController(binding.root).navigate(R.id.action_homeFragment_to_informationFragment)
+                    "Subject" -> navController.navigate(R.id.action_homeFragment_to_subjectFragment)
+                    "Classroom" -> navController.navigate(R.id.action_homeFragment_to_classroomFragment)
+                    "Information" -> navController.navigate(R.id.action_homeFragment_to_informationFragment)
                 }
             }
         })
-
         return binding.root
+    }
+    @SuppressLint("SetTextI18n")
+    private fun getCurrentUserName() {
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            val uid = currentUser.uid
+            getUserName(uid)
+        } else {
+            // Người dùng chưa đăng nhập, xử lý tương ứng (ví dụ: ẩn tvUser, hiển thị thông báo)
+            binding.tvUser.text = "Not logged in"
+        }
+    }
+    private fun getUserName(uid: String) {
+        database.child(uid).child("name").addListenerForSingleValueEvent(object : ValueEventListener {
+            @SuppressLint("SetTextI18n")
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val userName = snapshot.getValue(String::class.java)
+                    binding.tvUser.text = userName
+                } else {
+                    binding.tvUser.text = "User name not found"
+                }
+            }
+
+            @SuppressLint("SetTextI18n")
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Failed to read user name.", error.toException())
+                binding.tvUser.text = "Error loading user name"
+            }
+        })
     }
 
     override fun onPause() {
