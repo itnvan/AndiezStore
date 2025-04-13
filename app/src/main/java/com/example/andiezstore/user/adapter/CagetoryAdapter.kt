@@ -15,7 +15,7 @@ class CagetoryAdapter(val listCagetory: MutableList<CagetoryModel>) :
     private var itemClickListener: OnItemClickListener? = null
 
     interface OnItemClickListener {
-        fun onItemClick(category: CagetoryModel)
+        fun onItemClick(category: CagetoryModel, view: View) // Thêm tham số view
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
@@ -31,7 +31,7 @@ class CagetoryAdapter(val listCagetory: MutableList<CagetoryModel>) :
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val clickedCategory = listCagetory[position]
-                    itemClickListener?.onItemClick(clickedCategory)
+                    itemClickListener?.onItemClick(clickedCategory, itemView) // Truyền itemView
                 }
             }
         }
@@ -53,4 +53,3 @@ class CagetoryAdapter(val listCagetory: MutableList<CagetoryModel>) :
         return listCagetory.size
     }
 }
-

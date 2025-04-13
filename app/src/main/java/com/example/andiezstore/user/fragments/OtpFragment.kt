@@ -56,7 +56,7 @@ class OtpFragment : Fragment() {
                         if (it){
                             Util.showDialog(requireContext(),"Wait a second")
                             Toast.makeText(requireContext(),"Login Success",Toast.LENGTH_SHORT).show()
-                            findNavController().navigate(R.id.action_otpFragment_to_mainActivity)
+                            findNavController().navigate(R.id.action_otpFragment_to_homeFragment)
 
                         }
                     }

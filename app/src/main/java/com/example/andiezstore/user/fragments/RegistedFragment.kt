@@ -1,7 +1,6 @@
 package com.example.andiezstore.user.fragments
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -20,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.andiezstore.R
 import com.example.andiezstore.databinding.FragmentRegistedBinding
 import com.example.andiezstore.ui.DatabaseRoom
-import com.example.andiezstore.ui.MainActivity
 import com.example.andiezstore.user.account.AccountResponsitory
 import com.example.andiezstore.user.adapter.AccountAdapter
 import com.example.andiezstore.user.model.Account
@@ -28,6 +26,7 @@ import com.example.andiezstore.user.viewmodel.AccountViewModel
 import com.example.andiezstore.utils.Util
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -39,7 +38,7 @@ class RegistedFragment : Fragment() {
     private lateinit var binding: FragmentRegistedBinding
     private lateinit var accountAdapter: AccountAdapter
     private lateinit var accountViewModel: AccountViewModel
-    private lateinit var database: DatabaseReference
+    private var database: DatabaseReference=FirebaseDatabase.getInstance().getReference("Users")
     private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
@@ -47,11 +46,11 @@ class RegistedFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRegistedBinding.inflate(layoutInflater)
+        auth = FirebaseAuth.getInstance()
         addAccount()
         checkAccount()
         data()
         setColorButton()
-//        isValidPassword(password = "")
         binding.tvLogin.setOnClickListener {
             findNavController().navigate(R.id.action_registedFragment_to_loginFragment)
         }
@@ -110,24 +109,39 @@ class RegistedFragment : Fragment() {
                 }
                 Util.hideDialog() // Hide loading dialog when errors are present.
             } else {
-                // Tất cả điều kiện đều đúng, gọi creatUser() và chuyển sang màn hình đăng nhập
                 creatUser()
             }
         }
     }
+    private suspend fun addNameUser(uid: String, name:String) {
+        try {
+            database.child(uid.toString()).child("name").setValue(name).await()
+            Log.d("RealtimeDB", "User name '$name' saved for UID: $uid")
+        } catch (e: Exception) {
+            Log.e("RealtimeDB", "Error saving user name for UID: $uid: ${e.message}", e)
+            withContext(Dispatchers.Main) {
+                Toast.makeText(requireContext(), "Failed to save user name", Toast.LENGTH_SHORT).show()
+            }
+        }
 
-    fun creatUser() {
+    }
+
+    private fun creatUser() {
         val email = binding.edtEmail.text.toString()
         val password = binding.edtPass.text.toString()
+        val name = binding.edtName.text.toString()
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
                 try {
-                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                   val authResult = auth.createUserWithEmailAndPassword(email, password)
                         .await()
+                    val uid=authResult.user?.uid ?: ""
+                    addNameUser(uid,name)
                     withContext(Dispatchers.Main) {
                         Util.hideDialog()
                         Toast.makeText(requireContext(), "Registed Success", Toast.LENGTH_SHORT).show()
                         findNavController().navigate(R.id.action_registedFragment_to_loginFragment)
+
                     }
                 } catch (e: Exception) {
                     withContext(Dispatchers.Main) {
