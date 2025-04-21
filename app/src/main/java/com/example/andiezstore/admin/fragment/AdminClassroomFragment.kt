@@ -84,4 +84,18 @@ class AdminClassroomFragment : Fragment() {
             binding.btnMain.startAnimation(rotateClose)
         }
     }
+    private fun setClickable(clicked: Boolean){
+        if (!clicked) {
+            binding.btnMain.isClickable=false
+            binding.btnAdd.isClickable=false
+            binding.btnDelete.isClickable=false
+            binding.btnUpdate.isClickable=false
+        }
+        else{
+            binding.btnMain.isClickable=true
+            binding.btnAdd.isClickable=true
+            binding.btnDelete.isClickable=true
+            binding.btnUpdate.isClickable=true
+        }
+    }
 }
