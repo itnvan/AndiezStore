@@ -56,6 +56,7 @@ class AdminClassroomFragment : Fragment() {
     private fun onAddButtonClicked() {
         setVisibility(clicked)
         setAnimation(clicked)
+        setVisibility(clicked)
         clicked = !clicked
     }
 
