@@ -123,7 +123,29 @@
         android:label="fragment_admin_login"
         tools:layout="@layout/fragment_admin_login" >
         <action
-            android:id="@+id/action_adminLoginFragment_to_mainActivity"
-            app:destination="@id/mainActivity" />
+            android:id="@+id/action_adminLoginFragment_to_adminHomeFragment"
+            app:destination="@id/adminHomeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adminClassroomFragment"
+        android:name="com.example.andiezstore.admin.fragment.AdminClassroomFragment"
+        android:label="fragment_admin_classroom"
+        tools:layout="@layout/fragment_admin_classroom" />
+    <fragment
+        android:id="@+id/adminSubjectFragment"
+        android:name="com.example.andiezstore.admin.fragment.AdminSubjectFragment"
+        android:label="fragment_admin_subject"
+        tools:layout="@layout/fragment_admin_subject" />
+    <fragment
+        android:id="@+id/adminHomeFragment"
+        android:name="com.example.andiezstore.admin.fragment.AdminHomeFragment"
+        android:label="fragment_admin_home"
+        tools:layout="@layout/fragment_admin_home" >
+        <action
+            android:id="@+id/action_adminHomeFragment_to_adminSubjectFragment"
+            app:destination="@id/adminSubjectFragment" />
+        <action
+            android:id="@+id/action_adminHomeFragment_to_adminClassroomFragment"
+            app:destination="@id/adminClassroomFragment" />
     </fragment>
 </navigation>

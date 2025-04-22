@@ -1,60 +1,144 @@
 package com.example.andiezstore.admin.fragment
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.andiezstore.R
+import com.example.andiezstore.databinding.FragmentLoginBinding
+import com.example.andiezstore.utils.Util
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [AdminLoginFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AdminLoginFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    class LoginFragment : Fragment() {
+        private lateinit var binding: FragmentLoginBinding
+        override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View {
+            binding = FragmentLoginBinding.inflate(layoutInflater)
+            setColorButton()
+            checkToLogin()
+            binding.tvRegisted.setOnClickListener {
+//               findNavController().navigate(R.id.action_adminLoginFragment2_to_registedFragment2)
+            }
+            return binding.root
         }
-    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_login, container, false)
-    }
+        private fun checkToLogin() {
+            binding.btnLogin.setOnClickListener {
+                Util.showDialog(requireContext(), "Wait A Second")
+                val email = binding.edtEmail.text.toString()
+                val password = binding.edtPass.text.toString()
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AdminLoginFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AdminLoginFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                if (email.isEmpty() || !isValidEmail(email) || password.isEmpty() || !isValidPassword(password)) {
+                    Util.hideDialog()
+                    if (email.isEmpty() || !isValidEmail(email)) {
+                        binding.edtEmail.error = "Invalid email"
+                        binding.edtEmail.requestFocus()
+                    } else {
+                        binding.edtEmail.error = null
+                    }
+                    if (password.isEmpty() || !isValidPassword(password)) {
+                        binding.edtPass.error = "Invalid password"
+                        binding.edtPass.requestFocus()
+                    } else {
+                        binding.edtPass.error = null
+                    }
+                } else {
+                    // Email và mật khẩu hợp lệ, gọi loginUser()
+                    loginUser()
                 }
             }
-    }
-}
+        }
+
+        fun loginUser() {
+            val email = binding.edtEmail.text.toString()
+            val password = binding.edtPass.text.toString()
+            lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+                    try {
+                        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).await()
+                        withContext(Dispatchers.Main) {
+                            Util.hideDialog()
+                            Toast.makeText(requireContext(), "Login Success", Toast.LENGTH_SHORT).show()
+                            findNavController().navigate(R.id.action_adminLoginFragment_to_adminHomeFragment)
+                        }
+                    } catch (e: Exception) {
+                        withContext(Dispatchers.Main) {
+                            Util.hideDialog()
+                            Toast.makeText(
+                                requireContext(),
+                                "Login Failed: ${e.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        private fun setColorButton() {
+            binding.edtEmail.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    updateButtonColor() // Gọi hàm updateButtonColor để kiểm tra tất cả điều kiện
+                }
+
+                override fun afterTextChanged(p0: Editable?) {}
+            })
+
+            binding.edtPass.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    updateButtonColor() // Gọi hàm updateButtonColor để kiểm tra tất cả điều kiện
+                }
+
+                override fun afterTextChanged(p0: Editable?) {}
+            })
+        }
+
+        fun updateButtonColor() {
+            val email = binding.edtEmail.text?.toString()
+            val password = binding.edtPass.text?.toString()
+
+            if (isValidEmail(email) && isValidPassword(password)) {
+                binding.btnLogin.setBackgroundColor(
+                    ContextCompat.getColor(requireContext(), R.color.my_blue)
+                )
+            } else {
+                binding.btnLogin.setBackgroundColor(
+                    ContextCompat.getColor(requireContext(), R.color.gray)
+                )
+            }
+        }
+
+        fun isValidEmail(email: String?): Boolean {
+            // Logic kiểm tra email (ví dụ: sử dụng Regex)
+            return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        }
+
+        fun isValidPassword(password: String?): Boolean {
+            // Logic kiểm tra mật khẩu (ví dụ: sử dụng Regex)
+            val passwordPattern = "^[A-Z].*(?=.*[0-9])(?=.*[^a-zA-Z0-9]).*$"
+            val pattern = Regex(passwordPattern)
+            return password?.let { pattern.matches(it) } ?: false
+        }
+}}
