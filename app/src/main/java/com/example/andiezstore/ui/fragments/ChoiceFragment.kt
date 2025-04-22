@@ -28,7 +28,7 @@ class ChoiceFragment : Fragment() {
                 lifecycleScope.launch {
                     delay(2000L) // Chờ 3 giây (3000 milliseconds)
                     Util.hideDialog() // Ẩn dialog sau 3 giây
-                    findNavController().navigate(com.example.andiezstore.R.id.action_choiceFragment_to_adminLoginFragment)
+                    findNavController().navigate(com.example.andiezstore.R.id.action_choiceFragment_to_adminHomeFragment)
                     binding.imgAdmin.isClickable = true // Cho phép click lại sau khi chuyển màn
                 }
             }

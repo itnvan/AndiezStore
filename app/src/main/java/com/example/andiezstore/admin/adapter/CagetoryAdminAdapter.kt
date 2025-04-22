@@ -1,4 +1,4 @@
-package com.example.andiezstore.user.adapter
+package com.example.andiezstore.admin.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.andiezstore.R
 import com.example.andiezstore.ui.model.CagetoryModel
 
-class CagetoryAdapter(val listCagetory: MutableList<CagetoryModel>) :
-    RecyclerView.Adapter<CagetoryAdapter.CagetoryViewHolder>() {
+class CagetoryAdminAdapter(val listCagetory: MutableList<CagetoryModel>) :
+    RecyclerView.Adapter<CagetoryAdminAdapter.CagetoryAdminViewHolder>() {
 
     private var itemClickListener: OnItemClickListener? = null
+
     interface OnItemClickListener {
         fun onItemClick(category: CagetoryModel, view: View) // Thêm tham số view
     }
@@ -21,7 +22,7 @@ class CagetoryAdapter(val listCagetory: MutableList<CagetoryModel>) :
         itemClickListener = listener
     }
 
-    inner class CagetoryViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    inner class CagetoryAdminViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val cagetoryName: TextView = view.findViewById(R.id.tvCagetoryez)
         val cagetoryImg: ImageView = view.findViewById(R.id.imgCagetoryez)
 
@@ -36,13 +37,16 @@ class CagetoryAdapter(val listCagetory: MutableList<CagetoryModel>) :
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CagetoryViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): CagetoryAdminViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_cagetories, parent, false)
-        return CagetoryViewHolder(view)
+        return CagetoryAdminViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: CagetoryViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CagetoryAdminAdapter.CagetoryAdminViewHolder, position: Int) {
         val category = listCagetory[position]
         holder.cagetoryName.text = category.name
         holder.cagetoryImg.setImageResource(category.img)

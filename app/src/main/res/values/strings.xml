@@ -36,4 +36,15 @@
     <string name="hello">Hello,</string>
     <string name="admin">Admin</string>
     <string name="teacher">Teacher</string>
+    <string name="apply">Apply</string>
+    <string name="or">|</string>
+    <string name="intro_to_ui_ux_design">Intro to UI/UX Design</string>
+    <string name="_4_4">4.4</string>
+    <string name="ui_ux_design">UI/UX Design</string>
+    <string name="june_27th_2025">June 27th 2025</string>
+    <string name="orr">/</string>
+    <string name="_93_125">93/125</string>
+    <string name="_93">93</string>
+    <string name="_125">125</string>
+    <string name="profile">Profile</string>
 </resources>

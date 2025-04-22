@@ -55,6 +55,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="@dimen/_15sdp"
         app:layout_constraintTop_toBottomOf="@id/btnCompleted"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/item_classroom"
         android:orientation="vertical" />

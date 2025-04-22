@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/_20sdp"
     android:layout_marginBottom="@dimen/_5sdp"
+    app:cardCornerRadius="@dimen/_20sdp"
     app:cardElevation="@dimen/_10sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_10sdp"
-            android:hint="UI/UX Design"
+            android:hint="@string/ui_ux_design"
             android:textColor="#FF6B00"
             android:textColorHint="#FF6B00"
             android:textSize="@dimen/_11ssp"
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_6sdp"
-            android:hint="Intro to UI/UX Design"
+            android:hint="@string/intro_to_ui_ux_design"
             android:textColorHint="@color/black"
             android:textSize="@dimen/_13ssp"
             android:textStyle="bold"
@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_3sdp"
-            android:hint="4.4"
+            android:hint="@string/_4_4"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:textSize="@dimen/_12ssp"
@@ -73,10 +73,10 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:text="|"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:text="@string/or"
             android:textColor="@color/black"
-            android:textSize="@dimen/_15sdp"
+            android:textSize="@dimen/_15ssp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/tvStar"
             app:layout_constraintStart_toEndOf="@id/tvStar"
@@ -86,8 +86,8 @@
             android:id="@+id/tvTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_30sdp"
-            android:hint="May 27th 2025"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:hint="@string/june_27th_2025"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:textStyle="bold"
@@ -105,18 +105,45 @@
             app:layout_constraintTop_toBottomOf="@id/imgStar" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvQuantity"
+            android:id="@+id/tvQuantity1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_7sdp"
-            android:hint="93/125"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:hint="@string/_93"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
-            android:textSize="@dimen/_8sdp"
+            android:textSize="@dimen/_8ssp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/scrollView"
-            app:layout_constraintStart_toEndOf="@id/scrollView"
-            app:layout_constraintTop_toTopOf="@id/scrollView" />
+            app:layout_constraintBottom_toBottomOf="@id/tvTime"
+            app:layout_constraintStart_toEndOf="@id/tvTime"
+            app:layout_constraintTop_toTopOf="@id/tvTime" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvQuantity2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:hint="@string/_125"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="@dimen/_8ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tvQuantity1"
+            app:layout_constraintStart_toEndOf="@id/tvQuantity1"
+            app:layout_constraintTop_toTopOf="@id/tvQuantity1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/orr"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="@dimen/_10sdp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tvQuantity1"
+            app:layout_constraintEnd_toStartOf="@id/tvQuantity2"
+            app:layout_constraintStart_toEndOf="@id/tvQuantity1"
+            app:layout_constraintTop_toTopOf="@id/tvQuantity1" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

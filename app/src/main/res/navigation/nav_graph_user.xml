@@ -116,6 +116,9 @@
         <action
             android:id="@+id/action_choiceFragment_to_adminLoginFragment"
             app:destination="@id/adminLoginFragment" />
+        <action
+            android:id="@+id/action_choiceFragment_to_adminHomeFragment"
+            app:destination="@id/adminHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/adminLoginFragment"
@@ -125,6 +128,9 @@
         <action
             android:id="@+id/action_adminLoginFragment_to_adminHomeFragment"
             app:destination="@id/adminHomeFragment" />
+        <action
+            android:id="@+id/action_adminLoginFragment_to_choiceFragment"
+            app:destination="@id/choiceFragment" />
     </fragment>
     <fragment
         android:id="@+id/adminClassroomFragment"

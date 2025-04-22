@@ -5,55 +5,82 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
 import com.example.andiezstore.R
 import com.example.andiezstore.databinding.FragmentSubjectBinding
 import com.example.andiezstore.user.adapter.SubjectAdapter
 import com.example.andiezstore.user.model.Subject
 
+
 class SubjectFragment : Fragment() {
     private lateinit var binding: FragmentSubjectBinding
     private lateinit var subjectAdapter: SubjectAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
-        binding= FragmentSubjectBinding.inflate(layoutInflater)
-        val listSubject=mutableListOf(
-            Subject(subject = "Kotlin Course",
-                decription = "Kotlin with Firebase Course",
+        binding = FragmentSubjectBinding.inflate(layoutInflater)
+        val listSubject = mutableListOf(
+            Subject(
+                subject = "Kotlin Course",
+                description = "Kotlin with Firebase Course",
                 timeStart = "26 January 2025",
-                timeEnd = "26 April 2025",
-                imgSubject = R.drawable.sflashlogo),
-            Subject(subject = "Java Course",
-                decription = "Java with Firebase Course",
+                tvStar = "4.5",
+                quantityS =100,
+                quantityE = 100,
+                imgSubject = R.drawable.sflashlogo
+            ),
+            Subject(
+                subject = "Java Course",
+                description = "Java with Firebase Course",
                 timeStart = "26 January 2025",
-                timeEnd = "26 April 2025",
-                imgSubject = R.drawable.sflashlogo),
-            Subject(subject = "PHP Course",
-                decription = "Made a website with PHP and HTML",
+                tvStar = "4.9",
+                quantityS =92,
+                quantityE = 100,
+                imgSubject = R.drawable.sflashlogo
+            ),
+            Subject(
+                subject = "PHP Course",
+                description = "Made a website with PHP and HTML",
                 timeStart = "10 May 2025",
-                timeEnd = "26 July 2025",
-                imgSubject = R.drawable.sflashlogo),
-            Subject(subject = "Spring Boot",
-                decription = "BackEnd with Spring Boot",
+                tvStar = "5.0",
+                quantityS =91,
+                quantityE = 100,
+                imgSubject = R.drawable.sflashlogo
+            ),
+            Subject(
+                subject = "Spring Boot",
+                description = "BackEnd with Spring Boot",
                 timeStart = "26 January 2025",
-                timeEnd = "26 April 2025",
-                imgSubject = R.drawable.sflashlogo),
-            Subject(subject = "Kotlin Course",
-                decription = "Kotlin with Firebase Course",
+                tvStar = "4.1",
+                quantityS =81,
+                quantityE = 100,
+                imgSubject = R.drawable.sflashlogo
+            ),
+            Subject(
+                subject = "Lavavel Course",
+                description = "Start with Lavavel BackEnd",
                 timeStart = "26 January 2025",
-                timeEnd = "26 April 2025",
-                imgSubject = R.drawable.sflashlogo),
-            Subject(subject = "Kotlin Course",
-                decription = "Kotlin with Firebase Course",
+                tvStar = "4.7",
+                quantityS =74,
+                quantityE = 100,
+                imgSubject = R.drawable.sflashlogo
+            ),
+            Subject(
+                subject = "Css Course",
+                description = "Start Css for beginner",
                 timeStart = "26 January 2025",
-                timeEnd = "26 April 2025",
-                imgSubject = R.drawable.sflashlogo),
+                tvStar = "26 April 2025",
+                quantityS =94,
+                quantityE = 100,
+                imgSubject = R.drawable.sflashlogo
+            ),
         )
-        subjectAdapter=SubjectAdapter(listSubject)
-        binding.rcvSubject.adapter=subjectAdapter
+        subjectAdapter = SubjectAdapter(
+            listSubject,
+            context = requireContext()
+        )
+        binding.rcvSubject.adapter = subjectAdapter
         return binding.root
     }
-
 }

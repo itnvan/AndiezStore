@@ -1,4 +1,4 @@
-package com.example.andiezstore.user.adapter
+package com.example.andiezstore.admin.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.andiezstore.R
 import com.example.andiezstore.user.model.Classroom
 
-class ClassAdapter(private val listClass: List<Classroom>) :
-    RecyclerView.Adapter<ClassAdapter.ClassViewHolder>() {
+class ClassroomAdminAdapter( private val listClass: List<Classroom>) :
+RecyclerView.Adapter<ClassroomAdminAdapter.ClassroomAdminViewHolder>() {
 
-    class ClassViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    class ClassroomAdminViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun onBind(classroom: Classroom) {
             subjects.text = classroom.subject
             subjectDecrips.text = classroom.description
@@ -36,13 +36,13 @@ class ClassAdapter(private val listClass: List<Classroom>) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): ClassViewHolder {
+    ): ClassroomAdminViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_classroom, parent, false)
-        return ClassViewHolder(view)
+        return ClassroomAdminViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ClassViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ClassroomAdminViewHolder, position: Int) {
         val classroom = listClass[position]
         holder.onBind(classroom)
 

@@ -1,10 +1,11 @@
 package com.example.andiezstore.user.model
 
 data class Classroom(
-    val subject: String,
-    val subjectDecrip: String,
-    val starCount: String,
-    val time: String,
-    val quantity: String,
-    val imgClass:Int
+    var subject: String? = null,
+    var description: String? = null,
+    var timeStart: String? = null,
+    var tvStar: String? = null,
+    var quantityS: Int?=null,
+    var quantityE:Int?=null,
+    var imgClasroom: Int? = null
 )
