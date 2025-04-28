@@ -21,7 +21,6 @@ class ClassAdapter(private val listClass: List<Classroom>) :
             quantityS.text = classroom.quantityS.toString()
             quantityE.text=classroom.quantityE.toString()
             classroom.imgClasroom?.let { imgClasss.setImageResource(it) }
-
         }
 
         private val subjects = view.findViewById<TextView>(R.id.tvSubjects)

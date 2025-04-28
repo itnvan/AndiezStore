@@ -3,17 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_user"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/choiceFragment">
 
-    <fragment
-        android:id="@+id/splashFragment"
-        android:name="com.example.andiezstore.ui.fragments.SplashFragment"
-        android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" >
-        <action
-            android:id="@+id/action_splashFragment_to_choiceFragment"
-            app:destination="@id/choiceFragment" />
-    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.andiezstore.user.fragments.LoginFragment"
@@ -26,9 +17,6 @@
             android:id="@+id/action_loginFragment_to_phoneFragment"
             app:destination="@id/phoneFragment" />
         <action
-            android:id="@+id/action_loginFragment_to_mainActivity"
-            app:destination="@id/mainActivity" />
-        <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
@@ -36,10 +24,7 @@
         android:id="@+id/otpFragment"
         android:name="com.example.andiezstore.user.fragments.OtpFragment"
         android:label="fragment_otp"
-        tools:layout="@layout/fragment_otp" >
-        <action
-            android:id="@+id/action_otpFragment_to_mainActivity"
-            app:destination="@id/mainActivity" />
+        tools:layout="@layout/fragment_otp">
         <action
             android:id="@+id/action_otpFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -48,7 +33,7 @@
         android:id="@+id/registedFragment"
         android:name="com.example.andiezstore.user.fragments.RegistedFragment"
         android:label="fragment_registed"
-        tools:layout="@layout/fragment_registed" >
+        tools:layout="@layout/fragment_registed">
         <action
             android:id="@+id/action_registedFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -57,7 +42,7 @@
         android:id="@+id/phoneFragment"
         android:name="com.example.andiezstore.user.fragments.PhoneFragment"
         android:label="fragment_phone"
-        tools:layout="@layout/fragment_phone" >
+        tools:layout="@layout/fragment_phone">
         <action
             android:id="@+id/action_phoneFragment_to_otpFragment"
             app:destination="@id/otpFragment" />
@@ -76,61 +61,60 @@
         <action
             android:id="@+id/action_homeFragment_to_informationFragment"
             app:destination="@id/informationFragment" />
+        <action
+            android:id="@+id/action_classroomFragment_to_subjectFragment"
+            app:destination="@id/subjectFragment" />
+        <action
+            android:id="@+id/action_classroomFragment_to_informationFragment"
+            app:destination="@id/informationFragment" />
     </fragment>
     <fragment
         android:id="@+id/subjectFragment"
         android:name="com.example.andiezstore.user.fragments.SubjectFragment"
         android:label="fragment_subject"
-        tools:layout="@layout/fragment_subject" >
+        tools:layout="@layout/fragment_subject">
         <action
-            android:id="@+id/action_subjectFragment_self"
-            app:destination="@id/subjectFragment" />
+            android:id="@+id/action_subjectFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/informationFragment"
         android:name="com.example.andiezstore.user.fragments.InformationFragment"
         android:label="fragment_information"
-        tools:layout="@layout/fragment_information" />
+        tools:layout="@layout/fragment_information">
+        <action
+            android:id="@+id/action_informationFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_classroomFragment_to_subjectFragment"
+            app:destination="@id/subjectFragment" />
+    </fragment>
     <fragment
         android:id="@+id/classroomFragment"
         android:name="com.example.andiezstore.user.fragments.ClassroomFragment"
         android:label="fragment_classroom"
-        tools:layout="@layout/fragment_classroom" >
+        tools:layout="@layout/fragment_classroom">
         <action
             android:id="@+id/action_classroomFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
-    </fragment>
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.example.andiezstore.ui.MainActivity"
-        android:label="activity_main"
-        tools:layout="@layout/activity_main" />
-    <fragment
-        android:id="@+id/choiceFragment"
-        android:name="com.example.andiezstore.ui.fragments.ChoiceFragment"
-        android:label="fragment_choice"
-        tools:layout="@layout/fragment_choice" >
         <action
-            android:id="@+id/action_choiceFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_classroomFragment_to_homeFragment2"
+            app:destination="@id/homeFragment" />
         <action
-            android:id="@+id/action_choiceFragment_to_adminLoginFragment"
-            app:destination="@id/adminLoginFragment" />
+            android:id="@+id/action_classroomFragment_to_informationFragment"
+            app:destination="@id/informationFragment" />
         <action
-            android:id="@+id/action_choiceFragment_to_adminHomeFragment"
-            app:destination="@id/adminHomeFragment" />
+            android:id="@+id/action_classroomFragment_to_subjectFragment"
+            app:destination="@id/subjectFragment" />
     </fragment>
     <fragment
         android:id="@+id/adminLoginFragment"
         android:name="com.example.andiezstore.admin.fragment.AdminLoginFragment"
         android:label="fragment_admin_login"
-        tools:layout="@layout/fragment_admin_login" >
+        tools:layout="@layout/fragment_admin_login">
         <action
             android:id="@+id/action_adminLoginFragment_to_adminHomeFragment"
             app:destination="@id/adminHomeFragment" />
-        <action
-            android:id="@+id/action_adminLoginFragment_to_choiceFragment"
-            app:destination="@id/choiceFragment" />
     </fragment>
     <fragment
         android:id="@+id/adminClassroomFragment"
@@ -146,12 +130,24 @@
         android:id="@+id/adminHomeFragment"
         android:name="com.example.andiezstore.admin.fragment.AdminHomeFragment"
         android:label="fragment_admin_home"
-        tools:layout="@layout/fragment_admin_home" >
+        tools:layout="@layout/fragment_admin_home">
         <action
             android:id="@+id/action_adminHomeFragment_to_adminSubjectFragment"
             app:destination="@id/adminSubjectFragment" />
         <action
             android:id="@+id/action_adminHomeFragment_to_adminClassroomFragment"
             app:destination="@id/adminClassroomFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/choiceFragment"
+        android:name="com.example.andiezstore.ui.fragments.ChoiceFragment"
+        android:label="fragment_choice"
+        tools:layout="@layout/fragment_choice">
+        <action
+            android:id="@+id/action_choiceFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_choiceFragment_to_adminLoginFragment"
+            app:destination="@id/adminLoginFragment" />
     </fragment>
 </navigation>

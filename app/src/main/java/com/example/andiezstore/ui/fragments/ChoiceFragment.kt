@@ -20,16 +20,16 @@ class ChoiceFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentChoiceBinding.inflate(layoutInflater)
-        binding.imgAdmin.setOnClickListener {
-            if (binding.imgAdmin.isClickable) {
+        binding.imgStudent.setOnClickListener {
+            if (binding.imgStudent.isClickable) {
                 Util.showDialog(requireContext(), "Wait a second")
-                binding.imgAdmin.isClickable = false // Ngăn click nhiều lần trong khi chờ
+                binding.imgStudent.isClickable = false // Ngăn click nhiều lần trong khi chờ
 
                 lifecycleScope.launch {
                     delay(2000L) // Chờ 3 giây (3000 milliseconds)
                     Util.hideDialog() // Ẩn dialog sau 3 giây
-                    findNavController().navigate(com.example.andiezstore.R.id.action_choiceFragment_to_adminHomeFragment)
-                    binding.imgAdmin.isClickable = true // Cho phép click lại sau khi chuyển màn
+                    findNavController().navigate(com.example.andiezstore.R.id.action_choiceFragment_to_loginFragment)
+                    binding.imgStudent.isClickable = true // Cho phép click lại sau khi chuyển màn
                 }
             }
         }
@@ -42,8 +42,8 @@ class ChoiceFragment : Fragment() {
                 lifecycleScope.launch {
                     delay(2000L) // Chờ 3 giây (3000 milliseconds)
                     Util.hideDialog() // Ẩn dialog sau 3 giây
-                    findNavController().navigate(com.example.andiezstore.R.id.action_choiceFragment_to_loginFragment)
-                    binding.imgAdmin.isClickable = true // Cho phép click lại sau khi chuyển màn
+                    findNavController().navigate(com.example.andiezstore.R.id.action_choiceFragment_to_adminLoginFragment)
+                    binding.imgTeacher.isClickable = true // Cho phép click lại sau khi chuyển màn
                 }
             }
         }

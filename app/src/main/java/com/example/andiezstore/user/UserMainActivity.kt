@@ -1,9 +1,10 @@
 package com.example.andiezstore.user
 
 import android.os.Bundle
-
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.andiezstore.R
 import com.example.andiezstore.databinding.ActivityUserMainBinding
 import com.example.andiezstore.user.fragments.HomeFragment
@@ -13,8 +14,37 @@ import com.example.andiezstore.user.fragments.SocialFragment
 
 class UserMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserMainBinding
+    private lateinit var navController: androidx.navigation.NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)}
+        setContentView(binding.root)
+        binding.bottomNavigationView.post {
+            navController = findNavController(R.id.nav_host_fragment_user)
+            binding.bottomNavigationView.setupWithNavController(navController)
+            binding.bottomNavigationView.setOnItemSelectedListener { item ->
+                when (item.itemId) {
+                    R.id.item_home -> replaceFragment(HomeFragment())
+                    R.id.item_mess_user -> replaceFragment(MessengerFragment())
+                    R.id.item_social_user -> replaceFragment(SocialFragment())
+                    R.id.item_profile_user -> replaceFragment(ProfileFragment())
+                    else -> {
+                        // Handle unrecognised item
+                    }
+                }
+                true
+            }
+        }
+    }
+
+    private fun navigateTo(destinationId: Int) {
+        navController.navigate(destinationId)
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.frameLayout, fragment)
+        fragmentTransaction.commit()
+    }
 }

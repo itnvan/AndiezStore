@@ -26,7 +26,7 @@ class SubjectFragment : Fragment() {
                 description = "Kotlin with Firebase Course",
                 timeStart = "26 January 2025",
                 tvStar = "4.5",
-                quantityS =100,
+                quantityS =null,
                 quantityE = 100,
                 imgSubject = R.drawable.sflashlogo
             ),
@@ -35,7 +35,7 @@ class SubjectFragment : Fragment() {
                 description = "Java with Firebase Course",
                 timeStart = "26 January 2025",
                 tvStar = "4.9",
-                quantityS =92,
+                quantityS =null,
                 quantityE = 100,
                 imgSubject = R.drawable.sflashlogo
             ),
@@ -44,7 +44,7 @@ class SubjectFragment : Fragment() {
                 description = "Made a website with PHP and HTML",
                 timeStart = "10 May 2025",
                 tvStar = "5.0",
-                quantityS =91,
+                quantityS =null,
                 quantityE = 100,
                 imgSubject = R.drawable.sflashlogo
             ),
@@ -53,7 +53,7 @@ class SubjectFragment : Fragment() {
                 description = "BackEnd with Spring Boot",
                 timeStart = "26 January 2025",
                 tvStar = "4.1",
-                quantityS =81,
+                quantityS =null,
                 quantityE = 100,
                 imgSubject = R.drawable.sflashlogo
             ),
@@ -62,7 +62,7 @@ class SubjectFragment : Fragment() {
                 description = "Start with Lavavel BackEnd",
                 timeStart = "26 January 2025",
                 tvStar = "4.7",
-                quantityS =74,
+                quantityS =null,
                 quantityE = 100,
                 imgSubject = R.drawable.sflashlogo
             ),
@@ -71,7 +71,7 @@ class SubjectFragment : Fragment() {
                 description = "Start Css for beginner",
                 timeStart = "26 January 2025",
                 tvStar = "26 April 2025",
-                quantityS =94,
+                quantityS =null,
                 quantityE = 100,
                 imgSubject = R.drawable.sflashlogo
             ),
