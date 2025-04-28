@@ -33,22 +33,22 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imgAdmin"
-        android:layout_width="150dp"
-        android:layout_height="160dp"
+        android:id="@+id/imgTeacher"
+        android:layout_width="170dp"
+        android:layout_height="180dp"
         android:layout_marginStart="@dimen/dimen_30dp"
-        android:layout_marginTop="@dimen/dimen_60dp"
+        android:layout_marginTop="@dimen/dimen_40dp"
         android:scaleType="fitXY"
-        android:src="@drawable/user"
+        android:src="@drawable/teacher"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv1" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imgTeacher"
-        android:layout_width="170dp"
-        android:layout_height="180dp"
-        android:layout_marginTop="@dimen/dimen_40dp"
-        android:src="@drawable/teacher"
+        android:id="@+id/imgStudent"
+        android:layout_width="160dp"
+        android:layout_height="170dp"
+        android:layout_marginTop="@dimen/dimen_50dp"
+        android:src="@drawable/student"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv1" />
 
@@ -56,24 +56,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_6sdp"
-        android:text="@string/admin"
+        android:text="@string/teacher"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="@dimen/_20ssp"
-        app:layout_constraintEnd_toEndOf="@id/imgAdmin"
-        app:layout_constraintStart_toStartOf="@id/imgAdmin"
-        app:layout_constraintTop_toBottomOf="@id/imgAdmin" />
+        app:layout_constraintEnd_toEndOf="@id/imgTeacher"
+        app:layout_constraintStart_toStartOf="@id/imgTeacher"
+        app:layout_constraintTop_toBottomOf="@id/imgTeacher" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/teacher"
+        android:text="@string/student"
         android:textColor="@color/black"
         android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
         android:layout_marginTop="@dimen/_5sdp"
-        app:layout_constraintEnd_toEndOf="@id/imgTeacher"
-        app:layout_constraintStart_toStartOf="@id/imgTeacher"
-        app:layout_constraintTop_toBottomOf="@id/imgTeacher" />
+        app:layout_constraintEnd_toEndOf="@id/imgStudent"
+        app:layout_constraintStart_toStartOf="@id/imgStudent"
+        app:layout_constraintTop_toBottomOf="@id/imgStudent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

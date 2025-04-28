@@ -18,25 +18,5 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        replaceFragment(HomeFragment())
-        binding.bottomNavigationView.setOnItemSelectedListener {
-            when(it.itemId){
-                R.id.item_home -> replaceFragment(HomeFragment())
-                R.id.item_mess_user->replaceFragment(MessengerFragment())
-                R.id.item_social_user-> replaceFragment(SocialFragment())
-                R.id.item_profile_user-> replaceFragment(ProfileFragment())
-                else ->{
-
-                }
-            }
-            true
-        }
-    }
-
-    private fun replaceFragment(fragment: Fragment) {
-        val fragmentManager =supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frameLayout, fragment)
-        fragmentTransaction.commit()
     }
 }

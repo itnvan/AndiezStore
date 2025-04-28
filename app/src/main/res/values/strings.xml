@@ -47,4 +47,17 @@
     <string name="_93">93</string>
     <string name="_125">125</string>
     <string name="profile">Profile</string>
+    <string name="title_activity_sflash">SflashActivity</string>
+    <string name="student">Student</string>
+    <string name="thienan">Thiên An Education</string>
+    <string name="setting">Setting</string>
+    <string name="setting_account">Setting Account</string>
+    <string name="change_account_information">Change Account Information</string>
+    <string name="change_account_password">Change Account Password</string>
+    <string name="student_name">Student Name</string>
+    <string name="enter_your_day_of_birth">Enter Your Day Of Birth</string>
+    <string name="hometown">Hometown</string>
+    <string name="email">Email</string>
+    <string name="delete_information">Delete Information</string>
+    <string name="update_information">Update Information</string>
 </resources>

@@ -23,12 +23,14 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.combine
 
 class ClassroomFragment : Fragment() {
     private var _binding: FragmentClassroomBinding? = null
     private val binding get() = _binding!!
     private lateinit var classAdapter: ClassAdapter
     private lateinit var firebaseRefClassrooms: DatabaseReference
+    private lateinit var firebaseRefSubjects: DatabaseReference
     private val classroomList = mutableListOf<Classroom>()
 
     override fun onCreateView(
@@ -47,7 +49,10 @@ class ClassroomFragment : Fragment() {
 
         val uid = FirebaseAuth.getInstance().currentUser?.uid
         if (uid != null) {
-            firebaseRefClassrooms = FirebaseDatabase.getInstance().getReference("Users").child(uid).child("Classrooms")
+            firebaseRefClassrooms =
+                FirebaseDatabase.getInstance().getReference("Users").child(uid).child("classrooms")
+            firebaseRefSubjects = FirebaseDatabase.getInstance().getReference("Subjects")
+                .child("quantityS") // Changed to the parent of quantityS
             observeClassrooms()
         } else {
             Toast.makeText(context, "User not logged in", Toast.LENGTH_SHORT).show()
@@ -57,17 +62,44 @@ class ClassroomFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun observeClassrooms() {
         lifecycleScope.launch {
-            fetchClassroomsFlow().collectLatest { classrooms ->
+            // Use combine to merge data from both sources
+            fetchSubjectsFlow().combine (fetchClassroomsFlow()) { Subjects, classrooms ->
+                classrooms.map { classroom ->
+                    val quantityS = Subjects[classroom.subject] ?: 0 // Default to 0 if not found.
+                    classroom.copy(quantityS = quantityS)
+                }
+                classrooms
+            }.collectLatest { combinedClassrooms ->
                 classroomList.clear()
-                classroomList.addAll(classrooms)
+                classroomList.addAll(combinedClassrooms)
                 classAdapter.notifyDataSetChanged()
-                if (classrooms.isEmpty() && isAdded) {
-                    Toast.makeText(context, "No classrooms found for this user", Toast.LENGTH_SHORT).show()
+            }
+            fetchClassroomsFlow().combine(fetchSubjectsFlow()) { classrooms, Subjects ->
+                // Combine the data here.  For example, merge quantityS into the Classroom objects.
+                //  Important:  Assume that the 'classrooms' list contains Classroom objects
+                //  retrieved from the "Users/{uid}/classrooms" path.  The 'subjects'
+                //  data is a map of subject IDs to quantityS values from "Subjects/{uid}".
+
+                val combinedList = classrooms.map { classroom ->
+                    //  Here, you need a way to match the classroom with the subject.
+                    //  Let's assume your Classroom object has a 'subjectId' field.
+                    val quantityS = Subjects[classroom.subject] ?: 0 // Default to 0 if not found.
+                    classroom.copy(quantityS = quantityS) //  <--  Ensure Classroom has 'quantityS'
+                }
+                combinedList
+            }.collectLatest { combinedClassrooms ->
+                classroomList.clear()
+                classroomList.addAll(combinedClassrooms)
+                classAdapter.notifyDataSetChanged()
+                if (combinedClassrooms.isEmpty() && isAdded) {
+                    Toast.makeText(context, "No classrooms found for this user", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
     }
 
+    // Flow to fetch classroom data
     private fun fetchClassroomsFlow() = callbackFlow<List<Classroom>> {
         val listener = firebaseRefClassrooms.addValueEventListener(object : ValueEventListener {
             @SuppressLint("NotifyDataSetChanged")
@@ -75,7 +107,6 @@ class ClassroomFragment : Fragment() {
                 val classrooms = snapshot.children.mapNotNull { it.getValue(Classroom::class.java) }
                 trySend(classrooms).isSuccess
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Log.e("Firebase", "Error fetching classrooms: $error", error.toException())
                 close(error.toException())
@@ -83,6 +114,28 @@ class ClassroomFragment : Fragment() {
         })
         awaitClose { firebaseRefClassrooms.removeEventListener(listener) }
     }
+
+    // Flow to fetch subjects data (quantityS)
+    private fun fetchSubjectsFlow() = callbackFlow<Map<String, Int>> {  // Changed to return Map
+        val listener = firebaseRefSubjects.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                //  Build a map of subjectId to quantityS.  Assume the key of each child
+                //  of snapshot is the subjectId.  If quantityS is a direct child, this works.
+                val subjectsMap = snapshot.children.associate { child ->
+                    val quantityS = child.child("quantityS").getValue(Int::class.java) ?: 0
+                    child.key!! to quantityS  // Use non-null assertion on child.key!!
+                }
+                trySend(subjectsMap).isSuccess
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error fetching subjects: $error", error.toException())
+                close(error.toException())
+            }
+        })
+        awaitClose { firebaseRefSubjects.removeEventListener(listener) }
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
