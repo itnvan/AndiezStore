@@ -46,7 +46,7 @@ class AdminHomeFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         init()
         setUpTransformer()
-        getCurrentUserName()
+//        getCurrentUserName()
         val categoryList = mutableListOf(
             CagetoryModel(name = "Subject", img = R.drawable.view2),
             CagetoryModel(name = "Classroom", img = R.drawable.view3),
@@ -67,7 +67,7 @@ class AdminHomeFragment : Fragment() {
             override fun onItemClick(category: CagetoryModel, itemView: View) { // Sử dụng itemView
                 val navController = itemView.findNavController() // Tìm NavController từ itemView
                 when (category.name) {
-                    "Subject" -> navController.navigate(R.id.action_adminHomeFragment_to_adminSubjectFragment)
+                    "Subject" -> navController.navigate(R.id.action_adminHomeFragment_to_adminSubjectFragment2)
                     "Classroom" -> navController.navigate(R.id.action_adminHomeFragment_to_adminClassroomFragment)
                     "Information" -> navController.navigate(R.id.action_homeFragment_to_informationFragment)
                 }
@@ -75,17 +75,17 @@ class AdminHomeFragment : Fragment() {
         })
         return binding.root
     }
-    @SuppressLint("SetTextI18n")
-    private fun getCurrentUserName() {
-        val currentUser = auth.currentUser
-        if (currentUser != null) {
-            val uid = currentUser.uid
-            getUserName(uid)
-        } else {
-            // Người dùng chưa đăng nhập, xử lý tương ứng (ví dụ: ẩn tvUser, hiển thị thông báo)
-            binding.tvUser.text = "Not logged in"
-        }
-    }
+//    @SuppressLint("SetTextI18n")
+//    private fun getCurrentUserName() {
+//        val currentUser = auth.currentUser
+//        if (currentUser != null) {
+//            val uid = currentUser.uid
+//            getUserName(uid)
+//        } else {
+//            // Người dùng chưa đăng nhập, xử lý tương ứng (ví dụ: ẩn tvUser, hiển thị thông báo)
+//            binding.tvUser.text = "Not logged in"
+//        }
+//    }
     private fun getUserName(uid: String) {
         database.child(uid).child("name").addListenerForSingleValueEvent(object :
             ValueEventListener {

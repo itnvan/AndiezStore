@@ -46,7 +46,8 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@id/btnMain"
         app:layout_constraintEnd_toEndOf="@id/btnMain"
-        app:layout_constraintStart_toStartOf="@id/btnMain" />
+        app:layout_constraintStart_toStartOf="@id/btnMain"
+        tools:ignore="ContentDescription" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnUpdate"

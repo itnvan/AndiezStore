@@ -60,4 +60,15 @@
     <string name="email">Email</string>
     <string name="delete_information">Delete Information</string>
     <string name="update_information">Update Information</string>
+    <string name="fragment_choice">fragment_choice</string>
+    <string name="hello_admin">Hello Admin</string>
+    <string name="manage_subject">Manage Subject</string>
+    <string name="enter_subject_name">Enter Subject Name</string>
+    <string name="enter_subject_decription">Enter Subject Decription</string>
+    <string name="decription">Decription</string>
+    <string name="enter_day_of_subject">Enter Day Of Subject</string>
+    <string name="enter_subject_star">Enter Subject Star</string>
+    <string name="subject_name">Subject Name</string>
+    <string name="star_of_subject">Star Of Subject</string>
+    <string name="day_of_subject_start">Day Of Subject Start</string>
 </resources>

@@ -1,14 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".admin.fragment.AdminSubjectFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvManageSubject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:text="@string/manage_subject"
+        android:textColor="@color/white_blue"
+        android:textSize="@dimen/_30ssp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:text="@string/subject_name"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toTopOf="@id/inputLayout"
+        app:layout_constraintStart_toStartOf="@id/inputLayout"
+        app:layout_constraintTop_toBottomOf="@id/tvManageSubject" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_25sdp"
+        app:boxCornerRadiusBottomEnd="@dimen/_10sdp"
+        app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+        app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+        app:boxCornerRadiusTopStart="@dimen/_10sdp"
+        app:endIconMode="clear_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvName"
+
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@id/edtName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/ic_user"
+            android:drawablePadding="@dimen/_7sdp"
+            android:hint="@string/enter_subject_name"
+            android:inputType="text"
+            android:paddingStart="@dimen/_5sdp"
+            tools:ignore="RtlSymmetry" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDecription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:text="@string/decription"
+        android:textSize="@dimen/_15sdp"
+        app:layout_constraintStart_toStartOf="@id/inputLayout"
+        app:layout_constraintTop_toBottomOf="@id/inputLayout" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_25sdp"
+        app:boxCornerRadiusBottomEnd="@dimen/_10sdp"
+        app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+        app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+        app:boxCornerRadiusTopStart="@dimen/_10sdp"
+        app:endIconMode="clear_text"
+        app:layout_constraintTop_toBottomOf="@id/tvDecription">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtBirthday"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/ic_float"
+            android:drawablePadding="@dimen/_7sdp"
+            android:hint="@string/enter_subject_decription"
+            android:inputType="text"
+            android:paddingStart="@dimen/_5sdp"
+            tools:ignore="RtlSymmetry" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSubjectDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:text="@string/day_of_subject_start"
+        android:textSize="@dimen/_15ssp"
+        app:layout_constraintStart_toStartOf="@id/inputLayout2"
+        app:layout_constraintTop_toBottomOf="@id/inputLayout2" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_25sdp"
+        app:boxCornerRadiusBottomEnd="@dimen/_10sdp"
+        app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+        app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+        app:boxCornerRadiusTopStart="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@id/tvSubjectDay">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtHometown"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/ic_date"
+            android:drawablePadding="@dimen/_7sdp"
+            android:hint="@string/enter_day_of_subject"
+            android:inputType="date"
+            android:paddingStart="@dimen/_5sdp"
+            tools:ignore="RtlSymmetry" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:text="@string/star_of_subject"
+        android:textSize="@dimen/_15ssp"
+        app:layout_constraintStart_toStartOf="@id/inputLayout3"
+        app:layout_constraintTop_toBottomOf="@id/inputLayout3" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_25sdp"
+        app:boxCornerRadiusBottomEnd="@dimen/_10sdp"
+        app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+        app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+        app:boxCornerRadiusTopStart="@dimen/_10sdp"
+        app:endIconMode="clear_text"
+        app:layout_constraintTop_toBottomOf="@id/tvStar">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtStar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/ic_star"
+            android:drawablePadding="@dimen/_7sdp"
+            android:hint="@string/enter_subject_star"
+            android:inputType="number"
+            android:paddingStart="@dimen/_5sdp"
+            tools:ignore="RtlSymmetry" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_30sdp"
+        android:backgroundTint="@color/dark_blue"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_love"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_12sdp"
+        android:backgroundTint="#8CCAF6"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_love"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@id/btnMain"
+        app:layout_constraintEnd_toEndOf="@id/btnMain"
+        app:layout_constraintStart_toStartOf="@id/btnMain"
+        tools:ignore="ContentDescription" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_12sdp"
+        android:backgroundTint="#8CCAF6"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_love"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@id/btnAdd"
+        app:layout_constraintEnd_toEndOf="@id/btnAdd"
+        app:layout_constraintStart_toStartOf="@id/btnAdd"
+        tools:ignore="ContentDescription" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_12sdp"
+        android:backgroundTint="#8CCAF6"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_love"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@id/btnUpdate"
+        app:layout_constraintEnd_toEndOf="@id/btnUpdate"
+        app:layout_constraintStart_toStartOf="@id/btnUpdate"
+        tools:ignore="ContentDescription" />
+</androidx.constraintlayout.widget.ConstraintLayout>

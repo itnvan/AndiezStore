@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_admin"
+    app:startDestination="@id/adminLoginFragment">
+
+    <fragment
+        android:id="@+id/adminLoginFragment"
+        android:name="com.example.andiezstore.admin.fragment.AdminLoginFragment"
+        android:label="fragment_admin_login"
+        tools:layout="@layout/fragment_admin_login" >
+        <action
+            android:id="@+id/action_adminLoginFragment_to_adminHomeFragment"
+            app:destination="@id/adminHomeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/adminClassroomFragment"
+        android:name="com.example.andiezstore.admin.fragment.AdminClassroomFragment"
+        android:label="fragment_admin_classroom"
+        tools:layout="@layout/fragment_admin_classroom" />
+
+    <fragment
+        android:id="@+id/adminHomeFragment"
+        android:name="com.example.andiezstore.admin.fragment.AdminHomeFragment"
+        android:label="fragment_admin_home"
+        tools:layout="@layout/fragment_admin_home" >
+        <action
+            android:id="@+id/action_adminHomeFragment_to_adminClassroomFragment"
+            app:destination="@id/adminClassroomFragment" />
+        <action
+            android:id="@+id/action_adminHomeFragment_to_adminSubjectFragment2"
+            app:destination="@id/adminSubjectFragment2" />
+        <action
+            android:id="@+id/action_adminHomeFragment_to_informationFragment"
+            app:destination="@id/informationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/adminSubjectFragment2"
+        android:name="com.example.andiezstore.admin.fragment.AdminSubjectFragment"
+        android:label="fragment_admin_subject"
+        tools:layout="@layout/fragment_admin_subject" />
+
+
+
+
+</navigation>
