@@ -53,7 +53,12 @@ class HomeFragment : Fragment() {
         setUpTransformer()
         getCurrentUserName()
         setupCategoryRecyclerView()
-
+        binding.imgMess.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_homeChatFragment)
+        }
+//        binding.imgSearch.setOnClickListener {
+//            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+//        }
         viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
@@ -71,7 +76,6 @@ class HomeFragment : Fragment() {
         )
         cagetoryAdapter = CagetoryAdapter(categoryList)
         binding.rcvCagetories.adapter = cagetoryAdapter
-
         cagetoryAdapter.setOnItemClickListener(object : CagetoryAdapter.OnItemClickListener {
             override fun onItemClick(category: CagetoryModel, itemView: View) {
                 findNavController().let { navController ->

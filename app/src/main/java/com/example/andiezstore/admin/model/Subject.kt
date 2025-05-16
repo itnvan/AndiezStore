@@ -1,4 +1,4 @@
-package com.example.andiezstore.user.model
+package com.example.andiezstore.admin.model
 
 data class Subject(
     var subject: String? = null,
@@ -7,4 +7,5 @@ data class Subject(
     var tvStar: String? = null,
     var quantityS: Int?=null,
     var quantityE:Int?=null,
+    var imgSubject: Int? = null
 )

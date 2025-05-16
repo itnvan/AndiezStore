@@ -32,6 +32,8 @@ class ClassroomFragment : Fragment() {
     private lateinit var firebaseRefClassrooms: DatabaseReference
     private lateinit var firebaseRefSubjects: DatabaseReference
     private val classroomList = mutableListOf<Classroom>()
+    private val subjectQuantityMap = mutableMapOf<String, Int>()
+    private val subjectKeyMap = mutableMapOf<String, String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,42 +63,27 @@ class ClassroomFragment : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun observeClassrooms() {
-        lifecycleScope.launch {
-            // Use combine to merge data from both sources
-            fetchSubjectsFlow().combine (fetchClassroomsFlow()) { Subjects, classrooms ->
-                classrooms.map { classroom ->
-                    val quantityS = Subjects[classroom.subject] ?: 0 // Default to 0 if not found.
-                    classroom.copy(quantityS = quantityS)
+        firebaseRefSubjects.addValueEventListener(object : ValueEventListener {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onDataChange(snapshot: DataSnapshot) {
+                subjectQuantityMap.clear()
+                subjectKeyMap.clear()
+                for (childSnapshot in snapshot.children) {
+                    val subjectName = childSnapshot.key
+                    val quantity =
+                        childSnapshot.child("quantityS").getValue(Long::class.java)?.toInt() ?: 0
+                    subjectName?.let {
+                        subjectQuantityMap[it] = quantity
+                        subjectKeyMap[it] = childSnapshot.key!!
+                    }
                 }
-                classrooms
-            }.collectLatest { combinedClassrooms ->
-                classroomList.clear()
-                classroomList.addAll(combinedClassrooms)
-                classAdapter.notifyDataSetChanged()
             }
-            fetchClassroomsFlow().combine(fetchSubjectsFlow()) { classrooms, Subjects ->
-                // Combine the data here.  For example, merge quantityS into the Classroom objects.
-                //  Important:  Assume that the 'classrooms' list contains Classroom objects
-                //  retrieved from the "Users/{uid}/classrooms" path.  The 'subjects'
-                //  data is a map of subject IDs to quantityS values from "Subjects/{uid}".
 
-                val combinedList = classrooms.map { classroom ->
-                    //  Here, you need a way to match the classroom with the subject.
-                    //  Let's assume your Classroom object has a 'subjectId' field.
-                    val quantityS = Subjects[classroom.subject] ?: 0 // Default to 0 if not found.
-                    classroom.copy(quantityS = quantityS) //  <--  Ensure Classroom has 'quantityS'
-                }
-                combinedList
-            }.collectLatest { combinedClassrooms ->
-                classroomList.clear()
-                classroomList.addAll(combinedClassrooms)
-                classAdapter.notifyDataSetChanged()
-                if (combinedClassrooms.isEmpty() && isAdded) {
-                    Toast.makeText(context, "No classrooms found for this user", Toast.LENGTH_SHORT)
-                        .show()
-                }
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error fetching subject quantities: ${error.message}")
             }
-        }
+        })
+
     }
 
     // Flow to fetch classroom data

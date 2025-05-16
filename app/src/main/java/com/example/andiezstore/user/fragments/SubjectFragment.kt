@@ -1,86 +1,89 @@
 package com.example.andiezstore.user.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.andiezstore.R
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.andiezstore.databinding.FragmentSubjectBinding
 import com.example.andiezstore.user.adapter.SubjectAdapter
 import com.example.andiezstore.user.model.Subject
-
+import com.google.firebase.database.*
 
 class SubjectFragment : Fragment() {
     private lateinit var binding: FragmentSubjectBinding
     private lateinit var subjectAdapter: SubjectAdapter
+    private lateinit var adminDatabase: DatabaseReference
+    private val listSubject = mutableListOf<Subject>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        binding = FragmentSubjectBinding.inflate(layoutInflater)
-        val listSubject = mutableListOf(
-            Subject(
-                subject = "Kotlin Course",
-                description = "Kotlin with Firebase Course",
-                timeStart = "26 January 2025",
-                tvStar = "4.5",
-                quantityS =null,
-                quantityE = 100,
-                imgSubject = R.drawable.sflashlogo
-            ),
-            Subject(
-                subject = "Java Course",
-                description = "Java with Firebase Course",
-                timeStart = "26 January 2025",
-                tvStar = "4.9",
-                quantityS =null,
-                quantityE = 100,
-                imgSubject = R.drawable.sflashlogo
-            ),
-            Subject(
-                subject = "PHP Course",
-                description = "Made a website with PHP and HTML",
-                timeStart = "10 May 2025",
-                tvStar = "5.0",
-                quantityS =null,
-                quantityE = 100,
-                imgSubject = R.drawable.sflashlogo
-            ),
-            Subject(
-                subject = "Spring Boot",
-                description = "BackEnd with Spring Boot",
-                timeStart = "26 January 2025",
-                tvStar = "4.1",
-                quantityS =null,
-                quantityE = 100,
-                imgSubject = R.drawable.sflashlogo
-            ),
-            Subject(
-                subject = "Lavavel Course",
-                description = "Start with Lavavel BackEnd",
-                timeStart = "26 January 2025",
-                tvStar = "4.7",
-                quantityS =null,
-                quantityE = 100,
-                imgSubject = R.drawable.sflashlogo
-            ),
-            Subject(
-                subject = "Css Course",
-                description = "Start Css for beginner",
-                timeStart = "26 January 2025",
-                tvStar = "26 April 2025",
-                quantityS =null,
-                quantityE = 100,
-                imgSubject = R.drawable.sflashlogo
-            ),
-        )
-        subjectAdapter = SubjectAdapter(
-            listSubject,
-            context = requireContext()
-        )
-        binding.rcvSubject.adapter = subjectAdapter
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentSubjectBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Initialize Firebase Database
+        adminDatabase = FirebaseDatabase.getInstance().getReference("Admin").child("Subjects")
+
+        // Initialize RecyclerView and Adapter, pass the update callback
+        subjectAdapter = SubjectAdapter(listSubject, requireContext()) { subjectKey, updatedSubject ->
+            updateSubject(subjectKey, updatedSubject)
+        }
+        binding.rcvSubject.adapter = subjectAdapter
+        binding.rcvSubject.layoutManager = LinearLayoutManager(requireContext())
+
+        // Fetch subject data from Firebase
+        getSubjectData()
+    }
+
+    private fun getSubjectData() {
+        adminDatabase.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                listSubject.clear()
+                if (snapshot.exists()) {
+                    for (childSnapshot in snapshot.children) {
+                        val subject = Subject(
+                            subject = childSnapshot.child("subjects").getValue(String::class.java),
+                            description = childSnapshot.child("description").getValue(String::class.java),
+                            timeStart = childSnapshot.child("timeStart").getValue(String::class.java),
+                            tvStar = childSnapshot.child("starCount").getValue(String::class.java),
+                            quantityS = childSnapshot.child("quantityS").getValue(String::class.java)?.toIntOrNull(),
+                            quantityE = childSnapshot.child("quantityE").getValue(String::class.java)?.toIntOrNull()
+                        )
+                        listSubject.add(subject)
+                    }
+                    subjectAdapter.notifyDataSetChanged()
+                } else {
+                    Log.d("SubjectFragment", "No subjects found")
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("SubjectFragment", "Error getting data: ${error.message}")
+                Toast.makeText(requireContext(), "Failed to load subjects: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+
+    private fun updateSubject(subjectKey: String, updatedSubject: Subject) {
+        // Update the subject data in Firebase
+        adminDatabase.child(subjectKey).setValue(updatedSubject) // Use setValue for the whole object
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "Subject updated successfully", Toast.LENGTH_SHORT).show()
+                // No need to call getSubjectData() here.  The ValueEventListener will automatically update the list.
+            }
+            .addOnFailureListener { e ->
+                Log.e("SubjectFragment", "Error updating subject: ${e.message}", e)
+                Toast.makeText(requireContext(), "Failed to update subject: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 }

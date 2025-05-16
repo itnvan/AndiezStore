@@ -1,10 +1,8 @@
 package com.example.andiezstore.admin.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,11 +18,6 @@ import com.example.andiezstore.ui.adapter.SliderAdapter
 import com.example.andiezstore.ui.model.CagetoryModel
 import com.example.andiezstore.user.adapter.CagetoryAdapter
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 class AdminHomeFragment : Fragment() {
 
@@ -34,7 +27,7 @@ class AdminHomeFragment : Fragment() {
     private lateinit var silderAdapter: SliderAdapter
     private lateinit var cagetoryAdapter: CagetoryAdapter
     private lateinit var binding: FragmentHomeBinding
-    private var database: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
+//    private var database: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
     private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
@@ -86,26 +79,26 @@ class AdminHomeFragment : Fragment() {
 //            binding.tvUser.text = "Not logged in"
 //        }
 //    }
-    private fun getUserName(uid: String) {
-        database.child(uid).child("name").addListenerForSingleValueEvent(object :
-            ValueEventListener {
-            @SuppressLint("SetTextI18n")
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    val userName = snapshot.getValue(String::class.java)
-                    binding.tvUser.text = userName
-                } else {
-                    binding.tvUser.text = "User name not found"
-                }
-            }
-
-            @SuppressLint("SetTextI18n")
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("Firebase", "Failed to read user name.", error.toException())
-                binding.tvUser.text = "Error loading user name"
-            }
-        })
-    }
+//    private fun getUserName(uid: String) {
+//        database.child(uid).child("name").addListenerForSingleValueEvent(object :
+//            ValueEventListener {
+//            @SuppressLint("SetTextI18n")
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                if (snapshot.exists()) {
+//                    val userName = snapshot.getValue(String::class.java)
+//                    binding.tvUser.text = userName
+//                } else {
+//                    binding.tvUser.text = "User name not found"
+//                }
+//            }
+//
+//            @SuppressLint("SetTextI18n")
+//            override fun onCancelled(error: DatabaseError) {
+//                Log.e("Firebase", "Failed to read user name.", error.toException())
+//                binding.tvUser.text = "Error loading user name"
+//            }
+//        })
+//    }
 
     override fun onPause() {
         super.onPause()
@@ -135,9 +128,9 @@ class AdminHomeFragment : Fragment() {
         handler = Handler(Looper.myLooper()!!)
         imageList = ArrayList()
         imageList.add(R.drawable.view3)
-        imageList.add(R.drawable.view)
-        imageList.add(R.drawable.view2)
-        imageList.add(R.drawable.rule)
+        imageList.add(R.drawable.android)
+        imageList.add(R.drawable.kotlin_background)
+        imageList.add(R.drawable.ic_laucher)
         silderAdapter = SliderAdapter(imageList, viewPager2) // viewPager2 đã được khởi tạo
         binding.viewPager2.adapter = silderAdapter // Sử dụng binding
         binding.viewPager2.offscreenPageLimit = 4 // Sử dụng binding

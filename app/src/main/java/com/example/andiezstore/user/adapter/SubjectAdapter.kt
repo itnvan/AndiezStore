@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -15,30 +14,23 @@ import com.example.andiezstore.R
 import com.example.andiezstore.user.model.Subject
 import com.example.andiezstore.utils.Util
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.MutableData
-import com.google.firebase.database.Transaction
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 
 open class SubjectAdapter(
     private val listSubject: MutableList<Subject>,
     private val context: Context,
+    private val onSubjectUpdate: (String, Subject) -> Unit
 ) :
-    RecyclerView.Adapter<SubjectAdapter.SubjectViewModel>() {
-
+    RecyclerView.Adapter<SubjectAdapter.SubjectViewHolder>() {
     private var database: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
     private val subjectDatabase: DatabaseReference =
         FirebaseDatabase.getInstance().getReference("Subjects")
     private val auth = FirebaseAuth.getInstance()
-    private val appliedSubjectsByUser =
-        mutableSetOf<String>() // Track subjects applied by the current user
-    private val subjectQuantityMap = mutableMapOf<String, Int>() // Cache for subject quantities
+    private val appliedSubjectsByUser = mutableSetOf<String>()
+    private val subjectQuantityMap = mutableMapOf<String, Int>()
+    private val subjectKeyMap = mutableMapOf<String, String>()
 
     init {
-        // Fetch the list of subjects applied by the current user
         auth.currentUser?.uid?.let { uid ->
             database.child(uid).child("classrooms")
                 .addValueEventListener(object : ValueEventListener {
@@ -50,7 +42,7 @@ open class SubjectAdapter(
                                 appliedSubjectsByUser.add(it)
                             }
                         }
-                        notifyDataSetChanged() // Rebind the view holders to update the "Applied" state
+                        notifyDataSetChanged()
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -59,18 +51,21 @@ open class SubjectAdapter(
                 })
         }
 
-        // Fetch and listen for changes in subject quantities
         subjectDatabase.addValueEventListener(object : ValueEventListener {
             @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(snapshot: DataSnapshot) {
                 subjectQuantityMap.clear()
+                subjectKeyMap.clear()
                 for (childSnapshot in snapshot.children) {
                     val subjectName = childSnapshot.key
                     val quantity =
                         childSnapshot.child("quantityS").getValue(Long::class.java)?.toInt() ?: 0
-                    subjectName?.let { subjectQuantityMap[it] = quantity }
+                    subjectName?.let {
+                        subjectQuantityMap[it] = quantity
+                        subjectKeyMap[it] = childSnapshot.key!!
+                    }
                 }
-                notifyDataSetChanged() // Rebind the view holders to update the quantities
+                notifyDataSetChanged()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -79,59 +74,63 @@ open class SubjectAdapter(
         })
     }
 
-    class SubjectViewModel(val view: View) : RecyclerView.ViewHolder(view) {
+    class SubjectViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val tvSubject: TextView = view.findViewById(R.id.tvSubjects)
-        val tvDecription: TextView = view.findViewById(R.id.tvDecription)
+        val tvDescription: TextView = view.findViewById(R.id.tvDecription)
         val timeStart: TextView = view.findViewById(R.id.tvStar)
         val timeEnd: TextView = view.findViewById(R.id.tvTime)
-        val imgSubject: ImageView = view.findViewById(R.id.imgSubject)
         val btnSubject: Button = view.findViewById(R.id.btnSubject)
         val quantityS: TextView = view.findViewById(R.id.tvQuantity1)
         val quantityE: TextView = view.findViewById(R.id.tvQuantity2)
+        val btnUpdate: Button? = view.findViewById(R.id.btnUpdate)
 
         fun onBind(
             subject: Subject,
             onAddClickListener: (Subject) -> Unit,
+            onUpdateClickListener: (Subject) -> Unit,
             isApplied: Boolean,
-            quantity: Int
+            quantity: Int,
+            isUpdateEnable: Boolean
         ) {
             tvSubject.text = subject.subject
-            tvDecription.text = subject.description
+            tvDescription.text = subject.description
             timeStart.text = subject.timeStart
             timeEnd.text = subject.tvStar
             quantityS.text = quantity.toString()
             quantityE.text = subject.quantityE.toString()
-            subject.imgSubject?.let { imgSubject.setImageResource(it) }
             btnSubject.text = if (isApplied) "Applied" else "Apply"
             btnSubject.isEnabled = !isApplied
             btnSubject.setOnClickListener {
                 onAddClickListener(subject)
+            }
+            btnUpdate?.visibility = if (isUpdateEnable) View.VISIBLE else View.GONE
+            btnUpdate?.setOnClickListener {
+                onUpdateClickListener(subject)
             }
         }
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
-        viewType: Int,
-    ): SubjectViewModel {
+        viewType: Int
+    ): SubjectViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_subject, parent, false)
-        return SubjectViewModel(view)
+        return SubjectViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: SubjectViewModel, position: Int) {
+    override fun onBindViewHolder(holder: SubjectViewHolder, position: Int) {
         val subject = listSubject[position]
         val isApplied = appliedSubjectsByUser.contains(subject.subject)
         val currentQuantity = subjectQuantityMap[subject.subject] ?: subject.quantityS ?: 0
-
         holder.onBind(subject, { clickedSubject ->
             val currentUser = auth.currentUser
             if (currentUser != null) {
                 if (!isApplied) {
-                    Util.showDialog(context, "Wait a second...")
+                    Util.showDialog(context, "Applying...") // Keep dialog here
                     addSubjectToUserAndIncrementQuantity(
                         currentUser.uid,
                         clickedSubject
-                    ) { isSuccess ->
+                    ) { isSuccess ->  // Callback for completion
                         Util.hideDialog()
                         if (isSuccess) {
                             Toast.makeText(
@@ -140,7 +139,7 @@ open class SubjectAdapter(
                                 Toast.LENGTH_SHORT
                             ).show()
                             appliedSubjectsByUser.add(clickedSubject.subject!!)
-                            notifyItemChanged(position)
+                            notifyItemChanged(position) // Update the specific item
                         } else {
                             Toast.makeText(
                                 context,
@@ -160,7 +159,14 @@ open class SubjectAdapter(
                 Toast.makeText(context, "You need to login to apply subject", Toast.LENGTH_SHORT)
                     .show()
             }
-        }, isApplied, currentQuantity)
+        }, { subject ->
+            val subjectKey = subjectKeyMap[subject.subject]
+            if (subjectKey != null) {
+                onSubjectUpdate(subjectKey, subject)
+            } else {
+                Toast.makeText(context, "Subject key not found", Toast.LENGTH_SHORT).show()
+            }
+        }, isApplied, currentQuantity, true)
     }
 
     override fun getItemCount(): Int {
@@ -178,32 +184,25 @@ open class SubjectAdapter(
             "timeStart" to subject.timeStart,
             "starCount" to subject.tvStar,
             "quantityE" to subject.quantityE,
-            "imgSubject" to subject.imgSubject
         )
 
-        val userClassroomRef =
-            database.child(uid).child("classrooms").child(subject.subject.toString())
-        userClassroomRef.setValue(subjectData)
-            .addOnSuccessListener {
-                Log.d("RealtimeDB", "Subject '${subject.subject}' added to user $uid")
-                incrementQuantityS(subject.subject.toString()) { isSuccess ->
-                    onComplete(isSuccess)
-                }
-            }
-            .addOnFailureListener { e ->
-                Log.e("RealtimeDB", "Error adding subject to user $uid: ${e.message}", e)
-                onComplete(false)
-            }
-    }
+        val userClassroomRef = database.child(uid).child("classrooms").child(subject.subject.toString())
 
-    private fun incrementQuantityS(subjectKey: String, onComplete: (Boolean) -> Unit) {
-        val subjectRef =
-            subjectDatabase.child(subjectKey).child("quantityS") // Reference to quantityS
-        subjectRef.runTransaction(object : Transaction.Handler {
+        // Use a transaction to ensure atomicity
+        val globalSubjectRef = subjectDatabase.child(subjectKeyMap[subject.subject] ?: "")
+        globalSubjectRef.runTransaction(object : Transaction.Handler { // Use runTransaction
             override fun doTransaction(mutableData: MutableData): Transaction.Result {
-                val currentQuantity = mutableData.getValue(Int::class.java) ?: 0
-                mutableData.value = currentQuantity + 1
-                return Transaction.success(mutableData)
+                // Get the current quantity
+                val currentQuantity = mutableData.child("quantityS").getValue(Int::class.java) ?: 0
+                // Check if there's space
+                if (currentQuantity < (subject.quantityS ?: 0)) { // Use the subject's max quantity
+                    // Increment quantity
+                    mutableData.child("quantityS").value = currentQuantity + 1
+                    return Transaction.success(mutableData)
+                } else {
+                    // No space, abort the transaction
+                    return Transaction.abort()
+                }
             }
 
             override fun onComplete(
@@ -214,76 +213,23 @@ open class SubjectAdapter(
                 if (error != null) {
                     Log.e("Firebase Transaction", "Transaction failed: ${error.message}")
                     onComplete(false)
+                    userClassroomRef.removeValue() // remove user's classroom entry on failure
                 } else if (committed) {
-                    Log.d("Firebase Transaction", "QuantityS incremented for $subjectKey")
-                    onComplete(true)
+                    Log.d("Firebase Transaction", "Subject applied and quantity incremented")
+                    userClassroomRef.setValue(subjectData) // Set user classroom data
+                        .addOnSuccessListener {
+                            onComplete(true)
+                        }
+                        .addOnFailureListener {
+                            onComplete(false)
+                        }
+
                 } else {
-                    onComplete(false)
+                    Log.e("Firebase Transaction", "Transaction was aborted (no space)")
+                    Toast.makeText(context, "Subject is full", Toast.LENGTH_SHORT).show()
+                    onComplete(false) // Indicate failure
                 }
             }
         })
-    }
-
-    private fun decrementQuantityS(subjectKey: String, onComplete: (Boolean) -> Unit) {
-        val subjectRef =
-            subjectDatabase.child(subjectKey).child("quantityS") // Reference to quantityS
-        subjectRef.runTransaction(object : Transaction.Handler {
-            override fun doTransaction(mutableData: MutableData): Transaction.Result {
-                val currentQuantity = mutableData.getValue(Int::class.java) ?: 0
-                mutableData.value = if (currentQuantity > 0) currentQuantity - 1 else 0
-                return Transaction.success(mutableData)
-            }
-
-            override fun onComplete(
-                error: DatabaseError?,
-                committed: Boolean,
-                currentData: DataSnapshot?
-            ) {
-                if (error != null) {
-                    Log.e("Firebase Transaction", "Error decrementing quantityS: ${error.message}")
-                    onComplete(false)
-                } else if (committed) {
-                    Log.d("Firebase Transaction", "QuantityS decremented for $subjectKey")
-                    onComplete(true)
-                } else {
-                    onComplete(false)
-                }
-            }
-        })
-    }
-
-    fun withdrawFromSubject(subject: Subject, position: Int) {
-        val currentUser = auth.currentUser
-        currentUser?.uid?.let { uid ->
-            Util.showDialog(context, "Withdrawing...")
-            takeQuantity(uid, subject) { isSuccess ->
-                Util.hideDialog()
-                if (isSuccess) {
-                    appliedSubjectsByUser.remove(subject.subject)
-                    Toast.makeText(context, "Withdrawn from ${subject.subject}", Toast.LENGTH_SHORT)
-                        .show()
-                    notifyItemChanged(position)
-                } else {
-                    Toast.makeText(context, "Failed to withdraw", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
-
-    private fun takeQuantity(uid: String, subject: Subject, onComplete: (Boolean) -> Unit) {
-        val userClassroomRef =
-            database.child(uid).child("classrooms").child(subject.subject.toString())
-
-        userClassroomRef.removeValue()
-            .addOnSuccessListener {
-                Log.d("RealtimeDB", "Subject '${subject.subject}' removed from user $uid")
-                decrementQuantityS(subject.subject.toString()) { isSuccess ->
-                    onComplete(isSuccess)
-                }
-            }
-            .addOnFailureListener { e ->
-                Log.e("RealtimeDB", "Error removing subject from user $uid: ${e.message}", e)
-                onComplete(false)
-            }
     }
 }

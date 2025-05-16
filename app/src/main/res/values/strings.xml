@@ -71,4 +71,9 @@
     <string name="subject_name">Subject Name</string>
     <string name="star_of_subject">Star Of Subject</string>
     <string name="day_of_subject_start">Day Of Subject Start</string>
+    <string name="enter_your_account">Enter Your Account</string>
+    <string name="subject_start_time">Subject Start Time</string>
+    <string name="maximum_number_of_students">Maximum number of students</string>
+    <string name="enter_number">Enter Number</string>
+    <string name="send">Send</string>
 </resources>

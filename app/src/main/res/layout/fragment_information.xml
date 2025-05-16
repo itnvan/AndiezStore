@@ -28,7 +28,16 @@
             android:padding="@dimen/_15sdp"
             android:scaleType="fitXY" />
     </androidx.cardview.widget.CardView>
-
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgExit"
+        android:background="@drawable/ic_exit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <androidx.cardview.widget.CardView
         android:layout_width="@dimen/_60sdp"
         android:layout_height="@dimen/_60sdp"

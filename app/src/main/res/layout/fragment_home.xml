@@ -19,6 +19,16 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgMess"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/ic_mess"
+        android:padding="@dimen/_10sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvUser"
         android:layout_width="wrap_content"
@@ -117,6 +127,7 @@
         app:layout_constraintBottom_toBottomOf="@id/tvCagetories"
         app:layout_constraintStart_toEndOf="@id/tvCagetories"
         app:layout_constraintTop_toTopOf="@id/tvCagetories" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvCagetories"

@@ -106,7 +106,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_6sdp"
         android:layout_marginTop="@dimen/_6sdp"
-        android:text="@string/day_of_subject_start"
+        android:text="@string/subject_start_time"
         android:textSize="@dimen/_15ssp"
         app:layout_constraintStart_toStartOf="@id/inputLayout2"
         app:layout_constraintTop_toBottomOf="@id/inputLayout2" />
@@ -169,11 +169,45 @@
             android:drawableStart="@drawable/ic_star"
             android:drawablePadding="@dimen/_7sdp"
             android:hint="@string/enter_subject_star"
+            android:inputType="numberDecimal"
+            android:paddingStart="@dimen/_5sdp"
+            tools:ignore="RtlSymmetry" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:text="@string/maximum_number_of_students"
+        android:textSize="@dimen/_15ssp"
+        app:layout_constraintStart_toStartOf="@id/inputLayout4"
+        app:layout_constraintTop_toBottomOf="@id/inputLayout4" />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginEnd="@dimen/_25sdp"
+        app:boxCornerRadiusBottomEnd="@dimen/_10sdp"
+        app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+        app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+        app:boxCornerRadiusTopStart="@dimen/_10sdp"
+        app:endIconMode="clear_text"
+        app:layout_constraintTop_toBottomOf="@id/tvQuantity">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/ic_number"
+            android:drawablePadding="@dimen/_7sdp"
+            android:hint="@string/enter_number"
             android:inputType="number"
             android:paddingStart="@dimen/_5sdp"
             tools:ignore="RtlSymmetry" />
     </com.google.android.material.textfield.TextInputLayout>
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnMain"
         android:layout_width="wrap_content"
@@ -196,7 +230,7 @@
         android:backgroundTint="#8CCAF6"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/ic_love"
+        android:src="@drawable/ic_add"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@id/btnMain"
         app:layout_constraintEnd_toEndOf="@id/btnMain"
@@ -211,7 +245,7 @@
         android:backgroundTint="#8CCAF6"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/ic_love"
+        android:src="@drawable/ic_float"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@id/btnAdd"
         app:layout_constraintEnd_toEndOf="@id/btnAdd"

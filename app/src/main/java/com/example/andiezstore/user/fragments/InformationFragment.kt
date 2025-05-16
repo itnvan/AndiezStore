@@ -24,7 +24,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy.ALL
 import com.bumptech.glide.request.RequestOptions
 import com.example.andiezstore.R
 import com.example.andiezstore.databinding.FragmentInformationBinding
+import com.example.andiezstore.ui.MainActivity
+import com.example.andiezstore.ui.fragments.ChoiceFragment
+import com.example.andiezstore.user.UserMainActivity
 import com.example.andiezstore.user.model.User
+import com.example.andiezstore.utils.Util
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
@@ -80,6 +84,12 @@ class InformationFragment : Fragment() {
         setupTextWatchers() // Thiết lập lắng nghe thay đổi
         binding.btnUpdate.setOnClickListener { updateInformation() }
         binding.imgUser.setOnClickListener { showImageSelectionDialog() }
+        binding.imgExit.setOnClickListener {
+            val intent = Intent(requireContext(), UserMainActivity::class.java)
+            Util.showDialog(requireContext(), "Signing out...")
+            startActivity(intent)
+            requireActivity().finish()
+        }
     }
 
     private fun initializeActivityResultLaunchers() {

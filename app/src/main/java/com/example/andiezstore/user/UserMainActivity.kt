@@ -7,7 +7,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.andiezstore.R
 import com.example.andiezstore.databinding.ActivityUserMainBinding
+import com.example.andiezstore.ui.fragments.ChoiceFragment
 import com.example.andiezstore.user.fragments.HomeFragment
+import com.example.andiezstore.user.fragments.LoginFragment
 import com.example.andiezstore.user.fragments.MessengerFragment
 import com.example.andiezstore.user.fragments.ProfileFragment
 import com.example.andiezstore.user.fragments.SocialFragment
@@ -15,11 +17,19 @@ import com.example.andiezstore.user.fragments.SocialFragment
 class UserMainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserMainBinding
     private lateinit var navController: androidx.navigation.NavController
+    private var isLoggedIn: Boolean = false // Biến để theo dõi trạng thái đăng nhập
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.bottomNavigationView.post {
+
+        // Kiểm tra trạng thái đăng nhập.
+        isLoggedIn = intent.getBooleanExtra("isLoggedIn", false)
+
+        if (isLoggedIn) {
+            // Nếu đã đăng nhập, hiển thị BottomNavigationView và thiết lập điều hướng.
+            binding.bottomNavigationView.visibility = android.view.View.VISIBLE
             navController = findNavController(R.id.nav_host_fragment_user)
             binding.bottomNavigationView.setupWithNavController(navController)
             binding.bottomNavigationView.setOnItemSelectedListener { item ->
@@ -34,6 +44,10 @@ class UserMainActivity : AppCompatActivity() {
                 }
                 true
             }
+        } else {
+            // Nếu chưa đăng nhập, ẩn BottomNavigationView và hiển thị LoginFragment.
+            binding.bottomNavigationView.visibility = android.view.View.GONE
+            replaceFragment(ChoiceFragment()) // Sử dụng replaceFragment để hiển thị LoginFragment
         }
     }
 
@@ -44,7 +58,7 @@ class UserMainActivity : AppCompatActivity() {
     private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frameLayout, fragment)
+        fragmentTransaction.replace(R.id.nav_host_fragment_user, fragment) // Đảm bảo bạn sử dụng đúng ID của FrameLayout
         fragmentTransaction.commit()
     }
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_image"
+        android:padding="@dimen/_35sdp"
+        />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvUser"
+        android:layout_toRightOf="@id/imgUser"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:hint="@string/teacher"
+        android:textSize="@dimen/_24ssp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:maxLines="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPresentText"
+        android:layout_below="@id/tvUser"
+        android:layout_toRightOf="@id/imgUser"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:textSize="@dimen/_15ssp"
+        android:maxLines="1"
+        android:layout_width="wrap_content"
+        android:hint="@string/hi_andiez"
+        android:layout_height="wrap_content"/>
+
+
+</RelativeLayout>

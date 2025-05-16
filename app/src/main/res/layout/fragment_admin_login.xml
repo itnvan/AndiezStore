@@ -53,9 +53,9 @@
             android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:drawableStart="@drawable/ic_phone"
+            android:drawableStart="@drawable/ic_user"
             android:drawablePadding="@dimen/_7sdp"
-            android:hint="@string/enter_your_email"
+            android:hint="@string/enter_your_account"
             android:inputType="textEmailAddress"
             android:paddingStart="@dimen/_5sdp"
             tools:ignore="RtlSymmetry" />

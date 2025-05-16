@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="end"
+    android:padding="8dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_message_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_class"
+        android:textColor="#000000"
+        android:textColorHint="@color/black"
+        android:padding="12dp"
+        android:textSize="16sp"
+        android:hint="Hi,Andiez"
+        android:maxWidth="250dp" />
+
+    <androidx.appcompat.widget.AppCompatCheckedTextView
+        android:id="@+id/text_message_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:layout_gravity="end"
+        android:textColor="#888"
+        android:text="Time" />
+</LinearLayout>
