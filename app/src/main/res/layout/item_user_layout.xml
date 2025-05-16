@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_20sdp"
+    android:layout_marginStart="@dimen/_20sdp"
+    >
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_image"
-        android:padding="@dimen/_35sdp"
+        android:padding="@dimen/_28sdp"
+        android:layout_marginTop="@dimen/_6sdp"
         />
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvUser"
         android:layout_toRightOf="@id/imgUser"
-        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginStart="@dimen/_10sdp"
         android:hint="@string/teacher"
-        android:textSize="@dimen/_24ssp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:textSize="@dimen/_16ssp"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:maxLines="1"
@@ -24,9 +29,9 @@
         android:id="@+id/tvPresentText"
         android:layout_below="@id/tvUser"
         android:layout_toRightOf="@id/imgUser"
-        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:textSize="@dimen/_15ssp"
+        android:textSize="@dimen/_13ssp"
         android:maxLines="1"
         android:layout_width="wrap_content"
         android:hint="@string/hi_andiez"

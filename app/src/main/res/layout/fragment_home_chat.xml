@@ -5,21 +5,89 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".user.fragments.HomeChatFragment">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMessage"
+        android:layout_width="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Messenger"
+        android:textStyle="bold"
+       android:layout_margin="@dimen/_20sdp"
+        android:textColor="@color/my_blue"
+        android:textSize="@dimen/_20ssp"
+        android:layout_height="wrap_content"/>
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edtSearch"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="@dimen/_13sdp"
+        android:background="@drawable/bg_search"
+        android:hint="@string/search"
+        android:padding="@dimen/_5sdp"
+        android:maxLines="1"
+        android:textAlignment="center"
+        android:textColor="#828282"
+        android:textSize="@dimen/dimen_20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvMessage" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvIconUser"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:listitem="@layout/item_list_user"
+        android:scrollbars="none"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/edtSearch"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgSearch"
+        android:layout_width="30dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="10dp"
+        android:background="@drawable/search"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@id/edtSearch"
+        app:layout_constraintStart_toStartOf="@id/edtSearch"
+        app:layout_constraintTop_toTopOf="@id/edtSearch" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvChat"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/chat_bottom_navigation"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_15sdp"
+        app:layout_constraintBottom_toTopOf="@id/bottomAppBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rcvIconUser"
+        android:scrollbars="vertical"
         tools:listitem="@layout/item_user_layout" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/chat_bottom_navigation"
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/transparent"
-        app:labelVisibilityMode="labeled"
+        android:layout_height="60dp"
+        app:fabCradleMargin="@dimen/dimen_10dp"
+        app:fabCradleRoundedCornerRadius="@dimen/dimen_60dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/chat_menu_bottom_navi" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="BottomAppBar">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/dimen_20dp"
+            android:background="@color/transparent"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/chat_menu_bottom_navi" />
+    </com.google.android.material.bottomappbar.BottomAppBar>
 </androidx.constraintlayout.widget.ConstraintLayout>
