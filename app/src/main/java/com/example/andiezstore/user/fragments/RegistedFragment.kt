@@ -22,6 +22,7 @@ import com.example.andiezstore.ui.DatabaseRoom
 import com.example.andiezstore.user.account.AccountResponsitory
 import com.example.andiezstore.user.adapter.AccountAdapter
 import com.example.andiezstore.user.model.Account
+import com.example.andiezstore.user.model.User
 import com.example.andiezstore.user.viewmodel.AccountViewModel
 import com.example.andiezstore.utils.Util
 import com.google.firebase.auth.FirebaseAuth
@@ -58,7 +59,8 @@ class RegistedFragment : Fragment() {
     }
 
     private val listAccount = mutableListOf(
-        Account(name = "Andiez", email = "ksit.nvan@gmail.com", pass = "An270502")
+
+        Account(name = "Andiez", email = "ksit.nvan11@gmail.com", pass = "An270502")
     )
 
 
@@ -113,9 +115,9 @@ class RegistedFragment : Fragment() {
             }
         }
     }
-    private suspend fun addNameUser(uid: String, name:String) {
+    private suspend fun addNameUser(uid: String, name:String,email: String) {
         try {
-            database.child(uid.toString()).child("name").setValue(name).await()
+            database.child(uid.toString()).child("information").setValue(User(uid=uid,name=name,email=email)).await()
             Log.d("RealtimeDB", "User name '$name' saved for UID: $uid")
         } catch (e: Exception) {
             Log.e("RealtimeDB", "Error saving user name for UID: $uid: ${e.message}", e)
@@ -136,7 +138,7 @@ class RegistedFragment : Fragment() {
                    val authResult = auth.createUserWithEmailAndPassword(email, password)
                         .await()
                     val uid=authResult.user?.uid ?: ""
-                    addNameUser(uid,name)
+                    addNameUser(uid,name,email)
                     withContext(Dispatchers.Main) {
                         Util.hideDialog()
                         Toast.makeText(requireContext(), "Registed Success", Toast.LENGTH_SHORT).show()

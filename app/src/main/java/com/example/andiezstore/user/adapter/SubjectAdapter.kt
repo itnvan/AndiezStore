@@ -195,7 +195,7 @@ open class SubjectAdapter(
                 // Get the current quantity
                 val currentQuantity = mutableData.child("quantityS").getValue(Int::class.java) ?: 0
                 // Check if there's space
-                if (currentQuantity < (subject.quantityS ?: 0)) { // Use the subject's max quantity
+                if (currentQuantity < (subject.quantityE ?: 0)) { // Use the subject's max quantity
                     // Increment quantity
                     mutableData.child("quantityS").value = currentQuantity + 1
                     return Transaction.success(mutableData)

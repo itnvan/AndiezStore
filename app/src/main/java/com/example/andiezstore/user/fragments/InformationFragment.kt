@@ -85,10 +85,13 @@ class InformationFragment : Fragment() {
         binding.btnUpdate.setOnClickListener { updateInformation() }
         binding.imgUser.setOnClickListener { showImageSelectionDialog() }
         binding.imgExit.setOnClickListener {
-            val intent = Intent(requireContext(), UserMainActivity::class.java)
-            Util.showDialog(requireContext(), "Signing out...")
-            startActivity(intent)
-            requireActivity().finish()
+            if (binding.imgExit.isClickable){
+                auth.signOut()
+                val intent = Intent(requireContext(), MainActivity::class.java)
+                Util.showDialog(requireContext(), "Signing out...")
+                startActivity(intent)
+                requireActivity().finish()
+            }
         }
     }
 
@@ -158,13 +161,14 @@ class InformationFragment : Fragment() {
             "email" to email,
             "dateOfBirth" to dateOfBirth,
             "hometown" to hometown
+
         )
 
         if (imageUrl != null) {
             userUpdates["profileImageUrl"] = imageUrl
         }
 
-        database.child(userId).updateChildren(userUpdates)
+        database.child(userId).child("information").updateChildren(userUpdates)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     showToast("Profile updated successfully")
@@ -177,7 +181,7 @@ class InformationFragment : Fragment() {
 
 
     private fun fetchAndBindData() {
-        database.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
+        database.child(userId).child("information").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (!snapshot.exists()) {
                     showToast("No user data found")
@@ -222,9 +226,6 @@ class InformationFragment : Fragment() {
             callback(null, true)
             return
         }
-        val formatter = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.getDefault())
-        val now = Date()
-        val fileName = formatter.format(now)
         val imageRef = storageRef.child("users/$userId/profile_image.jpg")
 
         imageRef.putFile(imageUri)

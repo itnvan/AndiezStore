@@ -101,7 +101,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun getUserName(uid: String) {
-        database.child(uid).child("name")
+        database.child(uid).child("information").child("name")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 @SuppressLint("SetTextI18n")
                 override fun onDataChange(snapshot: DataSnapshot) {
