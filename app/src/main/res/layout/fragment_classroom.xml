@@ -31,7 +31,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_50sdp"
-        android:hint="Andiez Kayn"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:textSize="@dimen/_20ssp"

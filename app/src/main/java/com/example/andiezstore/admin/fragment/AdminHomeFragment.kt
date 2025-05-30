@@ -35,18 +35,17 @@ class AdminHomeFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        viewPager2 = binding.viewPager2 // Khởi tạo viewPager2 bằng View Binding
+        viewPager2 = binding.viewPager2
         auth = FirebaseAuth.getInstance()
         init()
         setUpTransformer()
 //        getCurrentUserName()
         val categoryList = mutableListOf(
             CagetoryModel(name = "Subject", img = R.drawable.view2),
-            CagetoryModel(name = "Classroom", img = R.drawable.view3),
-            CagetoryModel(name = "Information", img = R.drawable.view)
+            CagetoryModel(name = "News", img = R.drawable.view3),
         )
         cagetoryAdapter = CagetoryAdapter(categoryList)
-        binding.rcvCagetories.adapter = cagetoryAdapter // Sử dụng binding để truy cập recyclerView
+        binding.rcvCagetories.adapter = cagetoryAdapter
 
         viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -57,12 +56,11 @@ class AdminHomeFragment : Fragment() {
         })
 
         cagetoryAdapter.setOnItemClickListener(object : CagetoryAdapter.OnItemClickListener {
-            override fun onItemClick(category: CagetoryModel, itemView: View) { // Sử dụng itemView
-                val navController = itemView.findNavController() // Tìm NavController từ itemView
+            override fun onItemClick(category: CagetoryModel, itemView: View) {
+                val navController = itemView.findNavController()
                 when (category.name) {
                     "Subject" -> navController.navigate(R.id.action_adminHomeFragment_to_adminSubjectFragment2)
-                    "Classroom" -> navController.navigate(R.id.action_adminHomeFragment_to_adminClassroomFragment)
-                    "Information" -> navController.navigate(R.id.action_homeFragment_to_informationFragment)
+                    "News" -> navController.navigate(R.id.action_adminHomeFragment_to_adminNewsFragment)
                 }
             }
         })
@@ -121,7 +119,7 @@ class AdminHomeFragment : Fragment() {
             val r = 1 - Math.abs(position)
             page.scaleY = 0.85f + r + 0.14f
         }
-        binding.viewPager2.setPageTransformer(transfomer) // Sử dụng binding
+        binding.viewPager2.setPageTransformer(transfomer)
     }
 
     private fun init() {
@@ -129,16 +127,16 @@ class AdminHomeFragment : Fragment() {
         imageList = ArrayList()
         imageList.add(R.drawable.view3)
         imageList.add(R.drawable.android)
-        imageList.add(R.drawable.kotlin_background)
-        imageList.add(R.drawable.ic_laucher)
+        imageList.add(R.drawable.view)
+        imageList.add(R.drawable.rule)
         silderAdapter = SliderAdapter(imageList, viewPager2) // viewPager2 đã được khởi tạo
-        binding.viewPager2.adapter = silderAdapter // Sử dụng binding
-        binding.viewPager2.offscreenPageLimit = 4 // Sử dụng binding
-        binding.viewPager2.clipToPadding = false // Sử dụng binding
-        binding.viewPager2.clipChildren = true // Sử dụng binding
+        binding.viewPager2.adapter = silderAdapter
+        binding.viewPager2.offscreenPageLimit = 4
+        binding.viewPager2.clipToPadding = false
+        binding.viewPager2.clipChildren = true
         binding.viewPager2.getChildAt(0).overScrollMode =
-            RecyclerView.OVER_SCROLL_NEVER // Sử dụng binding
-        binding.dotsIndicator.attachTo(viewPager2) // viewPager2 đã được khởi tạo
+            RecyclerView.OVER_SCROLL_NEVER
+        binding.dotsIndicator.attachTo(viewPager2)
         runnable = Runnable {
             var currentPosition = viewPager2.currentItem
             if (currentPosition == imageList.size - 1) {
@@ -146,7 +144,7 @@ class AdminHomeFragment : Fragment() {
             } else {
                 currentPosition++
             }
-            binding.viewPager2.setCurrentItem(currentPosition, true) // Sử dụng binding
+            binding.viewPager2.setCurrentItem(currentPosition, true)
         }
     }
 }

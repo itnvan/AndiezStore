@@ -1,16 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="@dimen/_10sdp"
-    app:cardCornerRadius="@dimen/_15sdp"
-    android:layout_marginTop="@dimen/_10sdp"
-    android:layout_marginStart="@dimen/_10sdp"
+   android:layout_height="wrap_content"
+    android:paddingVertical="@dimen/_10sdp"
+    android:layout_width="match_parent"
     >
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_article"/>
+        android:background="@drawable/bg_image"
+        android:padding="@dimen/_28sdp"
+        android:layout_marginTop="@dimen/_6sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvUser"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:hint="@string/teacher"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:textSize="@dimen/_16ssp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:maxLines="1"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgUser"
+        app:layout_goneMarginTop="@dimen/_5sdp"
+        />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTime"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:textSize="@dimen/_10ssp"
+        android:maxLines="1"
+        app:layout_constraintTop_toBottomOf="@id/tvUser"
+        app:layout_constraintStart_toEndOf="@id/imgUser"
+        android:layout_width="wrap_content"
+        android:hint="@string/hi_andiez"
+        android:layout_height="wrap_content"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/_10sdp"
+        app:cardCornerRadius="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        app:layout_constraintStart_toStartOf="@id/imgUser"
+        app:layout_constraintTop_toBottomOf="@id/imgUser"
+        >
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgNews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_article"/>
 
-</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

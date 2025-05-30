@@ -125,6 +125,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPhone" />
+        app:layout_constraintTop_toBottomOf="@+id/inputLayout2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

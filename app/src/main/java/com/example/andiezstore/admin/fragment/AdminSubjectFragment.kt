@@ -21,7 +21,10 @@ class AdminSubjectFragment : Fragment() {
     private lateinit var rotateOpen: Animation
     private lateinit var rotateClose: Animation
     private var clicked = false
-    private lateinit var subjectRef: DatabaseReference
+    private lateinit var adminSubjectRef: DatabaseReference
+    private lateinit var userSubjectRef: DatabaseReference
+    private var currentSubjectKey: String? = null
+    private var currentSubjectNameOnFirebase: String? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -42,25 +45,18 @@ class AdminSubjectFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initialize Firebase Database reference
-        subjectRef = FirebaseDatabase.getInstance().getReference("Admin").child("Subjects")
+        adminSubjectRef = FirebaseDatabase.getInstance().getReference("Admin").child("Subjects")
+        userSubjectRef = FirebaseDatabase.getInstance()
+            .getReference("Subjects")
 
-        // Set click listeners
-        binding.btnMain.setOnClickListener {
-            onMainButtonClicked()
-        }
-        binding.btnAdd.setOnClickListener {
-            onAddButtonClicked()
-        }
-        binding.btnDelete.setOnClickListener {
-            onDeleteButtonClicked()
-        }
-        binding.btnUpdate.setOnClickListener {
-            onUpdateButtonClicked()
-        }
-        binding.edtName.setOnFocusChangeListener { _, hasFocus ->  // lắng nghe thay đổi focus của edtName
-            if (!hasFocus) { // nếu không còn focus vào edtName
-                loadSubjectDetails() // gọi hàm loadSubjectDetails
+        binding.btnMain.setOnClickListener { onMainButtonClicked() }
+        binding.btnAdd.setOnClickListener { onAddButtonClicked() }
+        binding.btnDelete.setOnClickListener { onDeleteButtonClicked() }
+        binding.btnUpdate.setOnClickListener { onUpdateButtonClicked() }
+
+        binding.edtName.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                loadSubjectDetails()
             }
         }
         setVisibility(clicked)
@@ -96,131 +92,236 @@ class AdminSubjectFragment : Fragment() {
 
     private fun onAddButtonClicked() {
         val subjectName = binding.edtName.text.toString().trim()
-        val description = binding.edtBirthday.text.toString().trim() // Correct ID
-        val subjectDay = binding.edtHometown.text.toString().trim() // Correct ID
-        val star = binding.edtStar.text.toString().trim() // Correct ID
-        val quantity = binding.edtQuantity.text.toString().trim() // Correct ID
+        val description = binding.edtBirthday.text.toString().trim()
+        val subjectDay = binding.edtHometown.text.toString().trim()
+        val star = binding.edtStar.text.toString().trim()
+        val quantity = binding.edtQuantity.text.toString().trim()
 
-        if (subjectName.isEmpty() || description.isEmpty() || subjectDay.isEmpty() || star.isEmpty()|| quantity.isEmpty()) {
+        if (subjectName.isEmpty() || description.isEmpty() || subjectDay.isEmpty() || star.isEmpty() || quantity.isEmpty()) {
             showError("Please fill in all fields.")
-            if (star< 5.toString()){
-                showError("Star must be less than 150")
-            }
-            else if (quantity<100.toString()){
-                showError("Quantity must be less than 150")
-            }
             return
         }
 
-        val newSubject: HashMap<String, Any> = hashMapOf(
-            "subjects" to subjectName,
-            "description" to description,
-            "timeStart" to subjectDay, // Correct key name
-            "starCount" to star,
-            "quantityE" to quantity
-        )
+        val starFloat = star.toFloatOrNull()
+        val quantityInt = quantity.toIntOrNull() // Vẫn cần parse để validate cho adminSubjectRef
 
-        // Use push() to generate a unique ID for the new subject
-        subjectRef.push().setValue(newSubject)
-            .addOnSuccessListener {
-                Log.d("Firebase", "Subject added successfully.")
-                clearInputFields()
-                showSuccess("Subject added!")
-            }
-            .addOnFailureListener { e ->
-                Log.e("Firebase", "Error adding subject: ${e.message}", e)
-                showError("Failed to add subject: ${e.message}")
-            }
-    }
-
-    private fun onUpdateButtonClicked() {
-        val subjectName = binding.edtName.text.toString().trim()
-
-        if (subjectName.isEmpty()) {
-            showError("Please enter Subject Name to update.")
+        if (starFloat == null || starFloat > 5f) {
+            showError("Number of stars must be a number and less than or equal to 5.")
+            return
+        }
+        if (quantityInt == null || quantityInt > 150) {
+            showError("Quantity must be a number and less than or equal to 150.")
             return
         }
 
-        subjectRef.orderByChild("subjects").equalTo(subjectName)
+        adminSubjectRef.orderByChild("subjects").equalTo(subjectName)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        // Get the key of the first matching subject.
-                        val subjectKey = snapshot.children.first().key
-
-                        //update
-                        val description = binding.edtBirthday.text.toString().trim()
-                        val subjectDay = binding.edtHometown.text.toString().trim()
-                        val star = binding.edtStar.text.toString().trim()
-                        val quantity= binding.edtQuantity.text.toString().trim()
-
-                        val updatedSubject: HashMap<String, Any> = hashMapOf(
+                        showError("Subject '$subjectName' existed.")
+                    } else {
+                        val newAdminSubject: HashMap<String, Any> = hashMapOf(
                             "subjects" to subjectName,
                             "description" to description,
                             "timeStart" to subjectDay,
                             "starCount" to star,
-                            "quantityE" to quantity
+                            "quantityE" to quantity // Lưu quantityE vào Admin/Subjects
                         )
-                        subjectRef.child(subjectKey!!).updateChildren(updatedSubject as Map<String, Any>)
+
+                        adminSubjectRef.push().setValue(newAdminSubject)
                             .addOnSuccessListener {
-                                Log.d("Firebase", "Subject updated successfully.")
+                                Log.d("Firebase", "Subject added to Admin/Subjects successfully.")
+
+                                // Thay đổi ở đây: SET CỨNG quantityS LÀ 0
+                                val userSubjectData = hashMapOf("quantityS" to 0) // <--- Thay đổi ở đây
+                                userSubjectRef.child(subjectName).setValue(userSubjectData)
+                                    .addOnSuccessListener {
+                                        Log.d("Firebase", "Subject added to Subjects with quantityS=0 successfully.")
+                                    }
+                                    .addOnFailureListener { e ->
+                                        Log.e("Firebase", "Error adding subject to Subjects: ${e.message}", e)
+                                    }
+                                showSuccess("New subject added successfully!")
                                 clearInputFields()
-                                showSuccess("Subject updated")
                             }
                             .addOnFailureListener { e ->
-                                Log.e("Firebase", "Error updating subject: ${e.message}", e)
-                                showError("Failed to update subject: ${e.message}")
+                                Log.e(
+                                    "Firebase",
+                                    "Error adding subject to Admin/Subjects: ${e.message}",
+                                    e
+                                )
+                                showError("Failed to add new subject: ${e.message}")
+                            }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("Firebase", "Database Error checking existence: ${error.message}")
+                    showError("Error checking existence: ${error.message}")
+                }
+            })
+    }
+
+    private fun onUpdateButtonClicked() {
+        val newSubjectName = binding.edtName.text.toString().trim()
+        val description = binding.edtBirthday.text.toString().trim()
+        val subjectDay = binding.edtHometown.text.toString().trim()
+        val star = binding.edtStar.text.toString().trim()
+        val quantity = binding.edtQuantity.text.toString().trim() // Vẫn cần lấy để validate cho adminSubjectRef
+
+        if (newSubjectName.isEmpty()) {
+            showError("Please enter a subject name to update.")
+            return
+        }
+        if (description.isEmpty() || subjectDay.isEmpty() || star.isEmpty() || quantity.isEmpty()) {
+            showError("Please fill in all fields.")
+            return
+        }
+
+        val starFloat = star.toFloatOrNull()
+        val quantityInt = quantity.toIntOrNull() // Vẫn cần parse để validate cho adminSubjectRef
+
+        if (starFloat == null || starFloat > 5f) {
+            showError("Number of stars must be a number and less than or equal to 5.")
+            return
+        }
+        if (quantityInt == null || quantityInt > 150) {
+            showError("Quantity must be a number and less than or equal to 150.")
+            return
+        }
+
+        adminSubjectRef.orderByChild("subjects").equalTo(newSubjectName)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var foundExistingSubjectWithNewName = false
+
+                    if (snapshot.exists()) {
+                        for (child in snapshot.children) {
+                            if (child.key != currentSubjectKey) {
+                                foundExistingSubjectWithNewName = true
+                                break
+                            }
+                        }
+                    }
+
+                    if (foundExistingSubjectWithNewName) {
+                        showError("Subject name '$newSubjectName' already exists for another subject.")
+                        return
+                    }
+
+                    if (currentSubjectKey == null) {
+                        showError("Please load a subject's details first by entering its name and losing focus from the input field.")
+                        return
+                    }
+
+                    val updatedAdminSubject: HashMap<String, Any> = hashMapOf(
+                        "subjects" to newSubjectName,
+                        "description" to description,
+                        "timeStart" to subjectDay,
+                        "starCount" to star,
+                        "quantityE" to quantity // Cập nhật quantityE vào Admin/Subjects
+                    )
+
+                    adminSubjectRef.child(currentSubjectKey!!).updateChildren(updatedAdminSubject)
+                        .addOnSuccessListener {
+                            Log.d("Firebase", "Subject updated in Admin/Subjects successfully.")
+
+                            val updates = HashMap<String, Any?>()
+                            // Thay đổi ở đây: SET CỨNG quantityS LÀ 0
+                            val userSubjectData = hashMapOf("quantityS" to 0) // <--- Thay đổi ở đây
+
+                            if (currentSubjectNameOnFirebase != null && newSubjectName != currentSubjectNameOnFirebase) {
+                                updates["Subjects/${currentSubjectNameOnFirebase}"] = null
+                                updates["Subjects/$newSubjectName"] = userSubjectData
+                            } else {
+                                updates["Subjects/$newSubjectName"] = userSubjectData
                             }
 
+                            FirebaseDatabase.getInstance().reference.updateChildren(updates)
+                                .addOnSuccessListener {
+                                    Log.d("Firebase", "Subject name and quantityS=0 synced in Subjects successfully.")
+                                    showSuccess("Môn học đã được cập nhật!")
+                                    clearInputFields()
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.e("Firebase", "Error syncing subject name and quantityS=0 in Subjects: ${e.message}", e)
+                                    showError("Môn học đã cập nhật (admin), nhưng lỗi đồng bộ cho người dùng: ${e.message}")
+                                    clearInputFields()
+                                }
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e(
+                                "Firebase",
+                                "Error updating subject in Admin/Subjects: ${e.message}",
+                                e
+                            )
+                            showError("Failed to update subject: ${e.message}")
+                        }
+                }
 
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("Firebase", "Database Error: ${error.message}")
+                    showError("Failed to update subject: ${error.message}")
+                }
+            })
+    }
+
+    private fun onDeleteButtonClicked() {
+        val subjectName = binding.edtName.text.toString().trim()
+        if (subjectName.isEmpty()) {
+            showError("Please enter a subject name to delete.")
+            return
+        }
+
+        adminSubjectRef.orderByChild("subjects").equalTo(subjectName)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        val subjectKey = snapshot.children.first().key
+
+                        adminSubjectRef.child(subjectKey!!).removeValue()
+                            .addOnSuccessListener {
+                                Log.d(
+                                    "Firebase",
+                                    "Subject deleted from Admin/Subjects successfully."
+                                )
+
+                                userSubjectRef.child(subjectName).removeValue()
+                                    .addOnSuccessListener {
+                                        Log.d(
+                                            "Firebase",
+                                            "Subject deleted from Subjects successfully."
+                                        )
+                                        showSuccess("Môn học đã được xóa!")
+                                        clearInputFields()
+                                    }
+                                    .addOnFailureListener { e ->
+                                        Log.e(
+                                            "Firebase",
+                                            "Error deleting subject from Subjects: ${e.message}",
+                                            e
+                                        )
+                                        showError("Failed to delete subject (user): ${e.message}")
+                                    }
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e(
+                                    "Firebase",
+                                    "Error deleting subject from Admin/Subjects: ${e.message}",
+                                    e
+                                )
+                                showError("Failed to delete subject (admin): ${e.message}")
+                            }
                     } else {
-                        showError("Subject Name does not exist.")
+                        showError("Subject '$subjectName' is not found.")
                     }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
                     Log.e("Firebase", "Database Error: ${error.message}")
+                    showError("Error deleting subject: ${error.message}")
                 }
             })
-
-
-    }
-
-    private fun onDeleteButtonClicked() {
-        // Get the key of the subject to delete
-        val subjectName = binding.edtName.text.toString().trim()
-        if (subjectName.isEmpty()) {
-            showError("Please enter Subject Name to delete.")
-            return
-        }
-        subjectRef.orderByChild("subjects").equalTo(subjectName).addListenerForSingleValueEvent(object :
-            ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    // Get the key of the first matching subject.
-                    val subjectKey = snapshot.children.first().key
-
-                    subjectRef.child(subjectKey!!).removeValue()
-                        .addOnSuccessListener {
-                            Log.d("Firebase", "Subject deleted successfully.")
-                            clearInputFields()
-                            showSuccess("Subject Deleted")
-                        }
-                        .addOnFailureListener { e ->
-                            Log.e("Firebase", "Error deleting subject: ${e.message}", e)
-                            showError("Failed to delete subject: ${e.message}")
-                        }
-                } else {
-                    showError("Subject Name does not exist.")
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("Firebase", "Database Error: ${error.message}")
-            }
-        })
-
-
     }
 
     private fun clearInputFields() {
@@ -228,10 +329,13 @@ class AdminSubjectFragment : Fragment() {
         binding.edtBirthday.text?.clear()
         binding.edtHometown.text?.clear()
         binding.edtStar.text?.clear()
+        binding.edtQuantity.text?.clear()
+        currentSubjectKey = null
+        currentSubjectNameOnFirebase = null
+        binding.edtName.requestFocus()
     }
 
     private fun showError(message: String) {
-        // Use a Toast or a SnackBar to display the error message
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
@@ -241,26 +345,41 @@ class AdminSubjectFragment : Fragment() {
 
     private fun loadSubjectDetails() {
         val subjectName = binding.edtName.text.toString().trim()
-        if (subjectName.isEmpty()) return  // Không làm gì nếu không có subject name
+        if (subjectName.isEmpty()) {
+            clearInputFields()
+            return
+        }
 
-        subjectRef.orderByChild("subjects").equalTo(subjectName).addListenerForSingleValueEvent(object :
-            ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    val existingData = snapshot.children.first().value as Map<*, *>
-                    // Hiện thị dữ liệu
-                    binding.edtBirthday.setText(existingData["description"]?.toString() ?: "")
-                    binding.edtHometown.setText(existingData["timeStart"]?.toString() ?: "")
-                    binding.edtStar.setText(existingData["starCount"]?.toString() ?: "")
-                } else {
-                        showError("Subject Name does not exist.")
+        adminSubjectRef.orderByChild("subjects").equalTo(subjectName)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        val subjectData = snapshot.children.first()
+                        val existingData = subjectData.value as Map<*, *>
+                        currentSubjectKey = subjectData.key
+                        currentSubjectNameOnFirebase = existingData["subjects"]?.toString()
+
+                        binding.edtBirthday.setText(existingData["description"]?.toString() ?: "")
+                        binding.edtHometown.setText(existingData["timeStart"]?.toString() ?: "")
+                        binding.edtStar.setText(existingData["starCount"]?.toString() ?: "")
+                        binding.edtQuantity.setText(
+                            existingData["quantityE"]?.toString() ?: ""
+                        )
+                    } else {
+                        binding.edtBirthday.text?.clear()
+                        binding.edtHometown.text?.clear()
+                        binding.edtStar.text?.clear()
+                        binding.edtQuantity.text?.clear()
+                        currentSubjectKey = null
+                        currentSubjectNameOnFirebase = null
+                        showError("Subject '$subjectName' is not found.")
+                    }
                 }
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("Firebase", "Database Error: ${error.message}")
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("Firebase", "Database Error: ${error.message}")
+                    showError("Error loading subject details: ${error.message}")
+                }
+            })
     }
 }
-

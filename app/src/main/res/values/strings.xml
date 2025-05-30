@@ -76,4 +76,10 @@
     <string name="maximum_number_of_students">Maximum number of students</string>
     <string name="enter_number">Enter Number</string>
     <string name="send">Send</string>
+    <string name="update_news">Update News</string>
+    <string name="manage_news">Manage News</string>
+    <string name="enter_news_tittle">Enter News Tittle</string>
+    <string name="enter_news_decription">Enter News Decription</string>
+    <string name="time">Time</string>
+    <string name="news_title">News Title</string>
 </resources>

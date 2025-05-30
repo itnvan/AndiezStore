@@ -1,17 +1,12 @@
 package com.example.andiezstore.user.model
 
-class HomeChat{
-    var name:String?=null
-    var imgUser: Int?=null
-    var presentText: String?=null
-    var uid:String?=null
-    constructor(name:String?,imgUser:Int?,presentText:String?,uid:String?){
-        this.name=name
-        this.imgUser=imgUser
-        this.presentText=presentText
-        this.uid=uid
-    }
-}
+data class HomeChat(
+    val name: String? = null,
+    val presentText: String? = null,
+    val userId: String? = null, // Đảm bảo kiểu dữ liệu là String?
+    val profileImageUrl: String? = null,
+    val otherUserId: String? = null
+)
 
 
 

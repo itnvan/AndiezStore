@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_gravity="start"
     android:padding="8dp">
@@ -15,7 +16,10 @@
         android:padding="12dp"
         android:textSize="16sp"
         android:text="Message"
-        android:maxWidth="250dp" />
+        android:maxWidth="250dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <TextView
         android:id="@+id/text_message_time"
@@ -24,5 +28,7 @@
         android:textSize="12sp"
         android:layout_gravity="start"
         android:textColor="#888"
-        android:text="Time" />
-</LinearLayout>
+        android:text="Time"
+        app:layout_constraintStart_toStartOf="@id/text_message_body"
+        app:layout_constraintTop_toBottomOf="@id/text_message_body"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

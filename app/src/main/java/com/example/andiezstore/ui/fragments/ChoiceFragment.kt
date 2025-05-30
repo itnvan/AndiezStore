@@ -2,6 +2,7 @@ package com.example.andiezstore.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +32,10 @@ class ChoiceFragment : Fragment() {
                 lifecycleScope.launch {
                     delay(2000L) // Chờ 2 giây (2000 milliseconds)
                     Util.hideDialog() // Ẩn dialog sau 3 giây
-                    findNavController().navigate(com.example.andiezstore.R.id.action_choiceFragment_to_loginFragment)
+                    if (findNavController().currentDestination?.id == com.example.andiezstore.R.id.choiceFragment) {
+                        Log.d("ChoiceFragment", "Navigating to loginFragment")
+                        findNavController().navigate(com.example.andiezstore.R.id.action_choiceFragment_to_loginFragment)
+                    }
                     binding.imgStudent.isClickable = true // Cho phép click lại sau khi chuyển màn
                 }
             }

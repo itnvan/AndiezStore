@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_30sdp"
+    android:layout_marginEnd="@dimen/_30sdp"
+    android:elevation="@dimen/_8sdp"
+    android:paddingHorizontal="@dimen/_20sdp"
+    app:cardCornerRadius="@dimen/_10sdp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvManageSubject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:text="@string/manage_news"
+            android:textColor="@color/white_blue"
+            android:textSize="@dimen/_30ssp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="@string/news_title"
+            android:textSize="@dimen/_15ssp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toTopOf="@id/inputLayout"
+            app:layout_constraintStart_toStartOf="@id/inputLayout"
+            app:layout_constraintTop_toBottomOf="@id/tvManageSubject" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_25sdp"
+            app:boxCornerRadiusBottomEnd="@dimen/_10sdp"
+            app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+            app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+            app:boxCornerRadiusTopStart="@dimen/_10sdp"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvName"
+
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@id/edtName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/ic_user"
+                android:drawablePadding="@dimen/_7sdp"
+                android:hint="@string/enter_news_tittle"
+                android:inputType="text"
+                android:paddingStart="@dimen/_5sdp"
+                tools:ignore="RtlSymmetry" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDecription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:text="@string/decription"
+            android:textSize="@dimen/_15sdp"
+            app:layout_constraintStart_toStartOf="@id/inputLayout"
+            app:layout_constraintTop_toBottomOf="@id/inputLayout" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_25sdp"
+            app:boxCornerRadiusBottomEnd="@dimen/_10sdp"
+            app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+            app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+            app:boxCornerRadiusTopStart="@dimen/_10sdp"
+            app:endIconMode="clear_text"
+            app:layout_constraintTop_toBottomOf="@id/tvDecription">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtDecription"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/ic_float"
+                android:drawablePadding="@dimen/_7sdp"
+                android:hint="@string/enter_news_decription"
+                android:inputType="text"
+                android:paddingStart="@dimen/_5sdp"
+                tools:ignore="RtlSymmetry" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:text="Enter Time"
+            android:textSize="@dimen/_15ssp"
+            app:layout_constraintStart_toStartOf="@id/inputLayout2"
+            app:layout_constraintTop_toBottomOf="@id/inputLayout2" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_25sdp"
+            app:boxCornerRadiusBottomEnd="@dimen/_10sdp"
+            app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+            app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+            app:boxCornerRadiusTopStart="@dimen/_10sdp"
+            app:endIconMode="clear_text"
+            app:layout_constraintTop_toBottomOf="@id/tvTime">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtTime"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/ic_date"
+                android:drawablePadding="@dimen/_7sdp"
+                android:hint="@string/time"
+                android:inputType="datetime"
+                android:paddingStart="@dimen/_5sdp"
+                tools:ignore="RtlSymmetry" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/bg_subject"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:text="@string/update_news"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_8ssp"
+            app:layout_constraintStart_toStartOf="@id/inputLayout3"
+            app:layout_constraintEnd_toEndOf="@id/inputLayout3"
+            app:layout_constraintTop_toBottomOf="@id/inputLayout3" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/bg_subject"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:text="@string/update_news"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_8ssp"
+            app:layout_constraintStart_toStartOf="@id/inputLayout3"
+            app:layout_constraintEnd_toEndOf="@id/inputLayout3"
+            app:layout_constraintTop_toBottomOf="@id/inputLayout3" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/bg_subject"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:text="@string/update_news"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_8ssp"
+            app:layout_constraintStart_toStartOf="@id/inputLayout3"
+            app:layout_constraintEnd_toEndOf="@id/inputLayout3"
+            app:layout_constraintTop_toBottomOf="@id/inputLayout3" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnCancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/ic_exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

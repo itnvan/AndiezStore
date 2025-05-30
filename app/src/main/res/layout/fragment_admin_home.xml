@@ -127,43 +127,4 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@id/tvCagetories" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvProduct"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_10dp"
-        android:text="News"
-        android:layout_marginTop="@dimen/dimen_50dp"
-        android:textColor="@color/black"
-        android:textSize="@dimen/dimen_20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rcvCagetories" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/ic_right"
-        app:layout_constraintBottom_toBottomOf="@id/tvProduct"
-        app:layout_constraintStart_toEndOf="@id/tvProduct"
-        app:layout_constraintTop_toTopOf="@id/tvProduct" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcvProduct"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/_10sdp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvProduct" />
-
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/rcvProduct"
-        app:layout_constraintEnd_toEndOf="@id/rcvProduct"
-        app:layout_constraintStart_toStartOf="@id/rcvProduct"
-        app:layout_constraintTop_toTopOf="@id/rcvProduct" />
 </androidx.constraintlayout.widget.ConstraintLayout>
