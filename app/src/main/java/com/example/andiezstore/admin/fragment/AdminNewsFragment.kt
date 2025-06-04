@@ -171,17 +171,16 @@ class AdminNewsFragment : Fragment() {
             binding.tvTitle.text = news.title ?: "No title"
             binding.tvDecription.text = news.decription ?: "No description"
             binding.tvDate.text = news.date ?: "No Date"
-            // Tải ảnh. Hiện tại XML có imgNews với background drawable.
-            // Nếu bạn có URL ảnh trong News object, hãy dùng Glide ở đây.
-            // Ví dụ: Glide.with(this).load(news.imageUrl).into(binding.imgNews)
-            // Hiện tại, tôi sẽ giữ nguyên background mặc định hoặc đặt một placeholder.
-            binding.imgNews.setImageResource(R.drawable.ic_laucher)
+            binding.tvAuthor.text = news.author ?: "No Author"
+            Glide.with(this).load(news.image).into(binding.imgNews)
+            binding.imgNews.setImageResource(R.drawable.view3)
         } else {
             // Xóa nội dung hoặc hiển thị trạng thái rỗng
             binding.tvTitle.text = "No title"
             binding.tvDecription.text = "Please add more news"
             binding.tvDate.text = ""
-            binding.imgNews.setImageResource(R.drawable.ic_laucher) // Đặt ảnh placeholder
+            binding.tvAuthor.text = ""
+            binding.imgNews.setImageResource(R.drawable.view3) // Đặt ảnh placeholder
         }
     }
 
@@ -190,7 +189,8 @@ class AdminNewsFragment : Fragment() {
         val newNewsData: HashMap<String, Any?> = hashMapOf(
             "title" to news.title,
             "decription" to news.decription,
-            "date" to news.date
+            "date" to news.date,
+            "author" to news.author
         )
 
         newsDatabaseRef.push().setValue(newNewsData)
@@ -212,7 +212,8 @@ class AdminNewsFragment : Fragment() {
             val updatedNewsData: HashMap<String, Any?> = hashMapOf(
                 "title" to news.title,
                 "decription" to news.decription,
-                "date" to news.date
+                "date" to news.date,
+                "author" to news.author
             )
 
             newsDatabaseRef.child(key).updateChildren(updatedNewsData)

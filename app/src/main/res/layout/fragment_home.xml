@@ -1,184 +1,277 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRefreshLayoutHome"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?android:attr/colorBackground"
     tools:context=".user.fragments.HomeFragment">
 
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvHi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_10dp"
-        android:layout_marginStart="@dimen/dimen_20dp"
-        android:text="@string/hello"
-        android:textColor="@color/black"
-        android:textSize="@dimen/dimen_20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imgMess"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/ic_mess"
-        android:padding="@dimen/_10sdp"
-        android:layout_margin="@dimen/_10sdp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColorHint="@color/black"
-        android:textColor="@color/black"
-        android:textSize="@dimen/dimen_20sp"
-        android:textStyle="bold"
-        android:layout_marginStart="@dimen/_2sdp"
-        app:layout_constraintStart_toEndOf="@id/tvHi"
-        app:layout_constraintBottom_toBottomOf="@id/tvHi"
-        app:layout_constraintTop_toTopOf="@id/tvHi" />
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edtSearch"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/bg_search"
-        android:hint="@string/search"
-        android:padding="@dimen/_5sdp"
-        android:maxLines="1"
-        android:textAlignment="center"
-        android:textColor="#828282"
-        android:textSize="@dimen/dimen_20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imgSearch"
-        android:layout_width="30dp"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="10dp"
-        android:background="@drawable/search"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="@id/edtSearch"
-        app:layout_constraintStart_toStartOf="@id/edtSearch"
-        app:layout_constraintTop_toTopOf="@id/edtSearch" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/banner"
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edtSearch">
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager2"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:layout_constraintEnd_toEndOf="@id/banner"
-            app:layout_constraintStart_toStartOf="@id/banner"
-            app:layout_constraintTop_toTopOf="@id/banner" />
-
-        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-            android:id="@+id/dotsIndicator"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:visibility="visible"
-            app:dotsColor="#7A7777"
-            app:dotsCornerRadius="8dp"
-            app:dotsSize="6dp"
-            app:dotsSpacing="2dp"
-            app:dotsWidthFactor="2.5"
+            android:paddingBottom="24dp">
 
-            app:layout_constraintEnd_toEndOf="@id/banner"
-            app:layout_constraintStart_toStartOf="@id/banner"
-            app:layout_constraintTop_toBottomOf="@id/viewPager2"
-            app:selectedDotColor="#3EA042"
-            tools:visibility="visible" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvHi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="24dp"
+                android:text="@string/hello"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvCagetories"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_10dp"
-        android:text="@string/cagetories"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/black"
-        android:textSize="@dimen/dimen_20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/banner" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvUser"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/tvHi"
+                app:layout_constraintEnd_toStartOf="@id/imgMess"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@id/tvHi"
+                app:layout_constraintTop_toTopOf="@id/tvHi"
+                tools:text="Andiez" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/ic_right"
-        app:layout_constraintBottom_toBottomOf="@id/tvCagetories"
-        app:layout_constraintStart_toEndOf="@id/tvCagetories"
-        app:layout_constraintTop_toTopOf="@id/tvCagetories" />
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcvCagetories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/_10sdp"
-        tools:listitem="@layout/item_cagetories"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/tvCagetories" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvProduct"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_10dp"
-        android:text="News"
-        android:layout_marginTop="@dimen/dimen_50dp"
-        android:textColor="@color/black"
-        android:textSize="@dimen/dimen_20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rcvCagetories" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/ic_right"
-        app:layout_constraintBottom_toBottomOf="@id/tvProduct"
-        app:layout_constraintStart_toEndOf="@id/tvProduct"
-        app:layout_constraintTop_toTopOf="@id/tvProduct" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcvProduct"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/_10sdp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvProduct" />
-
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/rcvProduct"
-        app:layout_constraintEnd_toEndOf="@id/rcvProduct"
-        app:layout_constraintStart_toStartOf="@id/rcvProduct"
-        app:layout_constraintTop_toTopOf="@id/rcvProduct" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgMess"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="20dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                android:src="@drawable/ic_mess"
+                app:layout_constraintBottom_toBottomOf="@id/tvHi"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvHi"
+                app:tint="?attr/colorControlNormal" />
 
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardSearch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                app:cardBackgroundColor="?attr/colorSurface"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvHi">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imgSearch"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/search"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="?attr/colorControlNormal" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/edtSearch"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/search"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingStart="12dp"
+                        android:paddingTop="14dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="14dp"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textColorHint="?android:attr/textColorHint"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/imgSearch"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- Banner ViewPager2 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/banner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardSearch">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPager2"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintDimensionRatio="H,16:8"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                    android:id="@+id/dotsIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:dotsColor="#CCCCCC"
+                    app:dotsCornerRadius="8dp"
+                    app:dotsSize="8dp"
+                    app:dotsSpacing="4dp"
+                    app:dotsWidthFactor="2.5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/viewPager2"
+                    app:selectedDotColor="?attr/colorPrimary" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutHeaderCagetories"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/banner">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCagetories"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/cagetories"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSeeAllCagetories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingStart="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="4dp"
+                    android:text="@string/see_all"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvCagetories"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutHeaderCagetories"
+                tools:itemCount="4"
+                tools:listitem="@layout/item_cagetories" />
+
+            <LinearLayout
+                android:id="@+id/layoutHeaderProduct"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rcvCagetories">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvProduct"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="News"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSeeAllProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingStart="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="4dp"
+                    android:text="@string/see_all"
+                    android:textColor="?attr/colorPrimary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvProduct"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutHeaderProduct"
+                tools:listitem="@layout/item_news" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

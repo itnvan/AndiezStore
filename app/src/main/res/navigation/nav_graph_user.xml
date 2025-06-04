@@ -12,13 +12,25 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registedFragment"
-            app:destination="@id/registedFragment" />
+            app:destination="@id/registedFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_loginFragment_to_phoneFragment"
-            app:destination="@id/phoneFragment" />
+            app:destination="@id/phoneFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/otpFragment"
@@ -27,7 +39,11 @@
         tools:layout="@layout/fragment_otp">
         <action
             android:id="@+id/action_otpFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/registedFragment"
@@ -36,7 +52,11 @@
         tools:layout="@layout/fragment_registed">
         <action
             android:id="@+id/action_registedFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/phoneFragment"
@@ -45,7 +65,11 @@
         tools:layout="@layout/fragment_phone">
         <action
             android:id="@+id/action_phoneFragment_to_otpFragment"
-            app:destination="@id/otpFragment" />
+            app:destination="@id/otpFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -54,22 +78,39 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_subjectFragment"
-            app:destination="@id/subjectFragment" />
+            app:destination="@id/subjectFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_homeFragment_to_classroomFragment"
-            app:destination="@id/classroomFragment" />
+            app:destination="@id/classroomFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_homeFragment_to_informationFragment"
-            app:destination="@id/informationFragment" />
-        <action
-            android:id="@+id/action_classroomFragment_to_subjectFragment"
-            app:destination="@id/subjectFragment" />
-        <action
-            android:id="@+id/action_classroomFragment_to_informationFragment"
-            app:destination="@id/informationFragment" />
+            app:destination="@id/informationFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_homeFragment_to_homeChatFragment"
-            app:destination="@id/homeChatFragment" />
+            app:destination="@id/homeChatFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_newsDetailFragment"
+            app:destination="@id/newsDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/subjectFragment"
@@ -78,7 +119,11 @@
         tools:layout="@layout/fragment_subject">
         <action
             android:id="@+id/action_subjectFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/informationFragment"
@@ -87,13 +132,25 @@
         tools:layout="@layout/fragment_information">
         <action
             android:id="@+id/action_informationFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
-            android:id="@+id/action_classroomFragment_to_subjectFragment"
-            app:destination="@id/subjectFragment" />
+            android:id="@+id/action_informationFragment_to_subjectFragment"
+            app:destination="@id/subjectFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_informationFragment_to_choiceFragment"
-            app:destination="@id/choiceFragment" />
+            app:destination="@id/choiceFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/classroomFragment"
@@ -102,16 +159,32 @@
         tools:layout="@layout/fragment_classroom">
         <action
             android:id="@+id/action_classroomFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_classroomFragment_to_homeFragment2"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_classroomFragment_to_informationFragment"
-            app:destination="@id/informationFragment" />
+            app:destination="@id/informationFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_classroomFragment_to_subjectFragment"
-            app:destination="@id/subjectFragment" />
+            app:destination="@id/subjectFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/choiceFragment"
@@ -120,30 +193,60 @@
         tools:layout="@layout/fragment_choice">
         <action
             android:id="@+id/action_choiceFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.example.andiezstore.user.fragments.ChatFragment"
         android:label="chat_fragment"
-        tools:layout="@layout/fragment_chat" >
+        tools:layout="@layout/fragment_chat">
         <action
             android:id="@+id/action_chatFragment_to_homeChatFragment"
-            app:destination="@id/homeChatFragment" />
+            app:destination="@id/homeChatFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/homeChatFragment"
         android:name="com.example.andiezstore.user.fragments.HomeChatFragment"
         android:label="fragment_home_chat"
-        tools:layout="@layout/fragment_home_chat" >
+        tools:layout="@layout/fragment_home_chat">
         <action
             android:id="@+id/action_homeChatFragment_to_chatFragment"
-            app:destination="@id/chatFragment" />
+            app:destination="@id/chatFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_homeChatFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_homeChatFragment_to_chatFragment2"
-            app:destination="@id/chatFragment" />
+            app:destination="@id/chatFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/newsDetailFragment"
+        android:name="com.example.andiezstore.user.fragments.NewsDetailFragment"
+        android:label="NewsDetailFragment"
+        tools:layout="@layout/fragment_news_detail">
+        <argument
+            android:name="newsId"
+            app:argType="string" />
     </fragment>
 </navigation>

@@ -36,6 +36,7 @@ object Crud {
         val edtName: EditText = binding.edtName
         val edtDecription: EditText = binding.edtDecription
         val edtTime: EditText = binding.edtTime
+        val edtAuthor:EditText = binding.edtAuthor
         val btnUpdate: Button = binding.btnUpdate
         val btnCancel: AppCompatImageView = binding.btnCancel
         val btnAdd: Button = binding.btnAdd
@@ -45,7 +46,7 @@ object Crud {
             edtName.setText(currentNews.title)
             edtDecription.setText(currentNews.decription)
             edtTime.setText(currentNews.date)
-
+            edtAuthor.setText(currentNews.author)
             // Trong chế độ Update/Delete, thường không cho phép sửa tên môn học
             // hoặc tên môn học là khóa chính để tìm kiếm
             edtName.isEnabled = false
@@ -59,11 +60,12 @@ object Crud {
             val title = edtName.text.toString()
             val decription = edtDecription.text.toString()
             val date = edtTime.text.toString()
-            if (title.isEmpty() || decription.isEmpty() || date.isEmpty()) {
+            val author = edtAuthor.text.toString()
+            if (title.isEmpty() || decription.isEmpty() || date.isEmpty()|| author.isEmpty()) {
                 Toast.makeText(context, "Please fill in all the fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            val news = News(title = title, decription = decription, date = date)
+            val news = News(title = title, decription = decription, date = date, author = author, image = R.drawable.view3.toString())
             onAdd(news)
             dialog?.dismiss()
         }
@@ -71,11 +73,12 @@ object Crud {
             val title = edtName.text.toString()
             val decription = edtDecription.text.toString()
             val date = edtTime.text.toString()
-            if (title.isEmpty() || decription.isEmpty() || date.isEmpty()) {
+            val author = edtAuthor.text.toString()
+            if (title.isEmpty() || decription.isEmpty() || date.isEmpty()|| author.isEmpty()) {
                 Toast.makeText(context, "Please fill in all the fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            val news = News(title = title, decription = decription, date = date)
+            val news = News(title = title, decription = decription, date = date, author = author, image = R.drawable.view3.toString())
             onUpdate(news)
             dialog?.dismiss()
         }

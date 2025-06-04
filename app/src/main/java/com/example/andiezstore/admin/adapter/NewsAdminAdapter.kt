@@ -17,11 +17,12 @@ class NewsAdminAdapter(
         val tvTitle: TextView = itemView.findViewById(R.id.tvTitle)
         val tvDescription: TextView = itemView.findViewById(R.id.tvDecription)
         val tvDate: TextView = itemView.findViewById(R.id.tvDate)
-
+        val tvAuthor: TextView = itemView.findViewById(R.id.tvAuthor)
         fun bind(news: News) {
             tvTitle.text = news.title
             tvDescription.text = news.decription
             tvDate.text = news.date
+            tvAuthor.text = news.author
         }
     }
 

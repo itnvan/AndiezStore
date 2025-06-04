@@ -3,82 +3,100 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurfaceContainerLowest"
+    tools:context=".user.fragments.ClassroomFragment">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imgResearch"
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayoutClassroom"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_13sdp"
-        android:background="@drawable/ic_search"
-        android:padding="@dimen/_16sdp"
+        android:background="?attr/colorPrimary"
+        app:elevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imgBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_15sdp"
-        android:background="@drawable/ic_back"
-        android:padding="@dimen/_10sdp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarClassroom"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_back"
+            app:navigationIconTint="?attr/colorOnPrimary"
+            app:title="Classrooms"
+            app:titleTextColor="?attr/colorOnPrimary">
+
+
+            <ImageView
+                android:id="@+id/imgSearchAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Search classrooms"
+                android:padding="12dp"
+                android:src="@drawable/ic_search"
+                app:tint="?attr/colorOnPrimary" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBarLayoutClassroom"
+        android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_50sdp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:textSize="@dimen/_20ssp"
+        android:textSize="@dimen/_10ssp"
+        android:textStyle="normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvScreenTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnOnGoing"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_30sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:background="@drawable/bg_button"
-        android:text="ongoing"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_13ssp"
-        app:layout_constraintBottom_toBottomOf="@id/btnCompleted"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btnCompleted"
-        app:layout_constraintTop_toTopOf="@id/btnCompleted" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnCompleted"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_30sdp"
-        android:background="@drawable/bg_button"
-        android:text="completed"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_13ssp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvName" />
+        app:layout_constraintTop_toBottomOf="@id/appBarLayoutClassroom"
+        tools:text="Explore Available Classrooms" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvClass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_80sdp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:clipToPadding="false"
         android:orientation="vertical"
+        android:paddingBottom="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnCompleted"
-        android:transcriptMode="alwaysScroll"
+        app:layout_constraintTop_toBottomOf="@+id/tvScreenTitle"
         tools:listitem="@layout/item_classroom" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvEmptyClassroom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No classrooms found."
+        android:textColor="?android:attr/textColorSecondary"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/rcvClass"
+        app:layout_constraintEnd_toEndOf="@id/rcvClass"
+        app:layout_constraintStart_toStartOf="@id/rcvClass"
+        app:layout_constraintTop_toTopOf="@id/rcvClass"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

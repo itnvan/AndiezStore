@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.andiezstore.R
 import com.example.andiezstore.databinding.FragmentSubjectBinding
 import com.example.andiezstore.user.adapter.SubjectAdapter
 import com.example.andiezstore.user.model.Subject
@@ -31,6 +33,7 @@ class SubjectFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -45,42 +48,52 @@ class SubjectFragment : Fragment() {
         }
         binding.rcvSubject.adapter = subjectAdapter
         binding.rcvSubject.layoutManager = LinearLayoutManager(requireContext())
+        binding.toolbarSubject.setOnClickListener {
+            binding.toolbarSubject.navigationIcon.run {
+                if (this != null) {
+                    if (!this.constantState!!.equals(resources.getDrawable(R.drawable.ic_back).constantState) ) {
+                        binding.toolbarSubject.navigationIcon = resources.getDrawable(R.drawable.ic_back)
+                        findNavController().navigate(R.id.action_classroomFragment_to_homeFragment)
+                    }
+                }
+            }
+        }
 
         // Fetch subject data from Firebase
         getSubjectData()
-        getCurrentUserName()
+//        getCurrentUserName()
 
     }
     @SuppressLint("SetTextI18n")
-    private fun getCurrentUserName() {
-        val currentUser = auth.currentUser
-        if (currentUser != null) {
-            val uid = currentUser.uid
-            getCurrentUserName(uid)
-        } else {
-            binding.tvName.text = "Not logged in"
-        }
-    }
-    private fun getCurrentUserName(uid: String) {
-        database.child(uid).child("information").child("name")
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                @SuppressLint("SetTextI18n")
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
-                        val userName = snapshot.getValue(String::class.java)
-                        binding.tvName.text = userName
-                    } else {
-                        binding.tvName.text = "User name not found"
-                    }
-                }
-
-                @SuppressLint("SetTextI18n")
-                override fun onCancelled(error: DatabaseError) {
-                    Log.e("Firebase", "Failed to read user name.", error.toException())
-                    binding.tvName.text = "Error loading user name"
-                }
-            })
-    }
+//    private fun getCurrentUserName() {
+//        val currentUser = auth.currentUser
+//        if (currentUser != null) {
+//            val uid = currentUser.uid
+//            getCurrentUserName(uid)
+//        } else {
+//            binding.tvName.text = "Not logged in"
+//        }
+//    }
+//    private fun getCurrentUserName(uid: String) {
+//        database.child(uid).child("information").child("name")
+//            .addListenerForSingleValueEvent(object : ValueEventListener {
+//                @SuppressLint("SetTextI18n")
+//                override fun onDataChange(snapshot: DataSnapshot) {
+//                    if (snapshot.exists()) {
+//                        val userName = snapshot.getValue(String::class.java)
+//                        binding.tvName.text = userName
+//                    } else {
+//                        binding.tvName.text = "User name not found"
+//                    }
+//                }
+//
+//                @SuppressLint("SetTextI18n")
+//                override fun onCancelled(error: DatabaseError) {
+//                    Log.e("Firebase", "Failed to read user name.", error.toException())
+//                    binding.tvName.text = "Error loading user name"
+//                }
+//            })
+//    }
     private fun getSubjectData() {
         adminDatabase.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {

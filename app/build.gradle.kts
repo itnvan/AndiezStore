@@ -1,9 +1,11 @@
 plugins {
     id("kotlin-kapt")
+    id("androidx.navigation.safeargs")
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
     alias(libs.plugins.kotlin.compose)
+
 
     
 }
@@ -64,6 +66,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.firebase.storage)
+    implementation(libs.androidx.swiperefreshlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -72,6 +75,8 @@ dependencies {
     implementation("com.google.code.gson:gson:2.9.1")
     //dotsindicator
     implementation("com.tbuonomo:dotsindicator:5.0")
+    //swiftFreshLayout
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     //ssp & sdp
     implementation (libs.sdp.android)
     implementation (libs.ssp.android)
@@ -81,6 +86,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     //navigation
     val navversion = "2.8.8"
+    val nav_version = "2.9.0"
     implementation ("androidx.navigation:navigation-fragment:$navversion")
     implementation ("androidx.navigation:navigation-ui:$navversion")
     //auth

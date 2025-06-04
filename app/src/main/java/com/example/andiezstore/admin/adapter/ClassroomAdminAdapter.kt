@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.andiezstore.R
 import com.example.andiezstore.user.model.Classroom
 
-class ClassroomAdminAdapter( private val listClass: List<Classroom>) :
-RecyclerView.Adapter<ClassroomAdminAdapter.ClassroomAdminViewHolder>() {
+class ClassroomAdminAdapter(private val listClass: List<Classroom>) :
+    RecyclerView.Adapter<ClassroomAdminAdapter.ClassroomAdminViewHolder>() {
 
     class ClassroomAdminViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun onBind(classroom: Classroom) {
@@ -19,7 +19,7 @@ RecyclerView.Adapter<ClassroomAdminAdapter.ClassroomAdminViewHolder>() {
             starCounts.text = classroom.tvStar
             times.text = classroom.timeStart
             quantityS.text = classroom.quantityS.toString()
-            quantityE.text=classroom.quantityE.toString()
+            quantityE.text = classroom.quantityE.toString()
             classroom.imgClasroom?.let { imgClasss.setImageResource(it) }
 
         }
@@ -30,7 +30,7 @@ RecyclerView.Adapter<ClassroomAdminAdapter.ClassroomAdminViewHolder>() {
         private val times = view.findViewById<TextView>(R.id.tvTime)
         private val quantityS = view.findViewById<TextView>(R.id.tvQuantity1)
         private val imgClasss = view.findViewById<ImageView>(R.id.imgClass)
-        private val quantityE=view.findViewById<TextView>(R.id.tvQuantity2)
+        private val quantityE = view.findViewById<TextView>(R.id.tvQuantity2)
     }
 
     override fun onCreateViewHolder(

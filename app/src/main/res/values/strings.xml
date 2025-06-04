@@ -82,4 +82,18 @@
     <string name="enter_news_decription">Enter News Decription</string>
     <string name="time">Time</string>
     <string name="news_title">News Title</string>
+    <string name="enter_author">Enter Author</string>
+    <string name="delete_news">Delete News</string>
+    <string name="add_news">Add News</string>
+    <string name="news">News</string>
+    <string name="see_all">See All\n</string>
+    <string name="edit_profile_photo">Edit Profile Photo</string>
+    <string name="my_information">My Information</string>
+    <string name="back">Back</string>
+    <string name="exit_or_logout">Exit or Logout</string>
+    <string name="full_name">Full Name</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="email_address">Email Address</string>
+    <string name="update_informations">Update Information</string>
+    <string name="delete_account">Delete Account</string>
 </resources>

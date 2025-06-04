@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_10sdp"
-        android:text="News"
+        android:text="@string/news"
         android:textColor="@color/dark_gray"
         android:textColorHint="@color/black"
         android:textSize="@dimen/_25ssp"
@@ -54,13 +54,22 @@
         app:layout_constraintStart_toStartOf="@id/tvTitle"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDate"
+        android:id="@+id/tvAuthor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
         android:textSize="@dimen/_12ssp"
         android:layout_marginEnd="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="@id/tvDecription"
+        app:layout_constraintStart_toStartOf="@id/tvDecription"
+        app:layout_constraintTop_toBottomOf="@id/tvDecription" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:textSize="@dimen/_12ssp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvDecription" />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnMain"

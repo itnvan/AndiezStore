@@ -4,32 +4,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorSurfaceContainerLowest"
     tools:context=".user.fragments.SubjectFragment">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvName"
-        android:layout_width="wrap_content"
+    <!-- Header Section -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayoutSubject"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:hint="@string/hi_andiez"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:textSize="@dimen/_18ssp"
-        android:textStyle="bold"
+        android:background="@color/white_blue"
+        app:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarSubject"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_back"
+            app:navigationIconTint="?attr/colorOnPrimary"
+            app:title="Available Subjects"
+            app:titleTextColor="?attr/colorOnPrimary" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgSubjectIcon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/ic_book"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBarLayoutSubject"
+        app:tint="@color/white_blue" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSubjectGreeting"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:text="Explore our wide range of subjects and find your next learning adventure!"
+        android:textAlignment="center"
+        android:textColor="?android:attr/textColorSecondary"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgSubjectIcon" />
+
+
+    <!-- RecyclerView for Subjects -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvSubject"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_50sdp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:clipToPadding="false"
         android:orientation="vertical"
-        android:transcriptMode="alwaysScroll"
+        android:paddingBottom="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSubjectGreeting"
         tools:listitem="@layout/item_subject" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvEmptySubjects"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No subjects available at the moment."
+        android:textColor="?android:attr/textColorSecondary"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/rcvSubject"
+        app:layout_constraintEnd_toEndOf="@id/rcvSubject"
+        app:layout_constraintStart_toStartOf="@id/rcvSubject"
+        app:layout_constraintTop_toTopOf="@id/rcvSubject"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

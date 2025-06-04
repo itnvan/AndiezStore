@@ -8,10 +8,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.lifecycle.ViewModelProvider // Thêm import này
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
@@ -20,6 +23,9 @@ import com.example.andiezstore.databinding.FragmentHomeBinding
 import com.example.andiezstore.ui.adapter.SliderAdapter
 import com.example.andiezstore.ui.model.CagetoryModel
 import com.example.andiezstore.user.adapter.CagetoryAdapter
+import com.example.andiezstore.user.adapter.NewsAdapter
+import com.example.andiezstore.user.model.News
+import com.example.andiezstore.user.viewmodel.NewsViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -34,7 +40,11 @@ class HomeFragment : Fragment() {
     private lateinit var silderAdapter: SliderAdapter
     private lateinit var cagetoryAdapter: CagetoryAdapter
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var newsViewModel: NewsViewModel // Đã khai báo
+    private lateinit var homeNewsAdapter: NewsAdapter
+    private val newsDataListForHome = mutableListOf<News>()
     private var database: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
@@ -42,17 +52,35 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        swipeRefreshLayout = binding.swipeRefreshLayoutHome
+        // Khởi tạo ViewModel ở đây hoặc trong onViewCreated trước khi sử dụng
+        newsViewModel = ViewModelProvider(this).get(NewsViewModel::class.java)
+        auth = FirebaseAuth.getInstance() // auth cũng nên được khởi tạo ở đây nếu chưa
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewPager2 = binding.viewPager2
-        auth = FirebaseAuth.getInstance()
+        // auth = FirebaseAuth.getInstance() // Đã khởi tạo trong onCreateView
+
         init()
         setUpTransformer()
         getCurrentUserName()
         setupCategoryRecyclerView()
+        setupHomeNewsRecyclerView() // Setup RecyclerView cho News
+        observeNewsViewModelData()  // Quan sát dữ liệu từ ViewModel
+        setupSwipeToRefresh()
+
+        // Fetch dữ liệu nếu danh sách rỗng
+        if (newsDataListForHome.isEmpty()) {
+            newsViewModel.fetchAllNews()
+        }
+        if (newsDataListForHome.isEmpty()) {
+            // Hiển thị loading ban đầu nếu cần, SwipeRefreshLayout sẽ xử lý loading khi kéo
+            swipeRefreshLayout.isRefreshing = true
+            newsViewModel.fetchAllNews()
+        }
         binding.imgMess.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_homeChatFragment)
         }
@@ -68,6 +96,23 @@ class HomeFragment : Fragment() {
         })
     }
 
+    private fun setupSwipeToRefresh() {
+        swipeRefreshLayout.setOnRefreshListener {
+            // Hành động khi người dùng kéo để làm mới
+            Log.d("HomeFragment", "Swipe to refresh triggered")
+            // Gọi API hoặc phương thức để tải lại dữ liệu
+            newsViewModel.fetchAllNews()
+            // ViewModel sẽ cập nhật LiveData isLoadingList,
+            // và chúng ta sẽ ẩn swipeRefreshLayout.isRefreshing trong observer của isLoadingList
+        }
+        // Bạn có thể tùy chỉnh màu sắc của animation loading
+        swipeRefreshLayout.setColorSchemeResources(
+            android.R.color.holo_blue_bright,
+            android.R.color.holo_green_light,
+            android.R.color.holo_orange_light
+        )
+    }
+
     private fun setupCategoryRecyclerView() {
         val categoryList = mutableListOf(
             CagetoryModel(name = "Subject", img = R.drawable.view2),
@@ -78,12 +123,11 @@ class HomeFragment : Fragment() {
         binding.rcvCagetories.adapter = cagetoryAdapter
         cagetoryAdapter.setOnItemClickListener(object : CagetoryAdapter.OnItemClickListener {
             override fun onItemClick(category: CagetoryModel, itemView: View) {
-                findNavController().let { navController ->
-                    when (category.name) {
-                        "Subject" -> navController.navigate(R.id.action_classroomFragment_to_subjectFragment)
-                        "Classroom" -> navController.navigate(R.id.action_homeFragment_to_classroomFragment)
-                        "Information" -> navController.navigate(R.id.action_classroomFragment_to_informationFragment)
-                    }
+                val navController = findNavController()
+                when (category.name) {
+                    "Subject" -> navController.navigate(R.id.action_homeFragment_to_subjectFragment)
+                    "Classroom" -> navController.navigate(R.id.action_homeFragment_to_classroomFragment)
+                    "Information" -> navController.navigate(R.id.action_homeFragment_to_informationFragment)
                 }
             }
         })
@@ -145,8 +189,63 @@ class HomeFragment : Fragment() {
         binding.viewPager2.setPageTransformer(transfomer)
     }
 
+    private fun setupHomeNewsRecyclerView() {
+        homeNewsAdapter = NewsAdapter(newsDataListForHome) { clickedNews ->
+            clickedNews.id?.let { newsId ->
+                Log.d("HomeFragment", "News clicked: ID - $newsId, Title - ${clickedNews.title}")
+                try {
+                    val action =
+                        HomeFragmentDirections.actionHomeFragmentToNewsDetailFragment(newsId)
+                    findNavController().navigate(action)
+                } catch (e: Exception) {
+                    Log.e("HomeFragment", "Navigation action not found or error: ", e)
+                    Toast.makeText(context, "Lỗi điều hướng chi tiết tin tức", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            } ?: run {
+                Toast.makeText(context, "ID tin tức không hợp lệ", Toast.LENGTH_SHORT).show()
+                Log.e("HomeFragment", "News ID is null for title: ${clickedNews.title}")
+            }
+        }
+
+        binding.rcvProduct.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = homeNewsAdapter
+        }
+    }
+
+    private fun observeNewsViewModelData() {
+        newsViewModel.newsList.observe(viewLifecycleOwner) { newsItems ->
+            Log.d("HomeFragment", "News list updated with ${newsItems.size} items.")
+            newsDataListForHome.clear()
+            newsDataListForHome.addAll(newsItems)
+            homeNewsAdapter.notifyDataSetChanged()
+            if (swipeRefreshLayout.isRefreshing) {
+                swipeRefreshLayout.isRefreshing = false
+            }
+        }
+
+        newsViewModel.isLoadingList.observe(viewLifecycleOwner) { isLoading ->
+            if (::swipeRefreshLayout.isInitialized) {
+                swipeRefreshLayout.isRefreshing = isLoading
+            }
+            binding.progressBar.visibility = if (isLoading && !swipeRefreshLayout.isRefreshing) View.VISIBLE else View.GONE
+            Log.d("HomeFragment", "News list loading state: $isLoading")
+        }
+
+        newsViewModel.error.observe(viewLifecycleOwner) { errorMessage ->
+            errorMessage?.let {
+                Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+                Log.e("HomeFragment", "Error observed while fetching news list: $it")
+                if (::swipeRefreshLayout.isInitialized && swipeRefreshLayout.isRefreshing) {
+                    swipeRefreshLayout.isRefreshing = false
+                }
+            }
+        }
+    }
+
     private fun init() {
-        handler = Handler(Looper.getMainLooper()) // Use getMainLooper for Fragment
+        handler = Handler(Looper.getMainLooper())
         imageList = ArrayList()
         imageList.add(R.drawable.view3)
         imageList.add(R.drawable.view)
@@ -160,14 +259,7 @@ class HomeFragment : Fragment() {
         (binding.viewPager2.getChildAt(0) as? RecyclerView)?.overScrollMode =
             RecyclerView.OVER_SCROLL_NEVER
         binding.dotsIndicator.attachTo(viewPager2)
-        runnable = Runnable {
-            var currentPosition = viewPager2.currentItem
-            if (currentPosition == imageList.size - 1) {
-                currentPosition = 0
-            } else {
-                currentPosition++
-            }
-            binding.viewPager2.setCurrentItem(currentPosition, true)
-        }
+        // runnable đã được khởi tạo ở trên, không cần khởi tạo lại ở đây nếu không có logic đặc biệt
+        // runnable = Runnable { ... } // Đã có
     }
 }
