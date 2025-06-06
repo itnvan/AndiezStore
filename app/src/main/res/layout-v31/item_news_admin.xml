@@ -27,8 +27,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:src="@tools:sample/avatars"
-            tools:targetApi="31" />
+            tools:src="@tools:sample/avatars" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/item_news_title"

@@ -1,6 +1,6 @@
 package com.example.andiezstore.utils
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -20,6 +20,7 @@ import com.example.andiezstore.R
 import com.example.andiezstore.user.model.News
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.core.graphics.drawable.toDrawable
 
 object Crud {
 
@@ -31,6 +32,7 @@ object Crud {
         DELETE
     }
 
+    @SuppressLint("UseKtx", "SetTextI18n")
     fun showCrudDialog(
         context: Context,
         currentNews: News? = null,
@@ -47,7 +49,7 @@ object Crud {
         builder.setView(dialogView)
 
         dialog = builder.create()
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
         dialog?.setCancelable(false)
 
         val tvManageSubject: TextView = dialogView.findViewById(R.id.tvManageSubject)
@@ -76,7 +78,7 @@ object Crud {
                 // Set current date/time when adding, and make it uneditable
                 edtTime.setText(dateFormat.format(Date()))
                 edtTime.isEnabled = false // Make time field read-only for ADD
-                edtAuthor.setText("Admin") // Default author for new news (can be made read-only too if desired)
+                edtAuthor.setText("Admin")
             }
             DialogMode.UPDATE -> {
                 tvManageSubject.text = context.getString(R.string.update_news)

@@ -1,5 +1,6 @@
 package com.example.andiezstore.user.fragments // Adjust package as needed
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ class SuggestionAdapter(private val onItemClick: (News) -> Unit) :
     private var suggestions: List<News> = emptyList()
 
     // Update the data in the adapter
+    @SuppressLint("NotifyDataSetChanged")
     fun submitList(newSuggestions: List<News>) {
         suggestions = newSuggestions
         notifyDataSetChanged() // Notifies the RecyclerView that the data has changed
@@ -40,8 +42,8 @@ class SuggestionAdapter(private val onItemClick: (News) -> Unit) :
         private val imgCover: ImageView = itemView.findViewById(R.id.imgNewsThumbnail)
         private val tvTitle: TextView = itemView.findViewById(R.id.tvNewsTitle)
         private val tvAuthor: TextView = itemView.findViewById(R.id.tvNewsAuthor)
-        private val tvDate: TextView = itemView.findViewById(R.id.tvNewsDate)
 
+        @SuppressLint("SetTextI18n")
         fun bind(news: News) {
             tvTitle.text = news.title ?: "No title"
             tvAuthor.text = "${news.author ?: "Unknown Author"} · ${news.date ?: "Unknown Date"}"

@@ -1,5 +1,6 @@
 package com.example.andiezstore.user.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,6 +54,7 @@ class NewsAdapter(
         return newsList.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateNewsList(newNewsList: List<News>) {
         newsList.clear() // Clear existing data
         newsList.addAll(newNewsList) // Add all new data

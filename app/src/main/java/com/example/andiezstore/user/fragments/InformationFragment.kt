@@ -1,5 +1,6 @@
 package com.example.andiezstore.user.fragments
 
+import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -37,7 +38,9 @@ import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import androidx.core.net.toUri
 
+@Suppress("DEPRECATION")
 class InformationFragment : Fragment() {
     private var _binding: FragmentInformationBinding? = null
     private val binding get() = _binding!!
@@ -117,6 +120,7 @@ class InformationFragment : Fragment() {
         }
     }
 
+    @SuppressLint("DefaultLocale")
     private fun showDatePickerDialog() {
         val calendar = Calendar.getInstance()
         originalDateOfBirth?.let {
@@ -458,6 +462,7 @@ class InformationFragment : Fragment() {
         _binding = null
     }
 
+    @SuppressLint("UseKtx")
     private fun bitmapToUri(bitmap: Bitmap): Uri {
         val bytes = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
@@ -467,7 +472,7 @@ class InformationFragment : Fragment() {
             "ProfileImage_${System.currentTimeMillis()}", // Unique title
             null
         )
-        return Uri.parse(path)
+        return path.toUri()
     }
 
     private fun setupTextWatchers() {

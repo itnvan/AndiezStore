@@ -1,5 +1,6 @@
 package com.example.andiezstore.admin.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +40,7 @@ class NewsAdminAdapter(
         return NewsViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         val news = newsList[position]
         holder.titleTextView.text = news.title
@@ -57,6 +59,7 @@ class NewsAdminAdapter(
     override fun getItemCount(): Int = newsList.size
 
     // Function to update the data in the adapter
+    @SuppressLint("NotifyDataSetChanged")
     fun updateNewsList(newNewsList: List<News>) {
         newsList = newNewsList
         notifyDataSetChanged() // Notify the adapter that the data has changed

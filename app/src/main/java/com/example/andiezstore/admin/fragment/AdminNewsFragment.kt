@@ -1,5 +1,6 @@
 package com.example.andiezstore.admin.fragment
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -28,6 +29,7 @@ import com.google.firebase.storage.StorageReference
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import androidx.core.net.toUri
 
 class AdminNewsFragment : Fragment() {
     private var _binding: FragmentAdminNewsBinding? = null
@@ -175,6 +177,7 @@ class AdminNewsFragment : Fragment() {
         binding.btnDelete.isClickable = !clicked
     }
 
+    @SuppressLint("UseKtx")
     private fun showCrudDialog(news: News? = null, mode: Crud.DialogMode) {
         Crud.showCrudDialog(
             context = requireContext(),
@@ -183,7 +186,7 @@ class AdminNewsFragment : Fragment() {
             mode = mode,
             onAdd = { newNews ->
                 newNews.image?.let { imageUriString ->
-                    val imageUri = Uri.parse(imageUriString)
+                    val imageUri = imageUriString.toUri()
                     uploadImageToFirebaseStorage(imageUri) { imageUrl ->
                         val newsWithImageUrl = newNews.copy(image = imageUrl)
                         onAddNews(newsWithImageUrl)
@@ -196,7 +199,7 @@ class AdminNewsFragment : Fragment() {
                 updatedNews.image?.let { imageUriString ->
                     // Check if the image string is a local URI (e.g., content:// or file://)
                     if (imageUriString.startsWith("content://") || imageUriString.startsWith("file://")) {
-                        val imageUri = Uri.parse(imageUriString)
+                        val imageUri = imageUriString.toUri()
                         uploadImageToFirebaseStorage(imageUri) { imageUrl ->
                             val newsWithImageUrl = updatedNews.copy(image = imageUrl)
                             onUpdateNews(newsWithImageUrl)
@@ -255,10 +258,11 @@ class AdminNewsFragment : Fragment() {
     }
 
     // Function to delete image from Firebase Storage
+    @SuppressLint("UseKtx")
     private fun deleteImageFromFirebaseStorage(imageUrl: String, onComplete: (Boolean) -> Unit) {
         try {
             // Get the file name from the URL by parsing the encoded path
-            val encodedPath = Uri.parse(imageUrl).lastPathSegment
+            val encodedPath = imageUrl.toUri().lastPathSegment
             val fileName = encodedPath?.substringAfterLast("news_images%2F")?.substringBefore("?")
 
             if (fileName == null) {
@@ -304,7 +308,7 @@ class AdminNewsFragment : Fragment() {
                 newsList.sortByDescending {
                     try {
                         SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).parse(it.date ?: "")
-                    } catch (e: Exception) {
+                    } catch (_: Exception) {
                         Date(0) // Return a very old date if parsing fails
                     }
                 }
