@@ -54,7 +54,7 @@ class AdminSubjectFragment : Fragment() {
         binding.btnDelete.setOnClickListener { onDeleteButtonClicked() }
         binding.btnUpdate.setOnClickListener { onUpdateButtonClicked() }
 
-        binding.edtName.setOnFocusChangeListener { _, hasFocus ->
+        binding.edtSubjectName.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 loadSubjectDetails()
             }
@@ -91,10 +91,10 @@ class AdminSubjectFragment : Fragment() {
     }
 
     private fun onAddButtonClicked() {
-        val subjectName = binding.edtName.text.toString().trim()
-        val description = binding.edtBirthday.text.toString().trim()
-        val subjectDay = binding.edtHometown.text.toString().trim()
-        val star = binding.edtStar.text.toString().trim()
+        val subjectName = binding.edtSubjectName.text.toString().trim()
+        val description = binding.edtDescription.text.toString().trim()
+        val subjectDay = binding.edtSubjectStartTime.text.toString().trim()
+        val star = binding.edtSubjectStar.text.toString().trim()
         val quantity = binding.edtQuantity.text.toString().trim()
 
         if (subjectName.isEmpty() || description.isEmpty() || subjectDay.isEmpty() || star.isEmpty() || quantity.isEmpty()) {
@@ -163,13 +163,13 @@ class AdminSubjectFragment : Fragment() {
     }
 
     private fun onUpdateButtonClicked() {
-        val newSubjectName = binding.edtName.text.toString().trim()
-        val description = binding.edtBirthday.text.toString().trim()
-        val subjectDay = binding.edtHometown.text.toString().trim()
-        val star = binding.edtStar.text.toString().trim()
-        val quantity = binding.edtQuantity.text.toString().trim() // Vẫn cần lấy để validate cho adminSubjectRef
+        val subjectName = binding.edtSubjectName.text.toString().trim()
+        val description = binding.edtDescription.text.toString().trim()
+        val subjectDay = binding.edtSubjectStartTime.text.toString().trim()
+        val star = binding.edtSubjectStar.text.toString().trim()
+        val quantity = binding.edtQuantity.text.toString().trim()
 
-        if (newSubjectName.isEmpty()) {
+        if (subjectName.isEmpty()) {
             showError("Please enter a subject name to update.")
             return
         }
@@ -190,7 +190,7 @@ class AdminSubjectFragment : Fragment() {
             return
         }
 
-        adminSubjectRef.orderByChild("subjects").equalTo(newSubjectName)
+        adminSubjectRef.orderByChild("subjects").equalTo(subjectName)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     var foundExistingSubjectWithNewName = false
@@ -205,7 +205,7 @@ class AdminSubjectFragment : Fragment() {
                     }
 
                     if (foundExistingSubjectWithNewName) {
-                        showError("Subject name '$newSubjectName' already exists for another subject.")
+                        showError("Subject name '$subjectName' already exists for another subject.")
                         return
                     }
 
@@ -215,7 +215,7 @@ class AdminSubjectFragment : Fragment() {
                     }
 
                     val updatedAdminSubject: HashMap<String, Any> = hashMapOf(
-                        "subjects" to newSubjectName,
+                        "subjects" to subjectName,
                         "description" to description,
                         "timeStart" to subjectDay,
                         "starCount" to star,
@@ -230,11 +230,11 @@ class AdminSubjectFragment : Fragment() {
                             // Thay đổi ở đây: SET CỨNG quantityS LÀ 0
                             val userSubjectData = hashMapOf("quantityS" to 0) // <--- Thay đổi ở đây
 
-                            if (currentSubjectNameOnFirebase != null && newSubjectName != currentSubjectNameOnFirebase) {
+                            if (currentSubjectNameOnFirebase != null && subjectName != currentSubjectNameOnFirebase) {
                                 updates["Subjects/${currentSubjectNameOnFirebase}"] = null
-                                updates["Subjects/$newSubjectName"] = userSubjectData
+                                updates["Subjects/$subjectName"] = userSubjectData
                             } else {
-                                updates["Subjects/$newSubjectName"] = userSubjectData
+                                updates["Subjects/$subjectName"] = userSubjectData
                             }
 
                             FirebaseDatabase.getInstance().reference.updateChildren(updates)
@@ -267,7 +267,7 @@ class AdminSubjectFragment : Fragment() {
     }
 
     private fun onDeleteButtonClicked() {
-        val subjectName = binding.edtName.text.toString().trim()
+        val subjectName = binding.edtSubjectName.text.toString().trim()
         if (subjectName.isEmpty()) {
             showError("Please enter a subject name to delete.")
             return
@@ -325,14 +325,14 @@ class AdminSubjectFragment : Fragment() {
     }
 
     private fun clearInputFields() {
-        binding.edtName.text?.clear()
-        binding.edtBirthday.text?.clear()
-        binding.edtHometown.text?.clear()
-        binding.edtStar.text?.clear()
+        binding.edtSubjectName.text?.clear()
+        binding.edtDescription.text?.clear()
+        binding.edtSubjectStartTime.text?.clear()
+        binding.edtSubjectStar.text?.clear()
         binding.edtQuantity.text?.clear()
         currentSubjectKey = null
         currentSubjectNameOnFirebase = null
-        binding.edtName.requestFocus()
+        binding.edtSubjectName.requestFocus()
     }
 
     private fun showError(message: String) {
@@ -344,7 +344,7 @@ class AdminSubjectFragment : Fragment() {
     }
 
     private fun loadSubjectDetails() {
-        val subjectName = binding.edtName.text.toString().trim()
+        val subjectName = binding.edtSubjectName.text.toString().trim()
         if (subjectName.isEmpty()) {
             clearInputFields()
             return
@@ -359,16 +359,16 @@ class AdminSubjectFragment : Fragment() {
                         currentSubjectKey = subjectData.key
                         currentSubjectNameOnFirebase = existingData["subjects"]?.toString()
 
-                        binding.edtBirthday.setText(existingData["description"]?.toString() ?: "")
-                        binding.edtHometown.setText(existingData["timeStart"]?.toString() ?: "")
-                        binding.edtStar.setText(existingData["starCount"]?.toString() ?: "")
+                        binding.edtDescription.setText(existingData["description"]?.toString() ?: "")
+                        binding.edtSubjectStartTime.setText(existingData["timeStart"]?.toString() ?: "")
+                        binding.edtSubjectStar.setText(existingData["starCount"]?.toString() ?: "")
                         binding.edtQuantity.setText(
                             existingData["quantityE"]?.toString() ?: ""
                         )
                     } else {
-                        binding.edtBirthday.text?.clear()
-                        binding.edtHometown.text?.clear()
-                        binding.edtStar.text?.clear()
+                        binding.edtDescription.text?.clear()
+                        binding.edtSubjectStartTime.text?.clear()
+                        binding.edtSubjectStar.text?.clear()
                         binding.edtQuantity.text?.clear()
                         currentSubjectKey = null
                         currentSubjectNameOnFirebase = null

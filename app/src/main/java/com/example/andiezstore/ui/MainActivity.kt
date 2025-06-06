@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import com.example.andiezstore.R
 import com.example.andiezstore.databinding.ActivityMainBinding
 import com.example.andiezstore.user.fragments.HomeFragment
-import com.example.andiezstore.user.fragments.MessengerFragment
 import com.example.andiezstore.user.fragments.ProfileFragment
 import com.example.andiezstore.user.fragments.SocialFragment
 

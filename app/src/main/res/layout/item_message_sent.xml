@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_gravity="end"
-    android:padding="8dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingHorizontal="@dimen/_8sdp"
+    android:paddingVertical="@dimen/_4sdp">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_message_body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_receive"
-        android:textColor="#000000"
-        android:textColorHint="@color/black"
-        android:padding="12dp"
-        android:textSize="16sp"
-        android:hint="Hi,Andiez"
-        android:maxWidth="250dp"
+        android:background="@drawable/bg_sent_message"
+        android:textColor="@color/white"
+        android:paddingHorizontal="@dimen/_12sdp"
+        android:paddingVertical="@dimen/_8sdp"
+        android:textSize="@dimen/_14ssp"
+        tools:text="@string/hi_andiez_this_is_a_longer_message_to_test_how_the_bubble_adapts_to_more_content"
+        android:maxWidth="@dimen/_240sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         />
 
-    <androidx.appcompat.widget.AppCompatCheckedTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_message_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
+        android:textSize="@dimen/_10ssp"
+        android:textColor="#888888"
+        tools:text="4:38 PM"
         android:layout_marginTop="@dimen/_2sdp"
-        android:layout_marginEnd="@dimen/_2sdp"
-        android:layout_gravity="end"
-        android:textColor="#888"
-        android:text="Time"
+        android:layout_marginEnd="@dimen/_4sdp"
         app:layout_constraintEnd_toEndOf="@id/text_message_body"
         app:layout_constraintTop_toBottomOf="@id/text_message_body"
         />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

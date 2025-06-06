@@ -18,7 +18,7 @@
         android:padding="@dimen/_12sdp">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgNewsThumbnail"
+            android:id="@+id/item_news_image"
             android:layout_width="@dimen/_80sdp"
             android:layout_height="@dimen/_80sdp"
             android:scaleType="centerCrop"
@@ -30,7 +30,7 @@
             tools:src="@tools:sample/avatars" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvNewsTitle"
+            android:id="@+id/item_news_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_12sdp"
@@ -41,33 +41,48 @@
             android:textSize="@dimen/_16ssp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/imgNewsThumbnail"
-            app:layout_constraintTop_toTopOf="@id/imgNewsThumbnail"
+            app:layout_constraintStart_toEndOf="@id/item_news_image"
+            app:layout_constraintTop_toTopOf="@id/item_news_image"
             tools:text="Breaking News: Android Development Reaches New Heights" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvNewsAuthor"
-            android:layout_width="wrap_content"
+            android:id="@+id/item_news_description"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_4sdp"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:textColor="@color/dark_gray"
             android:textSize="@dimen/_12ssp"
-            app:layout_constraintStart_toEndOf="@id/imgNewsThumbnail"
-            app:layout_constraintTop_toBottomOf="@id/tvNewsTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/item_news_image"
+            app:layout_constraintTop_toBottomOf="@id/item_news_title"
+            tools:text="Developers are excited about the latest updates to Kotlin and Jetpack Compose, promising faster development cycles and more intuitive UIs." />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_news_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/_10ssp"
+            app:layout_constraintStart_toEndOf="@id/item_news_image"
+            app:layout_constraintTop_toBottomOf="@id/item_news_description"
             tools:text="By John Doe" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvNewsDate"
+            android:id="@+id/item_news_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             android:textColor="@color/gray"
             android:textSize="@dimen/_10ssp"
-            app:layout_constraintStart_toEndOf="@id/tvNewsAuthor"
-            app:layout_constraintTop_toTopOf="@id/tvNewsAuthor"
-            app:layout_constraintBottom_toBottomOf="@id/tvNewsAuthor"
-            tools:text="05/06/2025" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_news_description"
+            tools:text="05/06/2025 18:21" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

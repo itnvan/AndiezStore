@@ -18,18 +18,31 @@
             android:layout_height="wrap_content"
             android:paddingBottom="24dp">
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgMenu"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="24dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                android:src="@drawable/ic_menu"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="?attr/colorControlNormal" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvHi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="8dp"
                 android:text="@string/hello"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="@id/imgMenu"
+                app:layout_constraintStart_toEndOf="@id/imgMenu"
+                app:layout_constraintTop_toTopOf="@id/imgMenu" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvUser"
@@ -75,7 +88,7 @@
                 app:cardElevation="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvHi">
+                app:layout_constraintTop_toBottomOf="@id/imgMenu">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -116,7 +129,6 @@
             </androidx.cardview.widget.CardView>
 
 
-            <!-- Banner ViewPager2 -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/banner"
                 android:layout_width="0dp"
@@ -180,6 +192,7 @@
                     android:id="@+id/tvSeeAllCagetories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:background="?attr/selectableItemBackground"
                     android:paddingStart="8dp"
                     android:paddingTop="4dp"
@@ -234,6 +247,7 @@
                     android:id="@+id/tvSeeAllProduct"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:background="?attr/selectableItemBackground"
                     android:paddingStart="8dp"
                     android:paddingTop="4dp"
@@ -258,7 +272,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layoutHeaderProduct"
-                tools:listitem="@layout/item_news" />
+                tools:listitem="@layout/item_news_summary_home" />
 
             <ProgressBar
                 android:id="@+id/progressBar"

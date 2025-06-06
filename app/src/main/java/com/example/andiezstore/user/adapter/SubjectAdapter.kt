@@ -76,7 +76,7 @@ open class SubjectAdapter(
 
     class SubjectViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val tvSubject: TextView = view.findViewById(R.id.tvSubjects)
-        val tvDescription: TextView = view.findViewById(R.id.tvDecription)
+        val tvDescription: TextView = view.findViewById(R.id.tvDescription)
         val timeStart: TextView = view.findViewById(R.id.tvStar)
         val timeEnd: TextView = view.findViewById(R.id.tvTime)
         val btnSubject: Button = view.findViewById(R.id.btnSubject)
@@ -94,8 +94,8 @@ open class SubjectAdapter(
         ) {
             tvSubject.text = subject.subject
             tvDescription.text = subject.description
-            timeStart.text = subject.timeStart
-            timeEnd.text = subject.tvStar
+            timeStart.text = subject.tvStar
+            timeEnd.text = subject.timeStart
             quantityS.text = quantity.toString()
             quantityE.text = subject.quantityE.toString()
             btnSubject.text = if (isApplied) "Applied" else "Apply"

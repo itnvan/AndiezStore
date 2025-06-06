@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".user.adapter.NewsDetailFragment">
+    tools:context=".user.fragments.NewsDetailFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -13,9 +13,8 @@
         <ImageView
             android:id="@+id/imgNewsDetailCover"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="200dp"
             android:scaleType="centerCrop"
-            app:layout_constraintBottom_toTopOf="@id/tvNewsDetailTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -28,10 +27,9 @@
             android:layout_marginTop="16dp"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgNewsDetailCover"
             tools:text="Tiêu đề Chi Tiết Tin Tức Rất Dài và Hấp Dẫn" />
 
         <TextView
@@ -75,6 +73,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvNewsDetailAuthor"
             tools:text="Đây là nội dung chi tiết của tin tức. Nội dung này có thể rất dài và chứa nhiều thông tin quan trọng, hình ảnh, video, và các thành phần khác..." />
+
+        <TextView
+            android:id="@+id/tvSuggestionsHeader"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="More News"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvNewsDetailDescription" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSuggestions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSuggestionsHeader"
+            tools:listitem="@layout/item_news_summary_home" />
 
         <ProgressBar
             android:id="@+id/progressBarNewsDetailLoading"

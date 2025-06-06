@@ -2,25 +2,23 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/_8sdp"
     android:layout_marginBottom="@dimen/_7sdp"
-    app:cardCornerRadius="@dimen/_20sdp"
-    app:cardElevation="@dimen/_10sdp">
+    app:cardCornerRadius="@dimen/_12sdp"
+    app:cardElevation="@dimen/_4sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingEnd="@dimen/dimen_20dp"
-        android:paddingBottom="@dimen/_5sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:padding="@dimen/_10sdp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgSubject"
-            android:layout_width="130dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_90sdp"
+            android:scaleType="centerCrop"
             android:src="@drawable/sflashlogo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -28,135 +26,122 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvSubjects"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:hint="@string/ui_ux_design"
+            android:layout_marginStart="@dimen/_12sdp"
             android:textColor="#FF6B00"
-            android:textColorHint="#FF6B00"
-            android:textSize="@dimen/_11ssp"
+            android:textSize="@dimen/_12ssp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imgSubject"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/ui_ux_design" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvDecription"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvDescription"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:hint="@string/intro_to_ui_ux_design"
-            android:textColorHint="@color/black"
-            android:textSize="@dimen/_13ssp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tvSubjects"
-            app:layout_constraintTop_toBottomOf="@id/tvSubjects" />
+            app:layout_constraintTop_toBottomOf="@id/tvSubjects"
+            tools:text="@string/intro_to_ui_ux_design_long" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgStar"
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="@dimen/_14sdp"
+            android:layout_marginTop="@dimen/_6sdp"
             android:src="@drawable/ic_star"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="@id/tvDecription"
-            app:layout_constraintTop_toBottomOf="@id/tvDecription" />
+            app:layout_constraintStart_toStartOf="@id/tvDescription"
+            app:layout_constraintTop_toBottomOf="@id/tvDescription" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvStar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_3sdp"
-            android:hint="@string/_4_4"
+            android:layout_marginStart="@dimen/_4sdp"
             android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_11ssp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/imgStar"
             app:layout_constraintStart_toEndOf="@id/imgStar"
-            app:layout_constraintTop_toTopOf="@id/imgStar" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:text="@string/or"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_15ssp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/tvDecription"
-            app:layout_constraintStart_toEndOf="@id/tvStar"
-            app:layout_constraintBottom_toTopOf="@id/tvQuantity2" />
+            app:layout_constraintTop_toTopOf="@id/imgStar"
+            tools:text="@string/_4_4" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:hint="@string/june_27th_2025"
+            android:layout_marginStart="@dimen/_12sdp"
             android:textColor="@color/black"
-            android:textColorHint="@color/black"
+            android:textSize="@dimen/_11ssp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/tv3"
-            app:layout_constraintStart_toEndOf="@id/tv3"
-            app:layout_constraintTop_toTopOf="@id/tv3" />
+            app:layout_constraintBottom_toBottomOf="@id/tvStar"
+            app:layout_constraintStart_toEndOf="@id/tvStar"
+            app:layout_constraintTop_toTopOf="@id/tvStar"
+            tools:text="@string/june_27th_2025" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvQuantity1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:hint="@string/_93"
+            android:layout_marginTop="@dimen/_8sdp"
+            tools:text="@string/_93"
             android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_11ssp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@id/tvStar"
-            app:layout_constraintStart_toEndOf="@id/imgSubject"
+            app:layout_constraintStart_toStartOf="@id/tvStar"
             app:layout_constraintTop_toBottomOf="@id/tvStar" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSeparator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:text="@string/or"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintBottom_toBottomOf="@id/tvQuantity1"
+            app:layout_constraintStart_toEndOf="@id/tvQuantity1"
+            app:layout_constraintTop_toTopOf="@id/tvQuantity1" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvQuantity2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:hint="@string/_125"
+            tools:text="@string/_125"
             android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_11ssp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/tvQuantity1"
-            app:layout_constraintStart_toEndOf="@id/tvQuantity1"
-            app:layout_constraintTop_toTopOf="@id/tvQuantity1" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/orr"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            android:textSize="@dimen/_13ssp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/tvQuantity1"
-            app:layout_constraintEnd_toStartOf="@id/tvQuantity2"
-            app:layout_constraintStart_toEndOf="@id/tvQuantity1"
+            app:layout_constraintStart_toEndOf="@id/tvSeparator"
             app:layout_constraintTop_toTopOf="@id/tvQuantity1" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSubject"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginEnd="@dimen/_3sdp"
-            android:layout_marginTop="@dimen/_3sdp"
-            android:background="@drawable/bg_subject"
+            android:layout_height="30dp"
+            android:background="@drawable/bg_subject_gradient"
+            android:elevation="@dimen/_4sdp"
+            android:minWidth="0dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:paddingHorizontal="@dimen/_20sdp"
             android:text="@string/apply"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:textColor="@color/dark_gray"
-            app:layout_constraintStart_toEndOf="@id/tvQuantity2"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTime" />
+            app:layout_constraintTop_toBottomOf="@id/tvDescription"
+            app:layout_constraintVertical_bias="1.0" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

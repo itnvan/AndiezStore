@@ -8,9 +8,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat // Import GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout // Import DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider // Thêm import này
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +23,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide // Import Glide
 import com.example.andiezstore.R
 import com.example.andiezstore.databinding.FragmentHomeBinding
 import com.example.andiezstore.ui.adapter.SliderAdapter
@@ -26,6 +32,7 @@ import com.example.andiezstore.user.adapter.CagetoryAdapter
 import com.example.andiezstore.user.adapter.NewsAdapter
 import com.example.andiezstore.user.model.News
 import com.example.andiezstore.user.viewmodel.NewsViewModel
+import com.google.android.material.navigation.NavigationView // Import NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -40,7 +47,7 @@ class HomeFragment : Fragment() {
     private lateinit var silderAdapter: SliderAdapter
     private lateinit var cagetoryAdapter: CagetoryAdapter
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var newsViewModel: NewsViewModel // Đã khai báo
+    private lateinit var newsViewModel: NewsViewModel
     private lateinit var homeNewsAdapter: NewsAdapter
     private val newsDataListForHome = mutableListOf<News>()
     private var database: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
@@ -53,40 +60,39 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         swipeRefreshLayout = binding.swipeRefreshLayoutHome
-        // Khởi tạo ViewModel ở đây hoặc trong onViewCreated trước khi sử dụng
-        newsViewModel = ViewModelProvider(this).get(NewsViewModel::class.java)
-        auth = FirebaseAuth.getInstance() // auth cũng nên được khởi tạo ở đây nếu chưa
+        newsViewModel = ViewModelProvider(this)[NewsViewModel::class.java]
+        auth = FirebaseAuth.getInstance()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewPager2 = binding.viewPager2
-        // auth = FirebaseAuth.getInstance() // Đã khởi tạo trong onCreateView
 
         init()
         setUpTransformer()
         getCurrentUserName()
         setupCategoryRecyclerView()
-        setupHomeNewsRecyclerView() // Setup RecyclerView cho News
-        observeNewsViewModelData()  // Quan sát dữ liệu từ ViewModel
+        setupHomeNewsRecyclerView()
+        observeNewsViewModelData()
         setupSwipeToRefresh()
 
-        // Fetch dữ liệu nếu danh sách rỗng
+        // --- NEW: Handle opening Navigation Drawer ---
+        binding.imgMenu.setOnClickListener {
+            val drawerLayout = (activity as? AppCompatActivity)?.findViewById<DrawerLayout>(R.id.drawerLayout)
+            drawerLayout?.openDrawer(GravityCompat.START) // Mở Drawer từ bên trái
+        }
+        // --- END NEW ---
+
         if (newsDataListForHome.isEmpty()) {
+            Log.d("HomeFragment", "Initial news fetch triggered.")
             newsViewModel.fetchAllNews()
         }
-        if (newsDataListForHome.isEmpty()) {
-            // Hiển thị loading ban đầu nếu cần, SwipeRefreshLayout sẽ xử lý loading khi kéo
-            swipeRefreshLayout.isRefreshing = true
-            newsViewModel.fetchAllNews()
-        }
+
         binding.imgMess.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_homeChatFragment)
         }
-//        binding.imgSearch.setOnClickListener {
-//            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
-//        }
+
         viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
@@ -98,14 +104,10 @@ class HomeFragment : Fragment() {
 
     private fun setupSwipeToRefresh() {
         swipeRefreshLayout.setOnRefreshListener {
-            // Hành động khi người dùng kéo để làm mới
-            Log.d("HomeFragment", "Swipe to refresh triggered")
-            // Gọi API hoặc phương thức để tải lại dữ liệu
+            Log.d("HomeFragment", "Swipe to refresh triggered, fetching news...")
             newsViewModel.fetchAllNews()
-            // ViewModel sẽ cập nhật LiveData isLoadingList,
-            // và chúng ta sẽ ẩn swipeRefreshLayout.isRefreshing trong observer của isLoadingList
+            getCurrentUserName() // Refresh user data on swipe
         }
-        // Bạn có thể tùy chỉnh màu sắc của animation loading
         swipeRefreshLayout.setColorSchemeResources(
             android.R.color.holo_blue_bright,
             android.R.color.holo_green_light,
@@ -138,32 +140,71 @@ class HomeFragment : Fragment() {
         val currentUser = auth.currentUser
         if (currentUser != null) {
             val uid = currentUser.uid
-            getUserName(uid)
+            getUserInformation(uid) // Changed to get more user info
         } else {
             binding.tvUser.text = "Not logged in"
+            updateNavHeader(null, null, null) // Clear nav header if not logged in
         }
     }
 
-    private fun getUserName(uid: String) {
-        database.child(uid).child("information").child("name")
+    // Changed from getUserName to getUserInformation to fetch name, email, and profile image
+    private fun getUserInformation(uid: String) {
+        database.child(uid).child("information")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 @SuppressLint("SetTextI18n")
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        val userName = snapshot.getValue(String::class.java)
-                        binding.tvUser.text = userName
+                        val userName = snapshot.child("name").getValue(String::class.java)
+                        val userEmail = snapshot.child("email").getValue(String::class.java)
+                        val profileImageUrl = snapshot.child("profileImageUrl").getValue(String::class.java)
+
+                        binding.tvUser.text = userName ?: "User"
+                        Log.d("HomeFragment", "Fetched user name: $userName")
+
+                        // Update Navigation Drawer header
+                        updateNavHeader(userName, userEmail, profileImageUrl)
+
                     } else {
                         binding.tvUser.text = "User name not found"
+                        updateNavHeader(null, null, null) // Clear nav header if info not found
                     }
                 }
 
                 @SuppressLint("SetTextI18n")
                 override fun onCancelled(error: DatabaseError) {
-                    Log.e("Firebase", "Failed to read user name.", error.toException())
+                    Log.e("Firebase", "Failed to read user information.", error.toException())
                     binding.tvUser.text = "Error loading user name"
+                    updateNavHeader(null, null, null) // Clear nav header on error
+                    Toast.makeText(context, "Error loading user profile: ${error.message}", Toast.LENGTH_SHORT).show()
                 }
             })
     }
+
+    // NEW: Function to update Navigation Drawer header
+    private fun updateNavHeader(userName: String?, userEmail: String?, profileImageUrl: String?) {
+        val navView = (activity as? AppCompatActivity)?.findViewById<NavigationView>(R.id.navView)
+        val navHeaderView = navView?.getHeaderView(0) // Get the header view
+
+        navHeaderView?.let {
+            val headerUserName = it.findViewById<TextView>(R.id.textViewUserName)
+            val headerUserEmail = it.findViewById<TextView>(R.id.textViewUserEmail)
+            val headerUserAvatar = it.findViewById<ImageView>(R.id.imageViewUserAvatar)
+
+            headerUserName?.text = userName ?: getString(R.string.nav_header_title)
+            headerUserEmail?.text = userEmail ?: getString(R.string.nav_header_subtitle)
+
+            if (!profileImageUrl.isNullOrEmpty()) {
+                Glide.with(this)
+                    .load(profileImageUrl)
+                    .placeholder(R.drawable.ic_user) // Default icon for user profile
+                    .error(R.drawable.ic_user) // Error icon
+                    .into(headerUserAvatar!!)
+            } else {
+                headerUserAvatar?.setImageResource(R.drawable.ic_user) // Fallback to default if no URL
+            }
+        }
+    }
+
 
     override fun onPause() {
         super.onPause()
@@ -176,7 +217,11 @@ class HomeFragment : Fragment() {
     }
 
     private var runnable = Runnable {
-        viewPager2.currentItem = viewPager2.currentItem + 1
+        if (viewPager2.currentItem == imageList.size - 1) {
+            viewPager2.currentItem = 0
+        } else {
+            viewPager2.currentItem = viewPager2.currentItem + 1
+        }
     }
 
     private fun setUpTransformer() {
@@ -199,11 +244,11 @@ class HomeFragment : Fragment() {
                     findNavController().navigate(action)
                 } catch (e: Exception) {
                     Log.e("HomeFragment", "Navigation action not found or error: ", e)
-                    Toast.makeText(context, "Lỗi điều hướng chi tiết tin tức", Toast.LENGTH_SHORT)
+                    Toast.makeText(context, "Error navigating", Toast.LENGTH_SHORT)
                         .show()
                 }
             } ?: run {
-                Toast.makeText(context, "ID tin tức không hợp lệ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "News ID is null", Toast.LENGTH_SHORT).show()
                 Log.e("HomeFragment", "News ID is null for title: ${clickedNews.title}")
             }
         }
@@ -217,12 +262,7 @@ class HomeFragment : Fragment() {
     private fun observeNewsViewModelData() {
         newsViewModel.newsList.observe(viewLifecycleOwner) { newsItems ->
             Log.d("HomeFragment", "News list updated with ${newsItems.size} items.")
-            newsDataListForHome.clear()
-            newsDataListForHome.addAll(newsItems)
-            homeNewsAdapter.notifyDataSetChanged()
-            if (swipeRefreshLayout.isRefreshing) {
-                swipeRefreshLayout.isRefreshing = false
-            }
+            homeNewsAdapter.updateNewsList(newsItems)
         }
 
         newsViewModel.isLoadingList.observe(viewLifecycleOwner) { isLoading ->
@@ -252,14 +292,20 @@ class HomeFragment : Fragment() {
         imageList.add(R.drawable.view2)
         imageList.add(R.drawable.rule)
         silderAdapter = SliderAdapter(imageList, viewPager2)
+
         binding.viewPager2.adapter = silderAdapter
-        binding.viewPager2.offscreenPageLimit = 4
+        binding.viewPager2.offscreenPageLimit = 1
+        binding.viewPager2.setCurrentItem(imageList.size * 1000, false)
+
         binding.viewPager2.clipToPadding = false
         binding.viewPager2.clipChildren = true
         (binding.viewPager2.getChildAt(0) as? RecyclerView)?.overScrollMode =
             RecyclerView.OVER_SCROLL_NEVER
         binding.dotsIndicator.attachTo(viewPager2)
-        // runnable đã được khởi tạo ở trên, không cần khởi tạo lại ở đây nếu không có logic đặc biệt
-        // runnable = Runnable { ... } // Đã có
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        handler.removeCallbacks(runnable)
     }
 }

@@ -1,34 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_gravity="start"
-    android:padding="8dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingHorizontal="@dimen/_8sdp"
+    android:paddingVertical="@dimen/_4sdp">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_message_body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_class"
-        android:textColor="#000"
-        android:padding="12dp"
-        android:textSize="16sp"
-        android:text="Message"
-        android:maxWidth="250dp"
+        android:background="@drawable/bg_receive_message"
+        android:textColor="@color/black"
+        android:paddingHorizontal="@dimen/_12sdp"
+        android:paddingVertical="@dimen/_8sdp"
+        android:textSize="@dimen/_14ssp"
+        tools:text="Hi there! This is a received message, and it might be a bit longer to test the bubble's responsiveness."
+        android:maxWidth="@dimen/_240sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_message_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:layout_gravity="start"
-        android:textColor="#888"
-        android:text="Time"
+        android:textSize="@dimen/_10ssp"
+        android:textColor="#888888"
+        tools:text="4:45 PM"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginStart="@dimen/_4sdp"
         app:layout_constraintStart_toStartOf="@id/text_message_body"
-        app:layout_constraintTop_toBottomOf="@id/text_message_body"/>
+        app:layout_constraintTop_toBottomOf="@id/text_message_body"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

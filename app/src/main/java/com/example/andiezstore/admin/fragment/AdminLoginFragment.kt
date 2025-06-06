@@ -15,19 +15,25 @@ import androidx.navigation.fragment.findNavController
 import com.example.andiezstore.R
 import com.example.andiezstore.databinding.FragmentAdminLoginBinding
 import com.example.andiezstore.utils.Util
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.auth.FirebaseAuth // Import Firebase Auth
+import com.google.firebase.database.FirebaseDatabase // Import Firebase Database
 import kotlinx.coroutines.launch
+import com.example.andiezstore.admin.model.Account // Import your Account data class
 
 class AdminLoginFragment : Fragment() {
     private lateinit var binding: FragmentAdminLoginBinding
+    private lateinit var auth: FirebaseAuth
+
+
+    private val ADMIN_EMAIL = "admin@thienan.com"
+    private val ADMIN_PASSWORD = "123456"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAdminLoginBinding.inflate(layoutInflater)
+        auth = FirebaseAuth.getInstance() // Initialize Firebase Auth
         setColorButton()
         checkToLogin()
         return binding.root
@@ -35,151 +41,99 @@ class AdminLoginFragment : Fragment() {
 
     private fun checkToLogin() {
         binding.btnLogin.setOnClickListener {
-            val email = binding.edtEmail.text.toString()
-            val password = binding.edtPass.text.toString()
+            val email = binding.edtEmail.text.toString().trim()
+            val password = binding.edtPass.text.toString().trim()
 
-            if (email.isEmpty() || password.isEmpty()) {
-                Util.hideDialog()
-                if (email.isEmpty()) {
-                    binding.edtEmail.error = "Invalid email"
-                    binding.edtEmail.requestFocus()
-                } else {
-                    binding.edtEmail.error = null
-                }
-                if (password.isEmpty()) {
-                    binding.edtPass.error = "Invalid password"
-                    binding.edtPass.requestFocus()
-                } else {
-                    binding.edtPass.error = null
-                }
+            if (email.isEmpty()) {
+                binding.edtEmail.error = "Account cannot be empty"
+                binding.edtEmail.requestFocus()
+            } else if (password.isEmpty()) {
+                binding.edtPass.error = "Password cannot be empty"
+                binding.edtPass.requestFocus()
             } else {
-                // Email và mật khẩu hợp lệ, gọi loginUser()
-                loginUser()
-
+                loginUser(email, password) // Pass email and password to loginUser
             }
         }
     }
 
-    fun loginUser() {
-        val email = binding.edtEmail.text.toString()
-        val password = binding.edtPass.text.toString()
-        Util.showDialog(requireContext(), "Wait A Second")
+    fun loginUser(inputEmail: String, inputPassword: String) {
+        Util.showDialog(requireContext(), "Authenticating...")
 
         lifecycleScope.launch {
-            try {
-                // 1. Get a reference to the "Admin" node in your database
-                val adminRef = FirebaseDatabase.getInstance().getReference("Admin")
+            if (inputEmail.equals(ADMIN_EMAIL, ignoreCase = true) && inputPassword == ADMIN_PASSWORD) {
+                // Use Firebase Authentication to sign in the admin
+                auth.signInWithEmailAndPassword(inputEmail, inputPassword)
+                    .addOnCompleteListener(requireActivity()) { task ->
+                        Util.hideDialog()
+                        if (task.isSuccessful) {
+                            // Sign in success, update UI with the signed-in user's information
+                            val user = auth.currentUser
+                            user?.let { firebaseUser ->
+                                // Optional: Store admin profile details in Realtime Database under their UID
+                                val adminAccountData = Account(account = ADMIN_EMAIL.substringBefore("@")) // Store just the 'admin' part
+                                FirebaseDatabase.getInstance().getReference("Admin")
+                                    .child("Account")
+                                    .child(firebaseUser.uid)
+                                    .setValue(adminAccountData)
+                                    .addOnSuccessListener {
+                                        Log.d("FirebaseAdmin", "Admin profile saved to RTDB for UID: ${firebaseUser.uid}")
+                                    }
+                                    .addOnFailureListener { e ->
+                                        Log.e("FirebaseAdmin", "Failed to save admin profile to RTDB: ${e.message}")
+                                    }
 
-                // 2. Use a ValueEventListener to check the data
-                adminRef.addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if (snapshot.exists()) {
-                            // 3. Check for the "account" and "password" children
-                            val accountSnapshot = snapshot.child("Account")
-                            val passwordSnapshot = snapshot.child("Password")
-
-                            if (accountSnapshot.exists() && passwordSnapshot.exists()) {
-                                // 4. Get the values
-                                val storedAccount = accountSnapshot.value.toString()
-                                val storedPassword = passwordSnapshot.value.toString()
-
-                                // 5.  Perform the check (case-insensitive email comparison)
-                                if (storedAccount.equals(
-                                        email,
-                                        ignoreCase = true
-                                    ) && storedPassword == password
-                                ) {
-                                    // 6. Login is successful
-                                    Util.hideDialog() // Hide dialog on success
-                                    Toast.makeText(
-                                        requireContext(),
-                                        "Login Success",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                    findNavController().navigate(R.id.action_adminLoginFragment_to_adminHomeFragment)
-                                } else {
-                                    // 7.  Login failed - incorrect credentials
-                                    Util.hideDialog()
-                                    Toast.makeText(
-                                        requireContext(),
-                                        "Login Failed: Incorrect account or password",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            } else {
-                                // 8.  The expected structure ("account" or "password" child missing)
-                                Util.hideDialog()
                                 Toast.makeText(
                                     requireContext(),
-                                    "Login Failed: Invalid data structure in database",
+                                    "Login Success: Welcome, Admin!",
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                Util.hideDialog()
+                                findNavController().navigate(R.id.action_adminLoginFragment_to_adminHomeFragment)
                             }
                         } else {
-                            // 9.  "Admin" node does not exist
-                            Util.hideDialog()
+                            // If sign in fails, display a message to the user.
+                            Log.w("FirebaseAuth", "signInWithEmail:failure", task.exception)
                             Toast.makeText(
                                 requireContext(),
-                                "Login Failed: Admin account not found",
-                                Toast.LENGTH_SHORT
+                                "Login Failed: Authentication failed. Check credentials or create admin account.",
+                                Toast.LENGTH_LONG
                             ).show()
-
                         }
                     }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        // 10. Handle errors from Firebase
-                        Util.hideDialog()
-                        Toast.makeText(
-                            requireContext(),
-                            "Login Failed: ${error.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        Log.e("Firebase", "Database error: ${error.message}") // Log the error
-                    }
-                })
-            } catch (e: Exception) {
-                // 11. Handle general exceptions (e.g., network issues)
+            } else {
+                // If hardcoded values don't match, or Firebase Auth fails for some reason
                 Util.hideDialog()
                 Toast.makeText(
                     requireContext(),
-                    "Login Failed: ${e.message}",
+                    "Login Failed: Incorrect hardcoded admin credentials.",
                     Toast.LENGTH_SHORT
                 ).show()
-                Log.e("Exception", "General error: ${e.message}", e) // Log the exception
             }
         }
     }
-
 
     private fun setColorButton() {
         binding.edtEmail.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                updateButtonColor() // Gọi hàm updateButtonColor để kiểm tra tất cả điều kiện
+                updateButtonColor()
             }
-
             override fun afterTextChanged(p0: Editable?) {}
         })
 
         binding.edtPass.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                updateButtonColor() // Gọi hàm updateButtonColor để kiểm tra tất cả điều kiện
+                updateButtonColor()
             }
-
             override fun afterTextChanged(p0: Editable?) {}
         })
     }
 
     fun updateButtonColor() {
-        val email = binding.edtEmail.text?.toString()
-        val password = binding.edtPass.text?.toString()
+        val email = binding.edtEmail.text?.toString()?.trim()
+        val password = binding.edtPass.text?.toString()?.trim()
 
-        if (email?.isEmpty() == true || password?.isEmpty() == true) {
+        if (email.isNullOrEmpty() || password.isNullOrEmpty()) {
             binding.btnLogin.setBackgroundColor(
                 ContextCompat.getColor(requireContext(), R.color.gray)
             )
@@ -189,5 +143,4 @@ class AdminLoginFragment : Fragment() {
             )
         }
     }
-
 }

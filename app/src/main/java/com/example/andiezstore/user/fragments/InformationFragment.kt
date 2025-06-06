@@ -497,7 +497,6 @@ class InformationFragment : Fragment() {
     private fun updateUpdateButtonState() {
         binding.btnUpdate.isEnabled = hasUnsavedChanges()
         if (binding.btnUpdate.isEnabled) {
-            // Apply active style if you have one, e.g., change background color
             binding.btnUpdate.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.purple_500)) // Example color
         } else {
             // Apply inactive style

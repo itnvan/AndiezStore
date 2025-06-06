@@ -151,6 +151,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_informationFragment_to_homeFragment2"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/classroomFragment"
@@ -248,5 +251,9 @@
         <argument
             android:name="newsId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_newsDetailFragment_self"
+            app:destination="@id/newsDetailFragment" />
+
     </fragment>
 </navigation>

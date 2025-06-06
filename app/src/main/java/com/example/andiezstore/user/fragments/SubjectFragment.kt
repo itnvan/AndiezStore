@@ -17,6 +17,7 @@ import com.example.andiezstore.user.model.Subject
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
+@Suppress("DEPRECATION")
 class SubjectFragment : Fragment() {
     private lateinit var binding: FragmentSubjectBinding
     private lateinit var subjectAdapter: SubjectAdapter
@@ -51,7 +52,7 @@ class SubjectFragment : Fragment() {
         binding.toolbarSubject.setOnClickListener {
             binding.toolbarSubject.navigationIcon.run {
                 if (this != null) {
-                    if (!this.constantState!!.equals(resources.getDrawable(R.drawable.ic_back).constantState) ) {
+                    if (this.constantState!! != resources.getDrawable(R.drawable.ic_back).constantState) {
                         binding.toolbarSubject.navigationIcon = resources.getDrawable(R.drawable.ic_back)
                         findNavController().navigate(R.id.action_classroomFragment_to_homeFragment)
                     }
@@ -96,6 +97,7 @@ class SubjectFragment : Fragment() {
 //    }
     private fun getSubjectData() {
         adminDatabase.addValueEventListener(object : ValueEventListener {
+            @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(snapshot: DataSnapshot) {
                 listSubject.clear()
                 if (snapshot.exists()) {
