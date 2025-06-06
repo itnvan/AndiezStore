@@ -119,5 +119,6 @@
     <string name="nav_header_title">User Name</string>
     <string name="nav_header_subtitle">user.email@android.com</string>
     <string name="more_news_">More News</string>
+    <string name="news_">News</string>
 
 </resources>
